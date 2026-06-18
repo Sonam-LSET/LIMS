@@ -1,0 +1,2184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>ZooLab · Vet Mobile — Lab Module Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   ZooLab — Veterinary Lab Module (Vet/Paravet Mobile)
+   Design tokens derived from the green styleguide,
+   elevated with CRED / Swiggy / Zomato / Airbnb patterns.
+   ============================================================ */
+:root{
+  /* Brand greens (from styleguide) */
+  --brand-950:#06281C;
+  --brand-900:#0B3D2C;
+  --brand-800:#0F4E38;
+  --brand-700:#13654A;
+  --brand-600:#178a63;
+  --brand-500:#1fae7c;
+  --brand-400:#3fc795;
+  --brand-100:#d6f1e4;
+  --brand-50:#eaf6ef;
+
+  /* Neutrals */
+  --ink-900:#0c1411;
+  --ink-700:#2c3a34;
+  --ink-500:#5d6b64;
+  --ink-400:#87948d;
+  --ink-300:#aab4af;
+  --line:#e9eeeb;
+  --line-2:#dfe6e2;
+  --surface:#ffffff;
+  --bg:#eef3ef;
+  --bg-2:#f6f9f7;
+
+  /* Status */
+  --ok:#15a85f; --ok-bg:#e4f7ec;
+  --warn:#e3920b; --warn-bg:#fdf2dd;
+  --danger:#e23b3b; --danger-bg:#fce7e7;
+  --info:#2f72e8; --info-bg:#e6eefc;
+  --violet:#7c5cff; --violet-bg:#efeaff;
+  --teal:#0ea5a5; --teal-bg:#e2f6f6;
+
+  /* FX */
+  --r-sm:10px; --r:16px; --r-lg:22px; --r-xl:28px;
+  --sh-1:0 1px 2px rgba(12,40,28,.05), 0 2px 8px rgba(12,40,28,.05);
+  --sh-2:0 6px 18px rgba(12,40,28,.10);
+  --sh-3:0 18px 44px rgba(8,32,22,.20);
+  --ease:cubic-bezier(.22,1,.36,1);
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:#cdd8d0;
+  background-image:radial-gradient(120% 80% at 50% -10%,#dfe8e1 0%,#c6d2ca 60%,#bcc9c0 100%);
+  min-height:100vh; display:flex; align-items:center; justify-content:center;
+  padding:24px 0; color:var(--ink-900);
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+img{display:block}
+
+/* ---- Phone frame ---- */
+.phone{
+  position:relative; width:412px; height:892px; background:var(--bg);
+  border-radius:46px; box-shadow:var(--sh-3), 0 0 0 11px #0c1411, 0 0 0 13px #2a3631;
+  overflow:hidden; display:flex; flex-direction:column;
+}
+@media (max-width:460px){
+  body{padding:0}
+  .phone{width:100vw;height:100vh;border-radius:0;box-shadow:none}
+}
+.notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:128px;height:30px;background:#0c1411;border-radius:0 0 18px 18px;z-index:60}
+.statusbar{height:46px;flex:0 0 46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px 0 28px;font-weight:700;font-size:13px;color:#fff;background:var(--brand-900);position:relative;z-index:40}
+.statusbar.light{color:var(--ink-900);background:transparent}
+.sb-right{display:flex;gap:6px;align-items:center;font-size:12px}
+
+/* ---- App header ---- */
+.appbar{
+  flex:0 0 auto; background:var(--brand-900); color:#fff; padding:6px 18px 16px;
+  position:relative; z-index:30; box-shadow:0 8px 22px rgba(7,38,26,.18);
+}
+.appbar .row{display:flex;align-items:center;gap:12px;min-height:40px}
+.appbar h1{font-family:'Sora',sans-serif;font-size:19px;font-weight:700;margin:0;letter-spacing:-.2px;flex:1}
+.appbar .sub{font-size:12px;color:var(--brand-400);font-weight:600;margin-top:1px}
+.icon-btn{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;background:rgba(255,255,255,.10);transition:.18s var(--ease);position:relative}
+.icon-btn:active{transform:scale(.92);background:rgba(255,255,255,.2)}
+.icon-btn svg{width:21px;height:21px}
+.appbar.light{background:var(--surface);color:var(--ink-900);box-shadow:var(--sh-1)}
+.appbar.light .icon-btn{background:var(--bg-2)}
+.appbar.light .sub{color:var(--brand-600)}
+.badge-dot{position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:var(--warn);border:2px solid var(--brand-900)}
+.site-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);padding:5px 11px;border-radius:999px;font-size:12px;font-weight:600}
+.site-pill svg{width:13px;height:13px;opacity:.9}
+
+/* ---- Content ---- */
+.viewport{flex:1;position:relative;overflow:hidden}
+.screen{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 16px 108px;opacity:0;transform:translateX(14px);pointer-events:none;transition:opacity .26s var(--ease),transform .26s var(--ease)}
+.screen.active{opacity:1;transform:none;pointer-events:auto}
+.screen::-webkit-scrollbar{width:0}
+
+/* ---- Bottom nav ---- */
+.tabbar{
+  position:absolute;left:0;right:0;bottom:0;height:84px;background:rgba(255,255,255,.92);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--line);
+  display:flex;z-index:50;padding-bottom:12px;
+}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--ink-400);font-size:10.5px;font-weight:600;transition:.18s var(--ease);position:relative}
+.tab svg{width:23px;height:23px;transition:.2s var(--ease)}
+.tab.active{color:var(--brand-700)}
+.tab.active svg{transform:translateY(-1px)}
+.tab .ind{position:absolute;top:0;width:26px;height:3px;border-radius:0 0 4px 4px;background:var(--brand-600);opacity:0;transform:scaleX(.3);transition:.24s var(--ease)}
+.tab.active .ind{opacity:1;transform:none}
+.tab .pip{position:absolute;top:9px;right:calc(50% - 18px);min-width:15px;height:15px;padding:0 4px;border-radius:8px;background:var(--danger);color:#fff;font-size:9px;font-weight:800;display:grid;place-items:center}
+
+/* ---- Generic UI ---- */
+.card{background:var(--surface);border-radius:var(--r);box-shadow:var(--sh-1);transition:transform .14s var(--ease),box-shadow .2s var(--ease)}
+.card.tap:active{transform:scale(.985);box-shadow:var(--sh-2)}
+.sec-title{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-400);margin:20px 4px 10px;display:flex;align-items:center;justify-content:space-between}
+.sec-title a{color:var(--brand-600);font-size:12px;font-weight:700;text-transform:none;letter-spacing:0}
+.muted{color:var(--ink-500)}
+.row-between{display:flex;align-items:center;justify-content:space-between}
+
+/* chips / status */
+.chip{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;font-size:11.5px;font-weight:700;line-height:1;white-space:nowrap}
+.chip svg{width:12px;height:12px}
+.chip.ok{background:var(--ok-bg);color:#0c7a42}
+.chip.warn{background:var(--warn-bg);color:#9a6406}
+.chip.danger{background:var(--danger-bg);color:#b51f1f}
+.chip.info{background:var(--info-bg);color:#1c52b8}
+.chip.violet{background:var(--violet-bg);color:#5a3ce0}
+.chip.teal{background:var(--teal-bg);color:#0a7a7a}
+.chip.neutral{background:#eef2f0;color:var(--ink-500)}
+.dot{width:7px;height:7px;border-radius:50%;flex:0 0 auto}
+
+/* avatars */
+.avatar{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:25px;flex:0 0 auto;position:relative;box-shadow:inset 0 0 0 1px rgba(0,0,0,.04)}
+.avatar.sm{width:38px;height:38px;border-radius:11px;font-size:20px}
+.av-g1{background:linear-gradient(135deg,#ffe6b8,#ffcaa0)}
+.av-g2{background:linear-gradient(135deg,#cfe9d6,#a8dcc4)}
+.av-g3{background:linear-gradient(135deg,#d6e4ff,#bcd0ff)}
+.av-g4{background:linear-gradient(135deg,#ffd9e0,#ffc2cf)}
+.av-g5{background:linear-gradient(135deg,#e3d8ff,#cdbcff)}
+.av-g6{background:linear-gradient(135deg,#d2f1ef,#aee5e1)}
+.sex{position:absolute;bottom:-3px;right:-3px;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:10px;color:#fff;border:2px solid #fff}
+.sex.m{background:#3b82f6}.sex.f{background:#ec4899}.sex.x{background:#94a3b8}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:50px;border-radius:15px;font-size:15px;font-weight:700;width:100%;transition:.15s var(--ease)}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:linear-gradient(180deg,var(--brand-600),var(--brand-700));color:#fff;box-shadow:0 8px 18px rgba(19,101,74,.28)}
+.btn-ghost{background:var(--bg-2);color:var(--brand-700);box-shadow:inset 0 0 0 1.5px var(--line-2)}
+.btn-sm{height:38px;font-size:13px;border-radius:11px;width:auto;padding:0 16px}
+.btn svg{width:18px;height:18px}
+
+/* segmented tabs */
+.segment{display:flex;background:#e4ece7;border-radius:13px;padding:4px;gap:4px;position:sticky;top:0;z-index:5}
+.segment button{flex:1;height:38px;border-radius:10px;font-size:13.5px;font-weight:700;color:var(--ink-500);transition:.2s var(--ease)}
+.segment button.on{background:#fff;color:var(--brand-800);box-shadow:var(--sh-1)}
+
+/* filter chips */
+.filters{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 6px;margin:0 -2px}
+.filters::-webkit-scrollbar{display:none}
+.fchip{flex:0 0 auto;padding:8px 14px;border-radius:999px;background:#fff;font-size:13px;font-weight:600;color:var(--ink-500);box-shadow:inset 0 0 0 1.5px var(--line-2);display:flex;align-items:center;gap:6px;transition:.15s var(--ease)}
+.fchip:active{transform:scale(.95)}
+.fchip.on{background:var(--brand-900);color:#fff;box-shadow:none}
+.fchip svg{width:14px;height:14px}
+
+/* search */
+.search{display:flex;align-items:center;gap:10px;background:#fff;border-radius:14px;padding:0 14px;height:48px;box-shadow:var(--sh-1)}
+.search svg{width:19px;height:19px;color:var(--ink-400)}
+.search input{border:none;outline:none;flex:1;font-size:15px;font-family:inherit;background:none;color:var(--ink-900)}
+.search input::placeholder{color:var(--ink-300)}
+
+/* stat tiles */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.stat{background:#fff;border-radius:var(--r);padding:14px;box-shadow:var(--sh-1);position:relative;overflow:hidden}
+.stat .v{font-family:'Sora',sans-serif;font-size:27px;font-weight:700;line-height:1;letter-spacing:-1px}
+.stat .l{font-size:12px;color:var(--ink-500);font-weight:600;margin-top:6px}
+.stat .ic{position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:9px;display:grid;place-items:center}
+.stat .ic svg{width:16px;height:16px}
+.trend{font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:3px;margin-top:7px}
+.trend.up{color:var(--ok)}.trend.down{color:var(--danger)}
+
+/* list item */
+.li{display:flex;gap:13px;padding:14px;align-items:center}
+.li .meta{flex:1;min-width:0}
+.li .t1{font-weight:700;font-size:14.5px;letter-spacing:-.2px;display:flex;align-items:center;gap:7px}
+.li .t2{font-size:12.5px;color:var(--ink-500);margin-top:3px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.li .chev{color:var(--ink-300)}
+.li .chev svg{width:18px;height:18px}
+.divider{height:1px;background:var(--line);margin:0 14px}
+
+/* progress */
+.prog{height:6px;border-radius:999px;background:#eaf0ec;overflow:hidden}
+.prog>i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--brand-500),var(--brand-700))}
+
+/* location path */
+.locpath{display:flex;align-items:center;gap:5px;flex-wrap:wrap;font-size:12px;color:var(--ink-600,#41514a);font-weight:600}
+.locpath .node{background:var(--brand-50);color:var(--brand-800);padding:3px 9px;border-radius:8px}
+.locpath svg{width:12px;height:12px;color:var(--ink-300)}
+
+/* timeline */
+.timeline{position:relative;padding-left:26px}
+.timeline:before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:var(--line-2)}
+.tl-item{position:relative;padding-bottom:18px}
+.tl-item:last-child{padding-bottom:0}
+.tl-item .nub{position:absolute;left:-22px;top:2px;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px var(--brand-100);display:grid;place-items:center}
+.tl-item .nub i{width:6px;height:6px;border-radius:50%;background:var(--brand-600);display:block}
+.tl-item.done .nub i{background:var(--ok)}
+.tl-item.pending .nub{box-shadow:0 0 0 3px #f0f3f1}
+.tl-item.pending .nub i{background:var(--ink-300)}
+.tl-item .tt{font-weight:700;font-size:13.5px}
+.tl-item .ts{font-size:12px;color:var(--ink-500);margin-top:2px}
+
+/* charts */
+.bars{display:flex;align-items:flex-end;gap:9px;height:130px;padding-top:8px}
+.bars .b{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;height:100%;justify-content:flex-end}
+.bars .b .bar{width:100%;max-width:26px;border-radius:7px 7px 3px 3px;background:linear-gradient(180deg,var(--brand-400),var(--brand-600));transition:height .6s var(--ease)}
+.bars .b.alt .bar{background:linear-gradient(180deg,#dfeae4,#c4d6cc)}
+.bars .b .bl{font-size:10.5px;color:var(--ink-400);font-weight:600}
+.donut{width:128px;height:128px;border-radius:50%;position:relative;flex:0 0 auto}
+.donut .hole{position:absolute;inset:19px;background:#fff;border-radius:50%;display:grid;place-items:center;text-align:center}
+.donut .hole .v{font-family:'Sora';font-size:24px;font-weight:700;line-height:1}
+.donut .hole .l{font-size:10px;color:var(--ink-500);font-weight:600;margin-top:2px}
+.legend{display:flex;flex-direction:column;gap:9px;flex:1}
+.legend .lg{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600}
+.legend .lg .sw{width:11px;height:11px;border-radius:4px;flex:0 0 auto}
+.legend .lg .n{margin-left:auto;color:var(--ink-500);font-weight:700}
+.hbar{display:flex;flex-direction:column;gap:13px}
+.hbar .it .top{display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:6px}
+.hbar .it .track{height:9px;border-radius:999px;background:#eef2f0;overflow:hidden}
+.hbar .it .track>i{display:block;height:100%;border-radius:999px}
+
+/* sheet */
+.scrim{position:absolute;inset:0;background:rgba(8,24,18,.46);opacity:0;pointer-events:none;transition:.28s var(--ease);z-index:70;backdrop-filter:blur(2px)}
+.scrim.show{opacity:1;pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:26px 26px 0 0;z-index:80;transform:translateY(110%);transition:transform .34s var(--ease);max-height:88%;display:flex;flex-direction:column;box-shadow:0 -16px 44px rgba(8,32,22,.22)}
+.sheet.show{transform:none}
+.sheet .grab{width:42px;height:5px;border-radius:999px;background:var(--line-2);margin:11px auto 4px}
+.sheet .sh-head{padding:8px 20px 12px;display:flex;align-items:center;justify-content:space-between}
+.sheet .sh-head h3{font-family:'Sora';font-size:18px;margin:0;font-weight:700}
+.sheet .sh-body{padding:4px 20px 22px;overflow-y:auto}
+.sheet .sh-foot{padding:14px 20px calc(20px + env(safe-area-inset-bottom));border-top:1px solid var(--line);display:flex;gap:10px}
+
+/* option rows in sheet */
+.opt{display:flex;align-items:center;gap:13px;padding:15px 14px;border-radius:14px;background:var(--bg-2);margin-bottom:10px;transition:.15s var(--ease);box-shadow:inset 0 0 0 1.5px transparent}
+.opt:active{transform:scale(.99)}
+.opt.sel{background:var(--brand-50);box-shadow:inset 0 0 0 2px var(--brand-500)}
+.opt .oi{width:40px;height:40px;border-radius:12px;background:#fff;display:grid;place-items:center;box-shadow:var(--sh-1)}
+.opt .oi svg{width:20px;height:20px;color:var(--brand-700)}
+.opt .om{flex:1}
+.opt .om .a{font-weight:700;font-size:14.5px}
+.opt .om .b{font-size:12.5px;color:var(--ink-500);margin-top:2px}
+.opt .check{width:22px;height:22px;border-radius:50%;border:2px solid var(--line-2);display:grid;place-items:center;flex:0 0 auto}
+.opt.sel .check{background:var(--brand-600);border-color:var(--brand-600)}
+.opt.sel .check svg{width:13px;height:13px;color:#fff}
+.opt:not(.sel) .check svg{display:none}
+
+/* field */
+.field{margin-bottom:14px}
+.field label{font-size:12.5px;font-weight:700;color:var(--ink-700);margin-bottom:7px;display:block}
+.field input,.field textarea,.field select{width:100%;border:1.5px solid var(--line-2);border-radius:12px;padding:13px 14px;font-size:14.5px;font-family:inherit;outline:none;background:#fff;transition:.15s var(--ease)}
+.field input:focus,.field textarea:focus{border-color:var(--brand-500);box-shadow:0 0 0 3px var(--brand-50)}
+
+/* FAB */
+.fab{position:absolute;right:18px;bottom:100px;height:52px;padding:0 20px 0 17px;border-radius:18px;background:linear-gradient(180deg,var(--brand-600),var(--brand-800));color:#fff;display:flex;align-items:center;gap:9px;font-weight:700;font-size:15px;box-shadow:0 14px 30px rgba(15,78,56,.4);z-index:45;transition:.18s var(--ease)}
+.fab:active{transform:scale(.94)}
+.fab svg{width:20px;height:20px}
+
+/* toast */
+.toast{position:absolute;left:50%;bottom:104px;transform:translate(-50%,20px);background:var(--brand-950);color:#fff;padding:13px 18px;border-radius:14px;font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:9px;z-index:90;opacity:0;pointer-events:none;transition:.3s var(--ease);box-shadow:var(--sh-3);max-width:88%}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast svg{width:18px;height:18px;color:var(--brand-400)}
+
+/* empty state */
+.empty{text-align:center;padding:50px 30px}
+.empty .em-ic{width:74px;height:74px;border-radius:24px;background:var(--brand-50);display:grid;place-items:center;margin:0 auto 16px}
+.empty .em-ic svg{width:34px;height:34px;color:var(--brand-500)}
+.empty h3{font-family:'Sora';margin:0 0 6px;font-size:17px}
+.empty p{margin:0;color:var(--ink-500);font-size:13.5px;line-height:1.5}
+
+/* hero gradient card (CRED-ish) */
+.hero{background:linear-gradient(135deg,var(--brand-800),var(--brand-950));border-radius:var(--r-lg);padding:18px;color:#fff;position:relative;overflow:hidden;box-shadow:var(--sh-2)}
+.hero:before{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:rgba(63,199,149,.18);top:-80px;right:-50px}
+.hero:after{content:"";position:absolute;width:120px;height:120px;border-radius:50%;background:rgba(63,199,149,.10);bottom:-60px;left:-20px}
+.hero .h-row{position:relative;z-index:2}
+
+.pull{font-size:11px;color:var(--ink-300);text-align:center;padding:6px 0 2px;font-weight:600}
+.count-up{font-variant-numeric:tabular-nums}
+.skel{background:linear-gradient(90deg,#eef2f0 25%,#e3e9e6 37%,#eef2f0 63%);background-size:400% 100%;animation:sk 1.3s infinite;border-radius:8px}
+@keyframes sk{0%{background-position:100% 0}100%{background-position:-100% 0}}
+.fade-up{animation:fu .4s var(--ease) both}
+@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.spacer{height:6px}
+.kbd{font-size:11px;font-weight:700;color:var(--ink-400);background:#eef2f0;padding:2px 7px;border-radius:6px}
+
+/* ===================================================================
+   NON-ANIMAL REQUEST FLOW  (faithful to the 21 May board)
+   =================================================================== */
+:root{ --navy:#16263f; --navy-2:#203453; --teal-btn:#159b9b; }
+
+/* location switcher + entity toggle */
+.loc-switch{display:inline-flex;align-items:center;gap:7px;font-weight:700;font-size:15px;color:var(--ink-900)}
+.loc-switch svg{width:15px;height:15px;color:var(--brand-700)}
+.ent-toggle{display:flex;background:#e6ece8;border-radius:11px;padding:3px;gap:3px}
+.ent-toggle button{flex:1;height:36px;border-radius:8px;font-size:13.5px;font-weight:700;color:var(--ink-500);transition:.18s var(--ease)}
+.ent-toggle button.on{background:var(--brand-800);color:#fff;box-shadow:var(--sh-1)}
+
+/* navy overview card */
+.ov-card{background:linear-gradient(135deg,var(--navy),var(--navy-2));border-radius:18px;padding:15px 6px;color:#fff;display:flex;position:relative;box-shadow:var(--sh-2)}
+.ov-card .ov{flex:1;text-align:center;position:relative}
+.ov-card .ov+.ov:before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:1px;background:rgba(255,255,255,.14)}
+.ov-card .ov .n{font-family:'Sora';font-size:23px;font-weight:700;line-height:1}
+.ov-card .ov .n.red{color:#ff8b8b}.ov-card .ov .n.amber{color:#ffd27a}.ov-card .ov .n.green{color:#7ff0bd}
+.ov-card .ov .k{font-size:10.5px;color:rgba(255,255,255,.7);font-weight:600;margin-top:6px}
+.ov-range{position:absolute;top:10px;right:12px;font-size:10.5px;font-weight:700;color:rgba(255,255,255,.85);display:flex;align-items:center;gap:3px;background:rgba(255,255,255,.10);padding:4px 8px;border-radius:8px}
+.ov-range svg{width:11px;height:11px}
+
+/* high-priority band */
+.hp-band{display:flex;align-items:center;gap:9px;background:#fdeaea;border-radius:13px;padding:12px 14px;margin-top:11px;font-weight:700;font-size:13.5px;color:#c5332f}
+.hp-band svg{width:17px;height:17px}
+.hp-band .ct{margin-left:auto;background:#e24038;color:#fff;min-width:26px;height:24px;border-radius:8px;display:grid;place-items:center;font-size:13px}
+
+/* text subtabs + underline tabs */
+.subtabs{display:flex;gap:22px;margin:16px 4px 4px;font-size:14px;font-weight:700;color:var(--ink-400)}
+.subtabs button{position:relative;padding-bottom:9px;color:inherit}
+.subtabs button.on{color:var(--brand-800)}
+.subtabs button.on:after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;border-radius:3px;background:var(--brand-600)}
+.utabs{display:flex;gap:8px;background:#eef2f0;border-radius:11px;padding:4px;margin-top:12px}
+.utabs button{flex:1;height:34px;border-radius:8px;font-size:13px;font-weight:700;color:var(--ink-500)}
+.utabs button.on{background:#fff;color:var(--brand-800);box-shadow:var(--sh-1)}
+
+.list-meta{display:flex;align-items:center;justify-content:space-between;margin:14px 4px 10px;font-size:13px}
+.list-meta .lf{display:flex;align-items:center;gap:6px;font-weight:700;color:var(--ink-700)}
+.list-meta .rt{display:flex;align-items:center;gap:14px;color:var(--ink-400)}
+.list-meta .rt svg{width:17px;height:17px}
+
+/* request list card */
+.rq{background:#fff;border-radius:var(--r);box-shadow:var(--sh-1);overflow:hidden;margin-bottom:12px;transition:transform .14s var(--ease)}
+.rq:active{transform:scale(.99)}
+.rq .top{padding:12px 14px 10px;display:flex;gap:11px}
+.rq .cat-ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;flex:0 0 auto;font-size:17px}
+.rq .body{flex:1;min-width:0}
+.rq .cat{font-size:11px;font-weight:700;color:var(--brand-700);text-transform:uppercase;letter-spacing:.03em}
+.rq .lab{font-size:13px;font-weight:700;margin-top:3px}
+.rq .ent{font-size:12.5px;color:var(--ink-500);margin-top:2px;line-height:1.45}
+.rq .na{flex:0 0 auto;align-self:flex-start;font-size:10px;font-weight:800;color:var(--brand-700);background:var(--brand-50);padding:3px 8px;border-radius:7px}
+.rq .strip{display:flex;align-items:center;gap:7px;padding:9px 14px;background:var(--bg-2);border-top:1px solid var(--line)}
+.rq .tests{font-size:12px;font-weight:700;color:var(--ink-700)}
+.rq .cnts{margin-left:auto;display:flex;gap:6px}
+.cnt{min-width:24px;height:23px;border-radius:7px;display:flex;align-items:center;justify-content:center;gap:3px;font-size:11.5px;font-weight:800;padding:0 6px}
+.cnt svg{width:11px;height:11px}
+.cnt.r{background:var(--danger-bg);color:#c5332f}
+.cnt.a{background:var(--warn-bg);color:#9a6406}
+.cnt.g{background:var(--ok-bg);color:#0c7a42}
+
+/* ===== request detail (dark header) ===== */
+.rd-head{background:linear-gradient(135deg,var(--navy),var(--navy-2));border-radius:0 0 20px 20px;margin:0 -16px 0;padding:14px 16px 18px;color:#fff}
+.rd-id{display:flex;align-items:center;gap:8px;font-family:'Sora';font-size:17px;font-weight:700}
+.rd-id .warn{width:22px;height:22px;border-radius:50%;background:rgba(255,170,60,.2);display:grid;place-items:center}
+.rd-id .warn svg{width:13px;height:13px;color:#ffb43c}
+.rd-na{margin-left:auto;font-size:10.5px;font-weight:800;background:rgba(127,240,189,.16);color:#7ff0bd;padding:4px 9px;border-radius:8px}
+.rd-sub{font-size:12.5px;color:rgba(255,255,255,.72);margin-top:5px}
+.rd-ent{font-family:'Sora';font-size:18px;font-weight:700;margin-top:12px}
+.rd-line{font-size:12px;color:rgba(255,255,255,.7);margin-top:4px;display:flex;align-items:center;gap:6px}
+.rd-line svg{width:12px;height:12px;opacity:.8}
+
+.rd-tabs{display:flex;gap:20px;padding:0 2px;border-bottom:1px solid var(--line);margin:16px 0 0;font-size:13.5px;font-weight:700;color:var(--ink-400);overflow-x:auto}
+.rd-tabs::-webkit-scrollbar{display:none}
+.rd-tabs button{position:relative;padding:12px 0;white-space:nowrap;color:inherit;display:flex;align-items:center;gap:5px}
+.rd-tabs button.on{color:var(--brand-800)}
+.rd-tabs button.on:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:3px;border-radius:3px 3px 0 0;background:var(--brand-600)}
+
+.rd-counters{display:flex;margin:16px 0 6px}
+.rd-counters .c{flex:1;text-align:center;position:relative}
+.rd-counters .c+.c:before{content:"";position:absolute;left:0;top:2px;bottom:2px;width:1px;background:var(--line)}
+.rd-counters .c .v{font-family:'Sora';font-size:20px;font-weight:700;color:var(--ok)}
+.rd-counters .c .l{font-size:11.5px;color:var(--ink-500);font-weight:600;margin-top:3px}
+
+.ent-group{font-weight:800;font-size:14px;margin:18px 4px 10px;display:flex;align-items:center;gap:7px}
+.ent-group .pic{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:15px;background:var(--brand-50)}
+
+/* test row */
+.trow{background:#fff;border-radius:13px;box-shadow:var(--sh-1);padding:13px 14px;margin-bottom:10px;display:flex;align-items:center;gap:12px}
+.trow .st{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.03em}
+.trow .st.pend{color:var(--warn)}.trow .st.prog{color:var(--info)}.trow .st.done{color:var(--ok)}.trow .st.canc{color:var(--danger)}
+.trow .nm{font-weight:700;font-size:14.5px;margin-top:3px}
+.trow .rt{margin-left:auto;display:flex;align-items:center;gap:10px;color:var(--ink-300)}
+.trow .dept{font-size:11px;font-weight:700;color:var(--brand-700);background:var(--brand-50);padding:4px 8px;border-radius:7px}
+.trow.cancelled{opacity:.7}
+.cancel-act{margin-left:auto;font-size:12.5px;font-weight:700;color:var(--ok);border:1.5px solid var(--ok);border-radius:9px;padding:7px 12px}
+
+/* sample card */
+.scard{background:#fff;border-radius:14px;box-shadow:var(--sh-1);margin-bottom:11px;overflow:hidden}
+.scard .sh{padding:13px 14px;display:flex;align-items:flex-start;gap:10px}
+.scard .nm{font-weight:700;font-size:14.5px}
+.scard .mt{font-size:12px;color:var(--ink-500);margin-top:4px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.scard .mt .cm{display:flex;align-items:center;gap:4px}
+.scard .mt svg{width:13px;height:13px;color:var(--ink-300)}
+.scard .note{margin:0 14px 13px;background:#fdeded;border-radius:11px;padding:11px 12px;font-size:12px;color:#b5302c;line-height:1.5}
+.scard .note b{display:block;margin-bottom:2px}
+.scard .note.grey{background:#f1f4f2;color:var(--ink-600,#4a5a52)}
+.dept-tag{font-size:10.5px;font-weight:700;color:var(--brand-700);background:var(--brand-50);padding:3px 8px;border-radius:7px}
+
+/* sticky manage button */
+.sticky-cta{position:sticky;bottom:0;margin:14px -16px -108px;padding:14px 16px calc(112px + env(safe-area-inset-bottom));background:linear-gradient(180deg,transparent,var(--bg) 26%)}
+
+/* result banners */
+.res-banner{display:flex;align-items:center;gap:9px;border-radius:13px;padding:13px 14px;font-size:13.5px;font-weight:700;margin-bottom:13px}
+.res-banner svg{width:18px;height:18px}
+.res-banner.ok{background:var(--ok-bg);color:#0c7a42}
+.res-banner.bad{background:#fce5e5;color:#c5332f;cursor:pointer}
+.res-reason{background:#fdeded;border-radius:13px;padding:13px 14px;font-size:12.5px;color:#b5302c;line-height:1.55;margin-bottom:13px}
+
+/* cancel reason sheet (pink) */
+.sheet.danger .sh-head{background:#fdeded;border-radius:26px 26px 0 0}
+.sheet.danger .sh-head h3{color:#c5332f}
+.cancel-field{width:100%;border:1.5px solid #f0caca;border-radius:12px;padding:13px 14px;font-size:14px;font-family:inherit;outline:none;background:#fff;min-height:90px}
+.btn-danger{background:linear-gradient(180deg,#e8463f,#cf332c);color:#fff;box-shadow:0 8px 18px rgba(207,51,44,.28)}
+
+/* creation form */
+.cre-seg{display:flex;background:#eef2f0;border-radius:12px;padding:4px;gap:4px}
+.cre-seg button{flex:1;height:42px;border-radius:9px;font-size:14px;font-weight:700;color:var(--ink-500);display:flex;align-items:center;justify-content:center;gap:7px}
+.cre-seg button.on{background:var(--brand-800);color:#fff}
+.cre-seg .rdo{width:16px;height:16px;border-radius:50%;border:2px solid currentColor;flex:0 0 auto;display:grid;place-items:center}
+.cre-seg button.on .rdo:after{content:"";width:7px;height:7px;border-radius:50%;background:#fff}
+.cre-label{font-size:12.5px;font-weight:700;color:var(--ink-700);margin:16px 0 8px}
+.cre-select{width:100%;border:1.5px solid var(--line-2);border-radius:12px;padding:13px 14px;font-size:14.5px;font-family:inherit;background:#fff;display:flex;align-items:center;justify-content:space-between;color:var(--ink-900)}
+.cre-select svg{width:16px;height:16px;color:var(--ink-400)}
+.cre-select .ph{color:var(--ink-300)}
+.lab-card{display:flex;align-items:center;gap:11px;background:var(--brand-50);border-radius:12px;padding:12px;margin-top:10px}
+.lab-card .li2{flex:1}
+.lab-card .a{font-weight:700;font-size:13.5px}
+.lab-card .b{font-size:11.5px;color:var(--ink-500);margin-top:2px}
+.lab-card .rm{width:26px;height:26px;border-radius:8px;background:#fce5e5;color:#cf332c;display:grid;place-items:center}
+.lab-card .rm svg{width:14px;height:14px}
+.stepper-row{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--line)}
+.stepper-row .nm{font-size:14px;font-weight:600}
+.stepper{display:flex;align-items:center;gap:14px}
+.stepper button{width:28px;height:28px;border-radius:8px;background:var(--brand-50);color:var(--brand-700);display:grid;place-items:center;font-weight:800}
+.stepper button svg{width:14px;height:14px}
+.stepper .qty{font-weight:700;min-width:16px;text-align:center}
+.hint-note{font-size:12px;color:var(--brand-700);background:var(--brand-50);border-radius:10px;padding:10px 12px;margin-top:12px;font-weight:600}
+.add-line{width:100%;border:1.5px dashed var(--brand-400);border-radius:12px;padding:13px;color:var(--brand-700);font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;background:var(--brand-50)}
+.add-tests{width:100%;height:50px;border-radius:14px;background:var(--teal-btn);color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;box-shadow:0 8px 18px rgba(21,155,155,.28)}
+.test-pill{display:inline-flex;align-items:center;gap:6px;background:var(--brand-50);color:var(--brand-800);font-size:12.5px;font-weight:700;padding:7px 11px;border-radius:9px;margin:0 7px 7px 0}
+.submit-bar{position:sticky;bottom:0;margin:18px -16px -108px;padding:14px 16px calc(112px + env(safe-area-inset-bottom));background:linear-gradient(180deg,transparent,var(--bg) 26%)}
+.btn-submit{background:var(--brand-900);color:#fff;letter-spacing:.04em}
+
+/* test select sheet rows */
+.check-row{display:flex;align-items:center;gap:12px;padding:13px 2px;border-bottom:1px solid var(--line)}
+.check-row .box{width:22px;height:22px;border-radius:7px;border:2px solid var(--line-2);flex:0 0 auto;display:grid;place-items:center}
+.check-row.on .box{background:var(--brand-600);border-color:var(--brand-600)}
+.check-row .box svg{width:13px;height:13px;color:#fff;display:none}
+.check-row.on .box svg{display:block}
+.check-row .tx .a{font-weight:600;font-size:14px}
+.check-row .tx .b{font-size:11.5px;color:var(--ink-400);margin-top:1px}
+.save-panel{display:flex;align-items:center;gap:8px;background:#fdf6dc;border:1px solid #f0e3a8;border-radius:11px;padding:11px 13px;font-size:13px;font-weight:700;color:#8a6d10;margin:12px 0}
+.save-panel svg{width:16px;height:16px}
+.pill-range{font-size:10.5px;font-weight:700;color:rgba(255,255,255,.85);display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.10);padding:5px 9px;border-radius:8px}
+
+/* ===== SAMPLE MANAGEMENT FLOW ===== */
+.smp-seg{display:flex;gap:8px;overflow-x:auto;padding:2px;margin:0 -2px 4px}
+.smp-seg::-webkit-scrollbar{display:none}
+.smp-seg button{flex:0 0 auto;padding:9px 15px;border-radius:999px;font-size:13px;font-weight:700;color:var(--ink-500);background:#fff;box-shadow:inset 0 0 0 1.5px var(--line-2)}
+.smp-seg button.on{background:var(--brand-900);color:#fff;box-shadow:none}
+.sx{background:#fff;border-radius:14px;box-shadow:var(--sh-1);margin-bottom:12px;overflow:hidden}
+.sx .top{padding:13px 14px;display:flex;gap:11px;align-items:flex-start}
+.sx .ico{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;font-size:20px;flex:0 0 auto}
+.sx .nm{font-weight:700;font-size:14.5px}
+.sx .mt{font-size:12px;color:var(--ink-500);margin-top:3px}
+.sx .bar{padding:10px 14px;background:var(--bg-2);border-top:1px solid var(--line);display:flex;align-items:center;gap:9px;font-size:12px;font-weight:700;color:var(--ink-600,#4a5a52)}
+.ctn{display:flex;align-items:center;gap:12px;padding:13px 14px;background:#fff;border-radius:13px;box-shadow:var(--sh-1);margin-bottom:10px}
+.ctn .tube{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-size:17px;flex:0 0 auto}
+.ctn .nm{font-weight:700;font-size:14px}
+.ctn .bc{font-size:11px;font-weight:700;color:var(--brand-800);background:var(--brand-50);padding:3px 8px;border-radius:7px;display:inline-flex;align-items:center;gap:4px;margin-top:5px}
+.ctn .bc svg{width:11px;height:11px}
+.ctn .scan-state{margin-left:auto;width:26px;height:26px;border-radius:50%;border:2px solid var(--line-2);display:grid;place-items:center;flex:0 0 auto}
+.ctn.scanned .scan-state{background:var(--ok);border-color:var(--ok)}
+.ctn .scan-state svg{width:14px;height:14px;color:#fff;display:none}
+.ctn.scanned .scan-state svg{display:block}
+.scan-box{height:188px;border-radius:18px;border:2.5px dashed var(--brand-400);background:var(--brand-50);display:grid;place-items:center;position:relative;overflow:hidden;margin-bottom:8px}
+.scan-box svg{width:74px;height:74px;color:var(--brand-600);opacity:.5}
+.scan-line{position:absolute;left:10%;right:10%;height:3px;background:var(--brand-500);border-radius:3px;box-shadow:0 0 12px var(--brand-500);animation:scan 1.8s var(--ease) infinite}
+@keyframes scan{0%,100%{top:24%}50%{top:74%}}
+.scan-count{text-align:center;font-family:'Sora';font-size:15px;font-weight:700;margin:14px 0 4px}
+.scan-count b{color:var(--brand-700)}
+.step-head{display:flex;align-items:center;gap:8px;margin:4px 0 14px}
+.step-head .num{width:24px;height:24px;border-radius:50%;background:var(--brand-700);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:800}
+.step-head .tx{font-weight:700;font-size:14px}
+.step-head .tx span{display:block;font-size:11.5px;color:var(--ink-500);font-weight:600}
+
+/* ===================================================================
+   VETERINARY INTELLIGENCE MODULE (Reports)
+   =================================================================== */
+.vi-seg{display:flex;gap:7px;overflow-x:auto;padding:2px;margin:0 -2px 6px}
+.vi-seg::-webkit-scrollbar{display:none}
+.vi-seg button{flex:1;min-width:84px;height:38px;border-radius:11px;font-size:13px;font-weight:700;color:var(--ink-500);background:#fff;box-shadow:inset 0 0 0 1.5px var(--line-2)}
+.vi-seg button.on{background:var(--brand-900);color:#fff;box-shadow:none}
+.vi-h{font-family:'Sora';font-size:18px;font-weight:700;margin:18px 4px 12px;letter-spacing:-.3px}
+.vi-h .sm{display:block;font-family:'Inter';font-size:12px;font-weight:600;color:var(--ink-500);margin-top:2px}
+
+/* story cards */
+.story{background:#fff;border-radius:18px;box-shadow:var(--sh-1);padding:15px;margin-bottom:12px;position:relative;overflow:hidden;transition:transform .14s var(--ease)}
+.story:active{transform:scale(.99)}
+.story .em{font-size:24px}
+.story .hl{font-weight:600;font-size:14.5px;line-height:1.45;margin:9px 0 2px}
+.story .hl b{font-weight:800;color:var(--brand-700)}
+.story .lk{color:var(--brand-600);font-weight:800;font-size:12.5px;display:inline-flex;align-items:center;gap:4px;margin-top:11px}
+.story .lk svg{width:13px;height:13px}
+.story.tinted{background:linear-gradient(135deg,#fff,var(--brand-50))}
+
+/* mini viz */
+.mbars{display:flex;align-items:flex-end;gap:5px;height:42px;margin-top:10px}
+.mbars i{flex:1;background:linear-gradient(180deg,var(--brand-400),var(--brand-600));border-radius:4px 4px 2px 2px;display:block}
+.mtl{display:flex;align-items:center;gap:0;margin-top:11px;overflow:hidden}
+.mtl .d{width:9px;height:9px;border-radius:50%;background:var(--brand-500);flex:0 0 auto}
+.mtl .l{height:2px;flex:1;background:var(--line-2)}
+.mtl .t{font-size:9.5px;font-weight:700;color:var(--ink-400)}
+.spark{width:100%;height:36px;margin-top:8px;display:block}
+
+/* heatmap */
+.hm-row{display:grid;grid-template-columns:60px repeat(3,1fr);gap:5px;align-items:center;margin-bottom:5px}
+.hm-head{font-size:10px;font-weight:700;color:var(--ink-500);text-align:center}
+.hm-lbl{font-size:11px;font-weight:700;color:var(--ink-700)}
+.hm-cell{height:36px;border-radius:8px;display:grid;place-items:center;font-size:11px;font-weight:800;color:#fff;transition:transform .12s var(--ease)}
+.hm-cell:active{transform:scale(.93)}
+.hm-cell.empty{background:#eef2f0;color:var(--ink-300);font-weight:600}
+
+/* bubbles */
+.bubbles{position:relative;height:210px;margin:6px 0}
+.bub{position:absolute;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;text-align:center;line-height:1.05;box-shadow:var(--sh-2);transition:transform .14s var(--ease)}
+.bub:active{transform:scale(.93)}
+.bub small{display:block;font-weight:600;opacity:.85}
+
+/* journeys carousel */
+.carousel{display:flex;gap:12px;overflow-x:auto;padding:2px 2px 10px;margin:0 -2px;scroll-snap-type:x mandatory}
+.carousel::-webkit-scrollbar{display:none}
+.jcard{flex:0 0 268px;scroll-snap-align:start;background:#fff;border-radius:18px;box-shadow:var(--sh-1);padding:14px}
+.jcard .jh{display:flex;align-items:center;gap:11px}
+
+/* lab journey (horizontal nodes) */
+.labj{display:flex;align-items:flex-start;overflow-x:auto;padding:8px 0 4px}
+.labj::-webkit-scrollbar{display:none}
+.labj .jn{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;min-width:62px;text-align:center}
+.labj .jn .mo{font-size:10.5px;font-weight:700;color:var(--ink-400)}
+.labj .jn .dot{width:13px;height:13px;border-radius:50%;background:var(--brand-600);margin:6px 0;box-shadow:0 0 0 4px var(--brand-50)}
+.labj .jn .pill{background:var(--brand-50);color:var(--brand-800);font-size:11px;font-weight:700;padding:5px 8px;border-radius:8px}
+.labj .conn{flex:0 0 16px;height:2px;background:var(--line-2);margin-top:30px}
+
+/* coverage ring */
+.cov{display:flex;align-items:center;gap:15px;background:#fff;border-radius:16px;box-shadow:var(--sh-1);padding:14px;margin-bottom:11px;transition:transform .14s var(--ease)}
+.cov:active{transform:scale(.99)}
+.ring{width:74px;height:74px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto}
+.ring .inner{width:54px;height:54px;border-radius:50%;background:#fff;display:grid;place-items:center;font-family:'Sora';font-weight:700;font-size:17px;color:var(--brand-800)}
+.cov .cm{flex:1}
+.cov .cm .a{font-weight:700;font-size:15px}
+.cov .cm .b{font-size:12px;color:var(--ink-500);margin-top:3px}
+.cov .cm .lk{color:var(--brand-600);font-weight:700;font-size:12px;margin-top:7px;display:inline-flex;align-items:center;gap:4px}
+.cov .cm .lk svg{width:12px;height:12px}
+
+/* population grid */
+.popgrid{display:grid;grid-template-columns:repeat(9,1fr);gap:6px;margin-top:6px}
+.popcell{aspect-ratio:1;border-radius:6px;background:#e6ece8}
+.poplegend{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px;font-size:11.5px;font-weight:600;color:var(--ink-600,#4a5a52)}
+.poplegend i{width:11px;height:11px;border-radius:4px;display:inline-block;margin-right:5px;vertical-align:-1px}
+
+/* footprint / frequency reuse .hbar; matrix */
+.mx-row{display:grid;grid-template-columns:80px repeat(6,1fr);gap:4px;align-items:center;margin-bottom:4px}
+.mx-head{font-size:9.5px;color:var(--ink-400);text-align:center;font-weight:700}
+.mx-lbl{font-size:11px;font-weight:700;color:var(--ink-700)}
+.mx-cell{height:26px;border-radius:6px;background:#eef2f0;display:grid;place-items:center;font-size:10px;font-weight:800;color:#fff}
+
+/* treemap */
+.treemap{display:flex;flex-wrap:wrap;gap:5px}
+.tm{border-radius:11px;padding:11px;color:#fff;font-weight:700;font-size:12px;display:flex;flex-direction:column;justify-content:flex-end;min-height:58px}
+.tm small{font-weight:600;opacity:.85;font-size:10.5px}
+
+/* sunburst (approx: two conic rings) */
+.sunburst{width:150px;height:150px;border-radius:50%;position:relative;margin:0 auto;flex:0 0 auto}
+.sunburst .ring2{position:absolute;inset:24px;border-radius:50%}
+.sunburst .hole2{position:absolute;inset:48px;border-radius:50%;background:#fff;display:grid;place-items:center;text-align:center;font-size:10px;font-weight:700;color:var(--ink-500)}
+
+/* quick value comparison */
+.qvc{display:flex;gap:10px;margin-top:6px}
+.qvc .qv{flex:1;background:#fff;border-radius:13px;box-shadow:var(--sh-1);padding:13px;text-align:center}
+.qvc .qv .v{font-family:'Sora';font-size:22px;font-weight:700}
+.qvc .qv .k{font-size:11px;color:var(--ink-500);font-weight:600;margin-top:3px}
+.trend-down{color:var(--danger)}.trend-up2{color:var(--info)}
+
+/* what changed */
+.wc{display:flex;gap:11px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}
+.wc:last-child{border-bottom:none}
+.wc .wi{width:32px;height:32px;border-radius:10px;background:var(--brand-50);display:grid;place-items:center;flex:0 0 auto}
+.wc .wi svg{width:16px;height:16px;color:var(--brand-700)}
+.wc .wt{font-size:13px;font-weight:600;line-height:1.45}
+
+/* explore suggestions */
+.expl{display:flex;align-items:center;gap:12px;padding:13px 14px;background:#fff;border-radius:13px;box-shadow:var(--sh-1);margin-bottom:10px;transition:transform .12s var(--ease)}
+.expl:active{transform:scale(.99)}
+.expl .ei{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-size:18px;flex:0 0 auto}
+.expl .et{flex:1;font-weight:700;font-size:14px}
+.expl .es{font-size:11.5px;color:var(--ink-500);font-weight:600;margin-top:2px}
+
+/* compare split */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.split .sp{background:#fff;border-radius:14px;box-shadow:var(--sh-1);padding:14px;text-align:center}
+.split .sp .av{margin:0 auto 8px}
+.vs-badge{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--brand-900);color:#fff;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:12px;z-index:2;box-shadow:var(--sh-2)}
+
+/* species/site cards */
+.icard{background:#fff;border-radius:18px;box-shadow:var(--sh-1);overflow:hidden;margin-bottom:12px;transition:transform .14s var(--ease)}
+.icard:active{transform:scale(.99)}
+.icard .ih{display:flex;gap:12px;padding:14px}
+.icard .big{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-size:27px;flex:0 0 auto}
+.icard .stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
+.icard .stats div{padding:11px 6px;text-align:center;border-right:1px solid var(--line)}
+.icard .stats div:last-child{border-right:none}
+.icard .stats .v{font-family:'Sora';font-size:16px;font-weight:700}
+.icard .stats .k{font-size:10px;color:var(--ink-500);font-weight:600;margin-top:2px}
+
+/* hero summary */
+.vi-hero{background:linear-gradient(135deg,var(--brand-800),var(--brand-950));border-radius:20px;padding:16px;color:#fff;position:relative;overflow:hidden;margin-bottom:14px}
+.vi-hero:before{content:"";position:absolute;width:160px;height:160px;border-radius:50%;background:rgba(63,199,149,.16);top:-70px;right:-40px}
+.vi-hero .grid4{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;position:relative;z-index:2;margin-top:12px}
+.vi-hero .grid4 .v{font-family:'Sora';font-size:21px;font-weight:700}
+.vi-hero .grid4 .k{font-size:10.5px;color:var(--brand-400);font-weight:700;margin-top:2px}
+</style>
+</head>
+<body>
+
+<!-- ===== ICON SPRITE ===== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-requests" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h6a2 2 0 0 1 2 2v0h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h1M9 4a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M8 12h8M8 16h5"/></symbol>
+  <symbol id="i-samples" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h8M9 2v8.5L5.5 17a3 3 0 0 0 2.6 4.5h7.8A3 3 0 0 0 18.5 17L15 10.5V2M7.5 13h9"/></symbol>
+  <symbol id="i-storage" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zM4 9h16M4 15h16M12 3v18"/></symbol>
+  <symbol id="i-tests" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6.2L4.8 18A2.5 2.5 0 0 0 7 21.7h10A2.5 2.5 0 0 0 19.2 18L14 9.2V3M8 14h8"/><circle cx="14.5" cy="16" r="1"/><circle cx="10" cy="17.5" r="1"/></symbol>
+  <symbol id="i-reports" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v16a2 2 0 0 0 2 2h14M9 16l3-4 3 3 4-6"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18M6 12h12M10 19h4"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></symbol>
+  <symbol id="i-loc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-qr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5a1 1 0 0 1 1-1h2M17 4h2a1 1 0 0 1 1 1v2M20 17v2a1 1 0 0 1-1 1h-2M7 20H5a1 1 0 0 1-1-1v-2M3 12h18"/></symbol>
+  <symbol id="i-snow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M4.2 7l15.6 10M19.8 7 4.2 17M12 5l2.5 2M12 5 9.5 7M12 19l2.5-2M12 19l-2.5-2M4.2 7l.3 3M4.2 7l2.8-1M19.8 17l-.3-3M19.8 17l-2.8 1"/></symbol>
+  <symbol id="i-flask" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6.2L4.8 18A2.5 2.5 0 0 0 7 21.7h10A2.5 2.5 0 0 0 19.2 18L14 9.2V3"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19a2 2 0 0 0 2 2h13"/></symbol>
+  <symbol id="i-archive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v3H3zM5 10v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-9M9 14h6"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+  <symbol id="i-vial" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10M8 3v15a4 4 0 0 0 8 0V3M8 11h8"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-temp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.8V5a2 2 0 0 0-4 0v9.8a4 4 0 1 0 4 0Z"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v13a0 0 0 0 1 0 0H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M14 3v5h5"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7l1 13a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-13"/></symbol>
+</svg>
+
+<div class="phone">
+  <div class="notch"></div>
+  <div class="statusbar" id="statusbar">
+    <span>9:41</span>
+    <span class="sb-right">
+      <svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="4.5" y="4" width="3" height="8" rx="1"/><rect x="9" y="2" width="3" height="10" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity=".4"/></svg>
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><path d="M8 2.5C10 2.5 11.7 3.3 13 4.5l1.3-1.4C12.7 1.5 10.5.6 8 .6S3.3 1.5 1.7 3.1L3 4.5C4.3 3.3 6 2.5 8 2.5Z"/><path d="M8 6c1 0 1.9.4 2.6 1l1.3-1.4C10.8 4.6 9.5 4 8 4s-2.8.6-3.9 1.6L5.4 7C6.1 6.4 7 6 8 6Z"/><circle cx="8" cy="9.6" r="1.6"/></svg>
+      <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".7" y=".7" width="21" height="10.6" rx="2.6" stroke="currentColor" stroke-opacity=".5"/><rect x="2.3" y="2.3" width="16" height="7.4" rx="1.4" fill="currentColor"/><rect x="23" y="4" width="1.6" height="4" rx=".8" fill="currentColor" fill-opacity=".5"/></svg>
+    </span>
+  </div>
+
+  <!-- APP BAR -->
+  <header class="appbar" id="appbar">
+    <div class="row" id="appbar-row"></div>
+    <div id="appbar-extra"></div>
+  </header>
+
+  <!-- VIEWPORT -->
+  <div class="viewport" id="viewport">
+
+    <!-- ================= REQUESTS ================= -->
+    <section class="screen" data-screen="req-home">
+      <div class="ent-toggle">
+        <button onclick="entToggle(this,'animal')">Animal</button>
+        <button class="on" onclick="entToggle(this,'nonanimal')">Non Animal</button>
+      </div>
+
+      <!-- ===== NON ANIMAL ===== -->
+      <div id="req-nonanimal">
+        <div class="ov-card" style="flex-direction:column;padding:13px 6px 15px;margin-top:13px">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:0 10px 12px">
+            <span style="font-size:12px;font-weight:700;color:rgba(255,255,255,.85)">Requests</span>
+            <span class="pill-range" onclick="openSheet('sheet-range2')">Last 7 Days <svg style="width:11px;height:11px"><use href="#i-chev"/></svg></span>
+          </div>
+          <div style="display:flex">
+            <div class="ov"><div class="n">78</div><div class="k">Total</div></div>
+            <div class="ov"><div class="n amber">25</div><div class="k">Pending</div></div>
+            <div class="ov"><div class="n red">0</div><div class="k">Rejected</div></div>
+            <div class="ov"><div class="n green">53</div><div class="k">Completed</div></div>
+          </div>
+        </div>
+
+        <div class="hp-band" onclick="toast('Filtering 12 high-priority requests')"><svg><use href="#i-info"/></svg>High Priority Requests<span class="ct">12</span></div>
+
+        <div class="subtabs"><button class="on" onclick="pick(this)">My Lab Requests</button><button onclick="pick(this)">All Lab Requests</button></div>
+        <div class="utabs"><button class="on" onclick="swap(this,'na-pending')">Pending</button><button onclick="swap(this,'na-completed')">Completed</button></div>
+        <div class="list-meta">
+          <span class="lf">All Requests · 12 <svg style="width:14px;height:14px;color:var(--ink-400)"><use href="#i-chev"/></svg></span>
+          <span class="rt"><span onclick="toast('Status legends')">Legends</span><svg onclick="toast('Search requests')"><use href="#i-search"/></svg></span>
+        </div>
+
+        <div id="na-pending">
+          <div class="rq" onclick="openReqDetail('nonanimal')">
+            <div class="top"><div class="cat-ic" style="background:var(--teal-bg)">🌿</div>
+              <div class="body"><div class="cat">Environmental</div><div class="lab">Gagna Lab</div><div class="ent">Aquatic Life ENC-24D<br>Sec: 52.4 · North Section · Site: Gagna</div></div>
+              <span class="na">Non Animal</span></div>
+            <div class="strip"><span class="tests">Tests 12</span><span class="cnts"><span class="cnt r">4</span><span class="cnt a">5</span><span class="cnt g">3</span></span></div>
+          </div>
+          <div class="rq" onclick="openReqDetail('nonanimal')">
+            <div class="top"><div class="cat-ic" style="background:var(--ok-bg)">🥦</div>
+              <div class="body"><div class="cat">Feed / Nutrition</div><div class="lab">Gagna Lab</div><div class="ent">Papaya · Site: Gagna<br>Location: Outside the gate leopard section</div></div>
+              <span class="na">Non Animal</span></div>
+            <div class="strip"><span class="tests">Tests 8</span><span class="cnts"><span class="cnt r">2</span><span class="cnt a">4</span><span class="cnt g">2</span></span></div>
+          </div>
+          <div class="rq" onclick="openReqDetail('nonanimal')">
+            <div class="top"><div class="cat-ic" style="background:var(--warn-bg)">🧫</div>
+              <div class="body"><div class="cat">Feed / Nutrition</div><div class="lab">Central Kitchen</div><div class="ent">Mango · Site: Gagna<br>Location: Outside the gate leopard section</div></div>
+              <span class="na">Non Animal</span></div>
+            <div class="strip"><span class="tests">Tests 6</span><span class="cnts"><span class="cnt a">3</span><span class="cnt g">3</span></span></div>
+          </div>
+          <div class="pull">3 pending requests</div>
+        </div>
+
+        <div id="na-completed" style="display:none">
+          <div class="rq" onclick="openReqDetail('nonanimal')">
+            <div class="top"><div class="cat-ic" style="background:var(--ok-bg)">🌾</div>
+              <div class="body"><div class="cat">Feed / Nutrition</div><div class="lab">Gagna Lab</div><div class="ent">Lucerne Hay · Site: Gagna</div></div>
+              <span class="na">Non Animal</span></div>
+            <div class="strip"><span class="tests">Tests 5</span><span class="cnts"><span class="cnt g">5</span></span></div>
+          </div>
+          <div class="rq" onclick="openReqDetail('nonanimal')">
+            <div class="top"><div class="cat-ic" style="background:var(--teal-bg)">💧</div>
+              <div class="body"><div class="cat">Environmental</div><div class="lab">Central Lab · R&R</div><div class="ent">Pond Water · Site: Gagna</div></div>
+              <span class="na">Non Animal</span></div>
+            <div class="strip"><span class="tests">Tests 4</span><span class="cnts"><span class="cnt g">4</span></span></div>
+          </div>
+          <div class="pull">2 completed requests</div>
+        </div>
+      </div>
+
+      <!-- ===== ANIMAL ===== -->
+      <div id="req-animal" style="display:none">
+        <div class="ov-card" style="flex-direction:column;padding:13px 6px 15px;margin-top:13px">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:0 10px 12px">
+            <span style="font-size:12px;font-weight:700;color:rgba(255,255,255,.85)">Requests</span>
+            <span class="pill-range" onclick="openSheet('sheet-range2')">Last 7 Days <svg style="width:11px;height:11px"><use href="#i-chev"/></svg></span>
+          </div>
+          <div style="display:flex">
+            <div class="ov"><div class="n">142</div><div class="k">Total</div></div>
+            <div class="ov"><div class="n amber">30</div><div class="k">Pending</div></div>
+            <div class="ov"><div class="n red">2</div><div class="k">Rejected</div></div>
+            <div class="ov"><div class="n green">110</div><div class="k">Completed</div></div>
+          </div>
+        </div>
+
+        <div class="hp-band" onclick="toast('Filtering 8 high-priority requests')"><svg><use href="#i-info"/></svg>High Priority Requests<span class="ct">8</span></div>
+
+        <div class="subtabs"><button class="on" onclick="pick(this)">My Lab Requests</button><button onclick="pick(this)">All Lab Requests</button></div>
+        <div class="utabs"><button class="on" onclick="swap(this,'an-pending')">Pending</button><button onclick="swap(this,'an-completed')">Completed</button></div>
+        <div class="list-meta">
+          <span class="lf">All Requests · 30 <svg style="width:14px;height:14px;color:var(--ink-400)"><use href="#i-chev"/></svg></span>
+          <span class="rt"><span onclick="toast('Status legends')">Legends</span><svg onclick="toast('Search requests')"><use href="#i-search"/></svg></span>
+        </div>
+
+        <div id="an-pending">
+          <div class="rq" onclick="openReqDetail('animal')">
+            <div class="top"><div class="cat-ic" style="background:var(--av-g1,#ffe6b8)">🦁</div>
+              <div class="body"><div class="cat">Health Check</div><div class="lab">Leo · LION-04</div><div class="ent">African Lion · ♂ · Savannah Site</div></div>
+              <span class="na" style="color:var(--info);background:var(--info-bg)">Animal</span></div>
+            <div class="strip"><span class="tests">Tests 4</span><span class="cnts"><span class="cnt a">3</span><span class="cnt g">1</span></span></div>
+          </div>
+          <div class="rq" onclick="openReqDetail('animal')">
+            <div class="top"><div class="cat-ic" style="background:#cfe9d6">🐘</div>
+              <div class="body"><div class="cat">Endocrine</div><div class="lab">Mara · ELE-11</div><div class="ent">African Elephant · ♀ · Savannah Site</div></div>
+              <span class="na" style="color:var(--info);background:var(--info-bg)">Animal</span></div>
+            <div class="strip"><span class="tests">Tests 3</span><span class="cnts"><span class="cnt a">2</span><span class="cnt g">1</span></span></div>
+          </div>
+          <div class="rq" onclick="openReqDetail('pool')">
+            <div class="top"><div class="cat-ic" style="background:#d6e4ff">🐠</div>
+              <div class="body"><div class="cat">Pool · Water-borne screen</div><div class="lab">Aquarium Cohort · POOL-07</div><div class="ent">9 animals · multi-entity (Pool)</div></div>
+              <span class="na" style="color:var(--violet);background:var(--violet-bg)">Pool</span></div>
+            <div class="strip"><span class="tests">Tests 2</span><span class="cnts"><span class="cnt a">2</span></span></div>
+          </div>
+          <div class="pull">3 of 30 pending requests</div>
+        </div>
+
+        <div id="an-completed" style="display:none">
+          <div class="rq" onclick="openReqDetail('animal')">
+            <div class="top"><div class="cat-ic" style="background:#ffd9e0">🦩</div>
+              <div class="body"><div class="cat">Necropsy</div><div class="lab">Flamingo · AVE-50</div><div class="ent">Greater Flamingo · Savannah Site</div></div>
+              <span class="na" style="color:var(--info);background:var(--info-bg)">Animal</span></div>
+            <div class="strip"><span class="tests">Tests 2</span><span class="cnts"><span class="cnt g">2</span></span></div>
+          </div>
+          <div class="pull">110 completed requests</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REQUEST DETAIL (Non Animal) -->
+    <section class="screen" data-screen="req-detail" style="padding-top:0">
+      <!-- NAVY header (Non Animal / Pool — multi-entity) -->
+      <div class="rd-head" id="rd-navy">
+        <div class="rd-id">
+          <span class="warn"><svg><use href="#i-info"/></svg></span>
+          LT11-00023
+          <span class="rd-na" id="rd-na">Non Animal</span>
+        </div>
+        <div class="rd-sub">Feed / Nutrition</div>
+        <div class="rd-ent">Papaya</div>
+        <div class="rd-line"><svg><use href="#i-loc"/></svg>Site: Gagna</div>
+        <div class="rd-line"><svg><use href="#i-loc"/></svg>Location: Outside the gate leopard section</div>
+      </div>
+
+      <!-- WHITE overview (Animal — single entity) -->
+      <div id="rd-white" style="display:none">
+        <div class="card" style="padding:16px;margin-top:14px">
+          <div class="li" style="padding:0">
+            <div class="avatar av-g1" style="width:52px;height:52px;font-size:27px">🦁<span class="sex m">♂</span></div>
+            <div class="meta"><div class="t1" style="font-size:16px">Leo · LION-04</div><div class="t2">African Lion · ♂ · 6y · Savannah Site</div></div>
+            <span class="chip info">Animal</span>
+          </div>
+          <div class="divider" style="margin:14px 0"></div>
+          <div class="row-between" style="font-size:13px"><span class="muted">Request</span><b>LR-2041 · Health Check</b></div>
+          <div class="row-between" style="font-size:13px;margin-top:8px"><span class="muted">Status</span><span class="chip warn">In Progress</span></div>
+          <div class="row-between" style="font-size:13px;margin-top:8px"><span class="muted">Created</span><span>14 May 2026 · 09:24</span></div>
+        </div>
+      </div>
+
+      <!-- cancellation banners (hidden until action) -->
+      <div id="banner-test" class="res-banner ok" style="display:none;margin-top:14px"><svg><use href="#i-check"/></svg>1 Test Has Been Cancelled</div>
+      <div id="banner-req" style="display:none;margin-top:14px">
+        <div class="res-banner bad"><svg><use href="#i-close"/></svg>Request Cancelled</div>
+        <div class="res-reason">Others lab request determined the cause — this test is no more needed to diagnose the condition of the animal.<br><span style="opacity:.7">Dr Pranav Shetty · 09 May 2026 · 12:08 PM</span></div>
+      </div>
+
+      <div class="rd-tabs" id="rd-tabs">
+        <button class="on" onclick="rdTab(this,'tests')">Tests</button>
+        <button onclick="rdTab(this,'samples')">Samples <svg style="width:12px;height:12px"><use href="#i-chev"/></svg></button>
+        <button onclick="rdTab(this,'reports')">Lab Reports</button>
+        <button onclick="rdTab(this,'notes')">Notes</button>
+      </div>
+
+      <div class="rd-counters">
+        <div class="c"><div class="v" id="cnt-tests">0/4</div><div class="l">Test Completed</div></div>
+        <div class="c"><div class="v">0/4</div><div class="l">Samples Received</div></div>
+      </div>
+
+      <!-- TESTS TAB -->
+      <div data-rdtab="tests">
+        <div class="ent-group"><span class="pic">🥭</span>Papaya</div>
+        <div class="trow" id="trow-protein"><div><div class="st pend">Pending</div><div class="nm">Protein Analysis</div></div><div class="rt"><span class="dept">2 depts</span><svg style="width:18px;height:18px"><use href="#i-chev"/></svg></div></div>
+        <div class="trow" id="trow-fiber">
+          <div><div class="st pend">Pending</div><div class="nm">Fiber Analysis</div></div>
+          <button class="cancel-act" onclick="event.stopPropagation();openSheet('sheet-cancel-test')">Cancel Test</button>
+        </div>
+        <div class="trow"><div><div class="st prog">In Progress</div><div class="nm">pH</div></div><div class="rt"><span class="dept">Central · R&R</span><svg style="width:18px;height:18px"><use href="#i-chev"/></svg></div></div>
+        <div class="trow"><div><div class="st pend">Pending</div><div class="nm">Platelet Count</div></div><div class="rt"><svg style="width:18px;height:18px"><use href="#i-chev"/></svg></div></div>
+      </div>
+
+      <!-- SAMPLES TAB -->
+      <div data-rdtab="samples" style="display:none">
+        <div class="ent-group"><span class="pic">🥭</span>Papaya</div>
+
+        <div class="scard tap" onclick="openSheet('sheet-containers')">
+          <div class="sh">
+            <div style="flex:1"><div class="nm">Sample Name A</div><div class="mt"><span>0/1 Completed</span><span class="cm"><svg><use href="#i-info"/></svg>3 comments</span></div></div>
+            <span class="chip ok">Received</span>
+          </div>
+          <div style="padding:0 14px 13px"><span class="dept-tag">Departments: 1</span></div>
+        </div>
+
+        <div class="scard tap" onclick="openSheet('sheet-containers')">
+          <div class="sh">
+            <div style="flex:1"><div class="nm">Sample Name B</div><div class="mt"><span>0/1 Completed</span><span class="cm"><svg><use href="#i-info"/></svg>1 comment</span></div></div>
+            <span class="chip info">In Progress</span>
+          </div>
+          <div style="padding:0 14px 13px"><span class="dept-tag">Departments: 2</span></div>
+        </div>
+
+        <div class="scard">
+          <div class="sh">
+            <div style="flex:1"><div class="nm">Sample Name C</div><div class="mt"><span>0/1 Completed</span><span>Lavender Top Tube · 10 ml</span></div></div>
+            <span class="chip danger">Reject</span>
+          </div>
+          <div class="note"><b>Insufficient Sample</b>Send another sample. This sample is not sufficient. <span style="opacity:.75">Revised 12 Jun 2026 · 11:24 PM</span></div>
+        </div>
+
+        <div class="scard tap" onclick="openSheet('sheet-containers')">
+          <div class="sh">
+            <div style="flex:1"><div class="nm">Sample Name D</div><div class="mt"><span>2/3 Completed</span></div></div>
+            <span class="chip violet">Reported</span>
+          </div>
+          <div style="padding:0 14px 13px"><span class="dept-tag">Departments: 1</span></div>
+        </div>
+
+        <div class="scard">
+          <div class="sh">
+            <div style="flex:1"><div class="nm">Sample Name E</div><div class="mt"><span>0/3 Completed</span></div></div>
+            <span class="chip neutral">Not needed</span>
+          </div>
+          <div class="note grey"><b>Not needed</b>Not enough sample volume. <span style="opacity:.75">Revised 12 Jun 2026</span></div>
+        </div>
+
+        <div class="sticky-cta"><button class="btn" style="background:var(--teal-btn);color:#fff" onclick="navTo('smp-home',document.querySelector('[data-tab=samples]'));go('smp-collect')">Manage Sample</button></div>
+      </div>
+
+      <!-- LAB REPORTS TAB -->
+      <div data-rdtab="reports" style="display:none">
+        <div class="card" style="margin-top:14px"><div class="li">
+          <div class="avatar sm av-g3"><svg style="width:18px;color:var(--info)"><use href="#i-doc"/></svg></div>
+          <div class="meta"><div class="t1">Interim Report · Papaya</div><div class="t2">Issued 12 Jun 2026 · Gagna Lab</div></div>
+          <svg style="width:18px;height:18px;color:var(--ink-300)"><use href="#i-chev"/></svg>
+        </div></div>
+        <div class="empty" style="padding:36px 30px 6px">
+          <div class="em-ic"><svg><use href="#i-doc"/></svg></div>
+          <h3>Final report pending</h3>
+          <p>Final lab report appears here once all tests are approved by the lab.</p>
+        </div>
+      </div>
+
+      <!-- NOTES TAB -->
+      <div data-rdtab="notes" style="display:none">
+        <div class="card" style="padding:14px;margin-top:14px">
+          <div style="font-size:13px"><b>Dr. Swathi</b> <span class="muted">· you · 09 May</span><div style="margin-top:4px">Sample drawn during routine feed-quality screen.</div></div>
+          <div class="divider" style="margin:12px 0"></div>
+          <div style="font-size:13px"><b>Lab · Gagna</b> <span class="muted">· 12 May</span><div style="margin-top:4px">Sample C insufficient — please resubmit a fresh aliquot.</div></div>
+        </div>
+        <div class="sticky-cta"><button class="btn btn-ghost" onclick="toast('Add a comment')">＋ Add comment</button></div>
+      </div>
+    </section>
+
+    <!-- CREATE LAB REQUEST (Non Animal) -->
+    <section class="screen" data-screen="req-create">
+      <div class="cre-label" style="margin-top:0">Request From</div>
+      <div class="cre-seg">
+        <button class="on" onclick="creSeg(this)"><span class="rdo"></span>From Site</button>
+        <button onclick="creSeg(this)"><span class="rdo"></span>From List</button>
+      </div>
+
+      <div class="cre-label">Select Site</div>
+      <div class="cre-select" onclick="toast('Choose site')">R&amp;R <svg><use href="#i-chev"/></svg></div>
+
+      <div class="row-between" style="margin-top:18px">
+        <span style="font-size:14px;font-weight:600">Add Location</span>
+        <span style="width:46px;height:27px;border-radius:999px;background:var(--brand-600);position:relative;display:inline-block;flex:0 0 auto" onclick="var i=this.querySelector('i');var on=i.style.left==='22px';i.style.left=on?'3px':'22px';this.style.background=on?'var(--line-2)':'var(--brand-600)'"><i style="position:absolute;top:3px;left:22px;width:21px;height:21px;border-radius:50%;background:#fff;transition:.16s var(--ease);box-shadow:var(--sh-1)"></i></span>
+      </div>
+
+      <div class="lab-card">
+        <div class="cat-ic" style="background:#fff;font-size:16px">🐟</div>
+        <div class="li2"><div class="a">Aquatic Life ENC-24D</div><div class="b">Sec: 52.4 · North Section · Site: Gagna</div></div>
+        <button class="rm" onclick="toast('Remove lab center')"><svg><use href="#i-close"/></svg></button>
+      </div>
+
+      <div class="cre-label">Test For</div>
+      <div class="cre-seg">
+        <button class="on" onclick="creSeg(this)"><span class="rdo"></span>Individual Sample</button>
+        <button onclick="creSeg(this)"><span class="rdo"></span>Pool Sample</button>
+      </div>
+
+      <div class="cre-label">Sample Category</div>
+      <div class="cre-select" onclick="toast('Choose category')">Feed / Nutrition <svg><use href="#i-chev"/></svg></div>
+
+      <div class="cre-label">Sample Type</div>
+      <div class="card" style="padding:2px 14px">
+        <div class="stepper-row"><span class="nm">🥭 Papaya</span><div class="stepper"><button>−</button><span class="qty">1</span><button>＋</button></div></div>
+        <div class="stepper-row"><span class="nm">🥭 Mango</span><div class="stepper"><button>−</button><span class="qty">2</span><button>＋</button></div></div>
+        <div class="stepper-row"><span class="nm">🍌 Banana</span><div class="stepper"><button>−</button><span class="qty">1</span><button>＋</button></div></div>
+        <div class="stepper-row" style="border-bottom:none"><span class="nm">🍉 Watermelon</span><div class="stepper"><button>−</button><span class="qty">1</span><button>＋</button></div></div>
+      </div>
+      <button class="add-line" onclick="toast('Add sample type')"><svg style="width:16px;height:16px"><use href="#i-plus"/></svg>Add Sample Type</button>
+
+      <div class="hint-note">ℹ This will be created as a “Batch Request” — one request per sample type.</div>
+
+      <div id="sel-tests" style="display:none">
+        <div class="cre-label">Tests</div>
+        <div>
+          <span class="test-pill">Protein Analysis</span><span class="test-pill">Fiber Analysis</span><span class="test-pill">Vitamin Analysis</span><span class="test-pill">pH</span><span class="test-pill">+3</span>
+        </div>
+      </div>
+
+      <button class="add-tests" onclick="openSheet('sheet-tests')"><svg style="width:18px;height:18px"><use href="#i-plus"/></svg>Add Tests</button>
+
+      <div class="submit-bar"><button class="btn btn-submit" onclick="navTo('req-home',document.querySelector('[data-tab=requests]'));toast('Lab request submitted')">SUBMIT</button></div>
+    </section>
+
+    <!-- ================= SAMPLES ================= -->
+    <section class="screen" data-screen="smp-home">
+      <div class="stat-grid" style="margin-bottom:12px">
+        <div class="stat"><div class="ic" style="background:var(--warn-bg)"><svg style="color:var(--warn)"><use href="#i-vial"/></svg></div><div class="v count-up" data-to="6">0</div><div class="l">To collect</div></div>
+        <div class="stat"><div class="ic" style="background:var(--info-bg)"><svg style="color:var(--info)"><use href="#i-samples"/></svg></div><div class="v count-up" data-to="28">0</div><div class="l">In progress</div></div>
+      </div>
+
+      <div class="smp-seg">
+        <button class="on" onclick="smpSeg(this,'collect')">To Collect</button>
+        <button onclick="smpSeg(this,'ready')">Ready to Deliver</button>
+        <button onclick="smpSeg(this,'shipped')">Shipped</button>
+        <button onclick="smpSeg(this,'delivered')">Delivered</button>
+      </div>
+
+      <!-- TO COLLECT -->
+      <div data-smp="collect">
+        <div class="sx" onclick="startCollect()">
+          <div class="top"><div class="ico" style="background:var(--ok-bg)">🥭</div>
+            <div style="flex:1"><div class="nm">LT11-00023 · Papaya</div><div class="mt">Feed / Nutrition · Gagna Lab</div></div>
+            <span class="chip neutral">To Collect</span></div>
+          <div class="bar"><svg style="width:14px;height:14px;color:var(--warn)"><use href="#i-vial"/></svg>4 samples · 12 containers to collect<svg style="width:16px;height:16px;margin-left:auto;color:var(--ink-300)"><use href="#i-chev"/></svg></div>
+        </div>
+        <div class="sx" onclick="startCollect()">
+          <div class="top"><div class="ico" style="background:var(--av-g1,#ffe6b8)">🦁</div>
+            <div style="flex:1"><div class="nm">LR-2041 · Leo</div><div class="mt">Health Check · LION-04</div></div>
+            <span class="chip neutral">To Collect</span></div>
+          <div class="bar"><svg style="width:14px;height:14px;color:var(--warn)"><use href="#i-vial"/></svg>3 samples · 5 containers to collect<svg style="width:16px;height:16px;margin-left:auto;color:var(--ink-300)"><use href="#i-chev"/></svg></div>
+        </div>
+        <div class="pull">2 requests awaiting collection</div>
+      </div>
+
+      <!-- READY TO DELIVER -->
+      <div data-smp="ready" style="display:none">
+        <div class="sx" onclick="go('smp-ready')">
+          <div class="top"><div class="ico" style="background:#cfe9d6">🐘</div>
+            <div style="flex:1"><div class="nm">LR-2038 · Mara</div><div class="mt">Endocrine · ELE-11</div></div>
+            <span class="chip ok">Ready</span></div>
+          <div class="bar"><svg style="width:14px;height:14px;color:var(--ok)"><use href="#i-check"/></svg>2 samples scanned · ready to deliver<svg style="width:16px;height:16px;margin-left:auto;color:var(--ink-300)"><use href="#i-chev"/></svg></div>
+        </div>
+        <div class="pull">1 request ready to deliver</div>
+      </div>
+
+      <!-- SHIPPED -->
+      <div data-smp="shipped" style="display:none">
+        <div class="sx" onclick="toast('In transit — awaiting lab reception scan')">
+          <div class="top"><div class="ico" style="background:var(--info-bg)">🚚</div>
+            <div style="flex:1"><div class="nm">LR-2030 · Flamingo</div><div class="mt">Necropsy · AVE-50</div></div>
+            <span class="chip info">In Transit</span></div>
+          <div class="bar"><svg style="width:14px;height:14px;color:var(--info)"><use href="#i-loc"/></svg>Courier #C-204 · ETA today 15:40</div>
+        </div>
+        <div class="pull">1 shipment in transit</div>
+      </div>
+
+      <!-- DELIVERED -->
+      <div data-smp="delivered" style="display:none">
+        <div class="sx">
+          <div class="top"><div class="ico" style="background:var(--ok-bg)">📦</div>
+            <div style="flex:1"><div class="nm">LR-2025 · Tula</div><div class="mt">Routine · REP-07</div></div>
+            <span class="chip ok">Delivered</span></div>
+          <div class="bar"><svg style="width:14px;height:14px;color:var(--ok)"><use href="#i-check"/></svg>Received at Central · 09 May 15:40</div>
+        </div>
+        <div class="scard" style="border:1px solid #f4caca">
+          <div class="sh"><div style="flex:1"><div class="nm">LR-2019 · Rio</div><div class="mt">1 sample rejected at reception</div></div><span class="chip danger">Rejected</span></div>
+          <div class="note"><b>Resubmit required</b>Haemolysed sample — please recollect and resend.</div>
+          <div style="padding:0 14px 14px"><button class="btn btn-sm" style="width:100%;height:42px;background:var(--teal-btn);color:#fff" onclick="openSheet('sheet-resubmit')">Re-Submit Sample</button></div>
+        </div>
+        <div class="pull">Delivered &amp; closed shipments</div>
+      </div>
+    </section>
+
+    <!-- SAMPLE: COLLECT / CONFIRM CONTAINERS -->
+    <section class="screen" data-screen="smp-collect">
+      <div class="step-head"><span class="num">1</span><span class="tx">Confirm Containers<span>Apply a barcode to each container, then scan</span></span></div>
+
+      <div class="ent-group" style="margin-top:4px"><span class="pic">🥭</span>Sample A · Plain Red Top Tube</div>
+      <div class="ctn"><div class="tube" style="background:#fce5e5">🩸</div><div><div class="nm">Container 1 · 5 ml</div><span class="bc"><svg><use href="#i-qr"/></svg>BC15678824</span></div><div class="scan-state"><svg><use href="#i-check"/></svg></div></div>
+      <div class="ctn"><div class="tube" style="background:#fce5e5">🩸</div><div><div class="nm">Container 2 · 5 ml</div><span class="bc"><svg><use href="#i-qr"/></svg>BC15678825</span></div><div class="scan-state"><svg><use href="#i-check"/></svg></div></div>
+
+      <div class="ent-group"><span class="pic">🥭</span>Sample B · Yellow Top Serum Tube</div>
+      <div class="ctn"><div class="tube" style="background:var(--warn-bg)">💧</div><div><div class="nm">Container 3 · 4 ml</div><span class="bc"><svg><use href="#i-qr"/></svg>BC15678827</span></div><div class="scan-state"><svg><use href="#i-check"/></svg></div></div>
+
+      <button class="add-line" onclick="toast('Re-print / re-assign barcode')" style="margin-top:14px"><svg style="width:16px;height:16px"><use href="#i-qr"/></svg>Re-assign a barcode</button>
+
+      <div class="submit-bar"><button class="btn btn-primary" onclick="go('smp-scan')"><svg><use href="#i-qr"/></svg>Scan Containers</button></div>
+    </section>
+
+    <!-- SAMPLE: SCAN -->
+    <section class="screen" data-screen="smp-scan">
+      <div class="step-head"><span class="num">2</span><span class="tx">Scan Sample Containers<span>Point the camera at each barcode</span></span></div>
+      <div class="scan-box"><svg><use href="#i-qr"/></svg><div class="scan-line"></div></div>
+      <div class="scan-count">Scanned <b><span id="scanN">0</span></b> / 3 containers</div>
+      <div class="prog" style="margin:0 2px 16px"><i id="scanBar" style="width:0%"></i></div>
+
+      <div class="ctn" id="sc1"><div class="tube" style="background:#fce5e5">🩸</div><div><div class="nm">Container 1 · BC15678824</div></div><div class="scan-state"><svg><use href="#i-check"/></svg></div></div>
+      <div class="ctn" id="sc2"><div class="tube" style="background:#fce5e5">🩸</div><div><div class="nm">Container 2 · BC15678825</div></div><div class="scan-state"><svg><use href="#i-check"/></svg></div></div>
+      <div class="ctn" id="sc3"><div class="tube" style="background:var(--warn-bg)">💧</div><div><div class="nm">Container 3 · BC15678827</div></div><div class="scan-state"><svg><use href="#i-check"/></svg></div></div>
+
+      <button class="add-line" id="scanSim" onclick="simScan()" style="margin-top:14px"><svg style="width:16px;height:16px"><use href="#i-qr"/></svg>Tap to simulate a scan</button>
+
+      <div class="submit-bar"><button class="btn btn-primary" id="scanCta" style="opacity:.5;pointer-events:none" onclick="go('smp-ready')"><svg><use href="#i-check"/></svg>Confirm — Ready to Deliver</button></div>
+    </section>
+
+    <!-- SAMPLE: READY TO DELIVER -->
+    <section class="screen" data-screen="smp-ready">
+      <div class="res-banner ok"><svg><use href="#i-check"/></svg>All containers scanned · ready to deliver</div>
+      <div class="step-head"><span class="num">3</span><span class="tx">Ready to Deliver<span>Choose how the lab will receive these samples</span></span></div>
+
+      <div class="sx"><div class="top"><div class="ico" style="background:var(--ok-bg)">🥭</div>
+        <div style="flex:1"><div class="nm">LT11-00023 · Papaya</div><div class="mt">3 containers · barcoded &amp; scanned</div></div>
+        <span class="chip ok">Scanned</span></div>
+      </div>
+      <div class="card" style="padding:14px;margin-bottom:12px">
+        <div class="row-between" style="font-size:13px"><span class="muted">Destination</span><b>Central Lab · R&R</b></div>
+        <div class="row-between" style="font-size:13px;margin-top:8px"><span class="muted">From</span><b>Savannah Site</b></div>
+      </div>
+
+      <div class="submit-bar"><button class="btn btn-primary" onclick="openSheet('sheet-delivery')"><svg><use href="#i-loc"/></svg>Confirm Delivery</button></div>
+    </section>
+
+    <!-- ================= STORAGE (detailed) ================= -->
+    <section class="screen" data-screen="sto-home">
+      <div class="stat-grid">
+        <div class="stat fade-up"><div class="ic" style="background:var(--teal-bg)"><svg style="color:var(--teal)"><use href="#i-snow"/></svg></div><div class="v count-up" data-to="34">0</div><div class="l">Stored samples</div></div>
+        <div class="stat fade-up"><div class="ic" style="background:var(--warn-bg)"><svg style="color:var(--warn)"><use href="#i-clock"/></svg></div><div class="v count-up" data-to="3">0</div><div class="l">Disposal due soon</div></div>
+      </div>
+      <div class="card" style="margin-top:11px;padding:13px 14px" onclick="go('sto-requests')">
+        <div class="li" style="padding:0">
+          <div class="avatar sm av-g5"><svg style="width:18px;color:var(--violet)"><use href="#i-archive"/></svg></div>
+          <div class="meta"><div class="t1">My storage requests</div><div class="t2">2 active · 1 awaiting central approval</div></div>
+          <span class="chev"><svg><use href="#i-chev"/></svg></span>
+        </div>
+      </div>
+
+      <div class="segment" style="margin-top:14px" id="sto-seg">
+        <button class="on" onclick="stoSeg(this,'site')">Site lab · 21</button>
+        <button onclick="stoSeg(this,'central')">Central lab · 13</button>
+      </div>
+
+      <div class="filters" style="margin-top:12px">
+        <button class="fchip on">All types</button><button class="fchip">Blood</button><button class="fchip">Serum</button><button class="fchip">Tissue</button><button class="fchip">Necropsy</button>
+      </div>
+
+      <div id="sto-list-site">
+        <div class="sec-title">Savannah Site lab <span class="muted" style="text-transform:none;font-weight:600">your site</span></div>
+        <div class="card tap" style="margin-bottom:11px" onclick="go('sto-detail')">
+          <div class="li" style="padding-bottom:8px">
+            <div class="avatar sm av-g4">🩸</div>
+            <div class="meta"><div class="t1">SMP-0412 · Blood (EDTA)</div><div class="t2">Leo · LION-04</div></div>
+            <span class="chip teal">Stored</span>
+          </div>
+          <div style="padding:0 14px 13px">
+            <div class="locpath"><span class="node">Freezer A</span><svg><use href="#i-chev"/></svg><span class="node">Rack 1</span><svg><use href="#i-chev"/></svg><span class="node">Box 2</span><svg><use href="#i-chev"/></svg><span class="node">Pos 14</span></div>
+            <div class="t2" style="margin-top:9px;gap:6px"><svg style="width:12px;height:12px;color:var(--ink-300)"><use href="#i-temp"/></svg>−20 °C · retain 90d · 78d left</div>
+          </div>
+        </div>
+        <div class="card tap" style="margin-bottom:11px" onclick="go('sto-detail')">
+          <div class="li" style="padding-bottom:8px">
+            <div class="avatar sm av-g2">💧</div>
+            <div class="meta"><div class="t1">SMP-0408 · Serum</div><div class="t2">Mara · ELE-11</div></div>
+            <span class="chip warn">Disposal due</span>
+          </div>
+          <div style="padding:0 14px 13px">
+            <div class="locpath"><span class="node">Freezer A</span><svg><use href="#i-chev"/></svg><span class="node">Rack 2</span><svg><use href="#i-chev"/></svg><span class="node">Box 1</span><svg><use href="#i-chev"/></svg><span class="node">Pos 03</span></div>
+            <div class="t2" style="margin-top:9px;gap:6px;color:var(--warn)"><svg style="width:12px;height:12px"><use href="#i-clock"/></svg>retain 30d · <b>5d left</b></div>
+          </div>
+        </div>
+        <div class="card tap" onclick="go('sto-detail')">
+          <div class="li" style="padding-bottom:8px">
+            <div class="avatar sm av-g6">🧫</div>
+            <div class="meta"><div class="t1">SMP-0431 · Feces</div><div class="t2">Kaa · REP-19</div></div>
+            <span class="chip teal">Stored</span>
+          </div>
+          <div style="padding:0 14px 13px">
+            <div class="locpath"><span class="node">Fridge B</span><svg><use href="#i-chev"/></svg><span class="node">Shelf 1</span><svg><use href="#i-chev"/></svg><span class="node">Box 4</span><svg><use href="#i-chev"/></svg><span class="node">Pos 07</span></div>
+            <div class="t2" style="margin-top:9px;gap:6px"><svg style="width:12px;height:12px;color:var(--ink-300)"><use href="#i-temp"/></svg>+4 °C · retain 14d · 9d left</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="sto-list-central" style="display:none">
+        <div class="sec-title">Central Reference Lab <span class="muted" style="text-transform:none;font-weight:600">your site's animals</span></div>
+        <div class="card tap" style="margin-bottom:11px" onclick="go('sto-detail')">
+          <div class="li" style="padding-bottom:8px">
+            <div class="avatar sm av-g5">🔬</div>
+            <div class="meta"><div class="t1">SMP-0395 · Tissue</div><div class="t2">Flamingo · AVE-50 · necropsy</div></div>
+            <span class="chip violet">Long-term</span>
+          </div>
+          <div style="padding:0 14px 13px">
+            <div class="locpath"><span class="node">Freezer C3</span><svg><use href="#i-chev"/></svg><span class="node">Rack 4</span><svg><use href="#i-chev"/></svg><span class="node">Box B</span><svg><use href="#i-chev"/></svg><span class="node">Pos 09</span></div>
+            <div class="t2" style="margin-top:9px;gap:6px"><svg style="width:12px;height:12px;color:var(--ink-300)"><use href="#i-temp"/></svg>−80 °C · retain 5y · necropsy archive</div>
+          </div>
+        </div>
+        <div class="card tap" onclick="go('sto-detail')">
+          <div class="li" style="padding-bottom:8px">
+            <div class="avatar sm av-g2">💧</div>
+            <div class="meta"><div class="t1">SMP-0399 · Plasma</div><div class="t2">Mara · ELE-11</div></div>
+            <span class="chip teal">Stored</span>
+          </div>
+          <div style="padding:0 14px 13px">
+            <div class="locpath"><span class="node">Freezer C1</span><svg><use href="#i-chev"/></svg><span class="node">Rack 2</span><svg><use href="#i-chev"/></svg><span class="node">Box A</span><svg><use href="#i-chev"/></svg><span class="node">Pos 22</span></div>
+            <div class="t2" style="margin-top:9px;gap:6px"><svg style="width:12px;height:12px;color:var(--ink-300)"><use href="#i-temp"/></svg>−20 °C · retain 1y · 220d left</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STORAGE DETAIL -->
+    <section class="screen" data-screen="sto-detail">
+      <div class="card" style="padding:16px;margin-bottom:13px">
+        <div class="li" style="padding:0">
+          <div class="avatar av-g4">🩸</div>
+          <div class="meta"><div class="t1" style="font-size:16px">SMP-0412 · Blood</div><div class="t2">EDTA tube · Leo · LION-04</div></div>
+          <span class="chip teal">Stored</span>
+        </div>
+        <div class="divider" style="margin:14px 0"></div>
+        <div class="sec-title" style="margin:0 0 10px">Location</div>
+        <div class="locpath" style="font-size:13px"><span class="node">Site lab</span><svg><use href="#i-chev"/></svg><span class="node">Freezer A</span><svg><use href="#i-chev"/></svg><span class="node">Rack 1</span><svg><use href="#i-chev"/></svg><span class="node">Box 2</span><svg><use href="#i-chev"/></svg><span class="node">Pos 14</span></div>
+        <div class="stat-grid" style="margin-top:13px">
+          <div class="stat" style="box-shadow:inset 0 0 0 1.5px var(--line)"><div class="v" style="font-size:19px">−20 °C</div><div class="l">Storage temp</div></div>
+          <div class="stat" style="box-shadow:inset 0 0 0 1.5px var(--line)"><div class="v" style="font-size:19px">78 d</div><div class="l">Until disposal</div></div>
+        </div>
+      </div>
+
+      <div class="sec-title">Chain of custody</div>
+      <div class="card" style="padding:18px 16px">
+        <div class="timeline">
+          <div class="tl-item done"><span class="nub"><i></i></span><div class="tt">Collected · Savannah Site</div><div class="ts">Dr. Swathi · 14 May 09:24</div></div>
+          <div class="tl-item done"><span class="nub"><i></i></span><div class="tt">In transit → Central</div><div class="ts">Courier #C-204 · 14 May 11:00</div></div>
+          <div class="tl-item done"><span class="nub"><i></i></span><div class="tt">Received at Central</div><div class="ts">Reception scan · 14 May 15:40</div></div>
+          <div class="tl-item done"><span class="nub"><i></i></span><div class="tt">Stored · Freezer A / R1 / B2 / P14</div><div class="ts">Lab tech M. Osei · 14 May 16:10</div></div>
+          <div class="tl-item pending"><span class="nub"><i></i></span><div class="tt">Disposal scheduled</div><div class="ts">Auto · 31 Aug 2026</div></div>
+        </div>
+      </div>
+      <div style="margin-top:16px;display:flex;gap:10px">
+        <button class="btn btn-ghost" onclick="toast('Track opens live map')"><svg><use href="#i-loc"/></svg>Track</button>
+        <button class="btn btn-primary" onclick="openSheet('sheet-storreq')"><svg><use href="#i-archive"/></svg>Extend retention</button>
+      </div>
+    </section>
+
+    <!-- MY STORAGE REQUESTS -->
+    <section class="screen" data-screen="sto-requests">
+      <div class="card tap" style="margin-bottom:11px"><div class="li">
+        <div class="avatar sm av-g5">🔬</div>
+        <div class="meta"><div class="t1">STR-014 · Necropsy tissue</div><div class="t2">Flamingo · AVE-50 → Central · long-term</div></div>
+        <span class="chip ok"><svg><use href="#i-check"/></svg>Approved</span></div></div>
+      <div class="card tap" style="margin-bottom:11px"><div class="li">
+        <div class="avatar sm av-g2">💧</div>
+        <div class="meta"><div class="t1">STR-016 · Serum aliquot</div><div class="t2">Leo · LION-04 → Central · regular</div></div>
+        <span class="chip warn">Requested</span></div></div>
+      <div class="empty" style="padding:30px 30px 10px">
+        <div class="em-ic"><svg><use href="#i-archive"/></svg></div>
+        <h3>That's everything</h3>
+        <p>Create a storage request to ask the central lab to retain samples — e.g. necropsy tissue for long-term archive.</p>
+      </div>
+    </section>
+
+    <!-- ================= TESTS (detailed, 2 tabs) ================= -->
+    <section class="screen" data-screen="tst-home">
+      <div class="segment" id="tst-seg">
+        <button class="on" onclick="tstTab(this,'my')">My Tests</button>
+        <button onclick="tstTab(this,'cat')">Catalog</button>
+      </div>
+
+      <!-- MY TESTS -->
+      <div id="tst-my" style="margin-top:14px">
+        <div class="stat-grid">
+          <div class="stat"><div class="ic" style="background:var(--warn-bg)"><svg style="color:var(--warn)"><use href="#i-clock"/></svg></div><div class="v count-up" data-to="9">0</div><div class="l">In progress</div></div>
+          <div class="stat"><div class="ic" style="background:var(--ok-bg)"><svg style="color:var(--ok)"><use href="#i-check"/></svg></div><div class="v count-up" data-to="5">0</div><div class="l">Resulted</div></div>
+        </div>
+        <div class="filters" style="margin-top:12px">
+          <button class="fchip on">All</button><button class="fchip">Pending receipt</button><button class="fchip">In progress</button><button class="fchip">Resulted</button>
+        </div>
+        <div class="sec-title">Tests across your requests</div>
+
+        <div class="card tap" style="margin-bottom:11px" onclick="go('tst-detail')"><div class="li">
+          <div class="avatar sm av-g4"><svg style="width:18px;color:var(--danger)"><use href="#i-flask"/></svg></div>
+          <div class="meta"><div class="t1">CBC · Haematology</div><div class="t2">Leo · LION-04 · REQ-2041 · Site lab</div></div>
+          <div style="text-align:right"><span class="chip warn">In progress</span><div class="t2" style="justify-content:flex-end;margin-top:5px">ETA today</div></div>
+        </div></div>
+
+        <div class="card tap" style="margin-bottom:11px" onclick="go('tst-detail')"><div class="li">
+          <div class="avatar sm av-g3"><svg style="width:18px;color:var(--info)"><use href="#i-flask"/></svg></div>
+          <div class="meta"><div class="t1">Liver Panel · Biochemistry</div><div class="t2">Leo · LION-04 · REQ-2041 · Central</div></div>
+          <div style="text-align:right"><span class="chip ok"><svg><use href="#i-check"/></svg>Resulted</span><div class="t2" style="justify-content:flex-end;margin-top:5px">View result</div></div>
+        </div></div>
+
+        <div class="card tap" style="margin-bottom:11px" onclick="go('tst-detail')"><div class="li">
+          <div class="avatar sm av-g5"><svg style="width:18px;color:var(--violet)"><use href="#i-flask"/></svg></div>
+          <div class="meta"><div class="t1">Cortisol · Endocrinology</div><div class="t2">Mara · ELE-11 · REQ-2038 · Central</div></div>
+          <div style="text-align:right"><span class="chip warn">In progress</span><div class="t2" style="justify-content:flex-end;margin-top:5px">ETA 18 Jun</div></div>
+        </div></div>
+
+        <div class="card tap" style="margin-bottom:11px" onclick="go('tst-detail')"><div class="li">
+          <div class="avatar sm av-g6"><svg style="width:18px;color:var(--teal)"><use href="#i-flask"/></svg></div>
+          <div class="meta"><div class="t1">Fecal Float · Parasitology</div><div class="t2">Kaa · REP-19 · REQ-2035 · Site lab</div></div>
+          <div style="text-align:right"><span class="chip neutral">Pending receipt</span><div class="t2" style="justify-content:flex-end;margin-top:5px">In transit</div></div>
+        </div></div>
+
+        <div class="card tap" onclick="go('tst-detail')"><div class="li">
+          <div class="avatar sm av-g1"><svg style="width:18px;color:var(--brand-700)"><use href="#i-flask"/></svg></div>
+          <div class="meta"><div class="t1">Histopathology · Pathology</div><div class="t2">Flamingo · AVE-50 · REQ-2030 · Central</div></div>
+          <div style="text-align:right"><span class="chip warn">In progress</span><div class="t2" style="justify-content:flex-end;margin-top:5px">ETA 22 Jun</div></div>
+        </div></div>
+      </div>
+
+      <!-- CATALOG -->
+      <div id="tst-cat" style="margin-top:14px;display:none">
+        <div class="search"><svg><use href="#i-search"/></svg><input placeholder="Search test or sample type…" readonly onclick="toast('Search is illustrative')"></div>
+        <div class="filters" style="margin-top:12px">
+          <button class="fchip on">All depts</button><button class="fchip">Site lab</button><button class="fchip">Central only</button><button class="fchip">Fast TAT</button>
+        </div>
+
+        <div class="sec-title">Haematology</div>
+        <div class="card" style="margin-bottom:8px">
+          <div class="li tap" onclick="openSheet('sheet-test')"><div class="meta"><div class="t1">Complete Blood Count (CBC)</div><div class="t2"><span class="chip neutral">Blood · EDTA</span><span class="muted">TAT 4h · Site lab</span></div></div><span class="chev"><svg><use href="#i-chev"/></svg></span></div>
+          <div class="divider"></div>
+          <div class="li tap" onclick="openSheet('sheet-test')"><div class="meta"><div class="t1">Blood Smear</div><div class="t2"><span class="chip neutral">Blood · slide</span><span class="muted">TAT 6h · Site lab</span></div></div><span class="chev"><svg><use href="#i-chev"/></svg></span></div>
+        </div>
+
+        <div class="sec-title">Biochemistry</div>
+        <div class="card" style="margin-bottom:8px">
+          <div class="li tap" onclick="openSheet('sheet-test')"><div class="meta"><div class="t1">Liver Panel (LFT)</div><div class="t2"><span class="chip neutral">Serum · SST</span><span class="muted">TAT 1d · Central</span></div></div><span class="chev"><svg><use href="#i-chev"/></svg></span></div>
+          <div class="divider"></div>
+          <div class="li tap" onclick="openSheet('sheet-test')"><div class="meta"><div class="t1">Renal Panel</div><div class="t2"><span class="chip neutral">Serum · SST</span><span class="muted">TAT 1d · Central</span></div></div><span class="chev"><svg><use href="#i-chev"/></svg></span></div>
+        </div>
+
+        <div class="sec-title">Endocrinology</div>
+        <div class="card" style="margin-bottom:8px">
+          <div class="li tap" onclick="openSheet('sheet-test')"><div class="meta"><div class="t1">Cortisol</div><div class="t2"><span class="chip neutral">Serum + Plasma</span><span class="muted">TAT 3d · Central</span></div></div><span class="chev"><svg><use href="#i-chev"/></svg></span></div>
+          <div class="divider"></div>
+          <div class="li tap" onclick="openSheet('sheet-test')"><div class="meta"><div class="t1">Progesterone</div><div class="t2"><span class="chip neutral">Serum</span><span class="muted">TAT 3d · Central</span></div></div><span class="chev"><svg><use href="#i-chev"/></svg></span></div>
+        </div>
+
+        <div class="sec-title">Microbiology · Pathology · Environmental</div>
+        <div class="card">
+          <div class="li tap" onclick="openSheet('sheet-test')"><div class="meta"><div class="t1">Aerobic Culture + Sensitivity</div><div class="t2"><span class="chip neutral">Swab</span><span class="muted">TAT 3–5d · Central</span></div></div><span class="chev"><svg><use href="#i-chev"/></svg></span></div>
+          <div class="divider"></div>
+          <div class="li tap" onclick="openSheet('sheet-test')"><div class="meta"><div class="t1">Histopathology</div><div class="t2"><span class="chip neutral">Tissue · formalin</span><span class="muted">TAT 5–7d · Central</span></div></div><span class="chev"><svg><use href="#i-chev"/></svg></span></div>
+          <div class="divider"></div>
+          <div class="li tap" onclick="openSheet('sheet-test')"><div class="meta"><div class="t1">Water Quality Screen</div><div class="t2"><span class="chip neutral">Water · 500ml</span><span class="muted">TAT 2d · Central</span></div></div><span class="chev"><svg><use href="#i-chev"/></svg></span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEST DETAIL -->
+    <section class="screen" data-screen="tst-detail">
+      <div class="card" style="padding:16px;margin-bottom:13px">
+        <div class="row-between"><div><div class="t1" style="font-size:17px">Liver Panel (LFT)</div><div class="t2">Biochemistry · Central Reference Lab</div></div><span class="chip ok"><svg><use href="#i-check"/></svg>Resulted</span></div>
+        <div class="divider" style="margin:14px 0"></div>
+        <div class="row-between" style="font-size:13px"><span class="muted">Animal</span><b>Leo · LION-04</b></div>
+        <div class="row-between" style="font-size:13px;margin-top:8px"><span class="muted">Request</span><b>REQ-2041</b></div>
+        <div class="row-between" style="font-size:13px;margin-top:8px"><span class="muted">Sample</span><b>SMP-0413 · Serum</b></div>
+        <div class="row-between" style="font-size:13px;margin-top:8px"><span class="muted">Turnaround</span><b>22h · within target</b></div>
+      </div>
+
+      <div class="sec-title">Result preview <span class="kbd">interim</span></div>
+      <div class="card" style="padding:6px 0">
+        <div class="li" style="padding:11px 16px"><div class="meta"><div class="t1" style="font-size:14px">ALT</div><div class="t2">Ref 8–52 U/L</div></div><b style="color:var(--ok)">41 U/L</b></div>
+        <div class="divider"></div>
+        <div class="li" style="padding:11px 16px"><div class="meta"><div class="t1" style="font-size:14px">AST</div><div class="t2">Ref 8–45 U/L</div></div><b style="color:var(--danger)">68 U/L ↑</b></div>
+        <div class="divider"></div>
+        <div class="li" style="padding:11px 16px"><div class="meta"><div class="t1" style="font-size:14px">ALP</div><div class="t2">Ref 20–150 U/L</div></div><b style="color:var(--ok)">96 U/L</b></div>
+        <div class="divider"></div>
+        <div class="li" style="padding:11px 16px"><div class="meta"><div class="t1" style="font-size:14px">Total Bilirubin</div><div class="t2">Ref 0–0.4 mg/dL</div></div><b style="color:var(--ok)">0.3 mg/dL</b></div>
+      </div>
+
+      <div class="sec-title">Status</div>
+      <div class="card" style="padding:18px 16px">
+        <div class="timeline">
+          <div class="tl-item done"><span class="nub"><i></i></span><div class="tt">Sample received</div><div class="ts">15 May 15:40</div></div>
+          <div class="tl-item done"><span class="nub"><i></i></span><div class="tt">Analysis complete</div><div class="ts">Analyst · 16 May 09:30</div></div>
+          <div class="tl-item done"><span class="nub"><i></i></span><div class="tt">Reviewed</div><div class="ts">Reviewer · 16 May 11:10</div></div>
+          <div class="tl-item pending"><span class="nub"><i></i></span><div class="tt">Final approval</div><div class="ts">Awaiting approver sign-off</div></div>
+        </div>
+      </div>
+      <div style="margin-top:16px"><button class="btn btn-primary" onclick="toast('Final report available in Reports once approved')"><svg><use href="#i-doc"/></svg>View when finalised</button></div>
+    </section>
+
+    <!-- ================= VETERINARY INTELLIGENCE (Reports) ================= -->
+    <section class="screen" data-screen="rep-home">
+      <div class="vi-seg">
+        <button class="on" onclick="viView(this,'focus')">Focus</button>
+        <button onclick="viView(this,'explore')">Explore</button>
+        <button onclick="viView(this,'compare')">Compare</button>
+        <button onclick="viView(this,'library')">Library</button>
+      </div>
+
+      <!-- ===== FOCUS ===== -->
+      <div data-vi="focus">
+        <div class="vi-h">What changed recently<span class="sm">Across your sites · June 2026</span></div>
+
+        <div class="story" onclick="openRep('rep-species')">
+          <div class="em">🦁</div>
+          <div class="hl"><b>Lions</b> accounted for <b>32%</b> of all laboratory investigations this month.</div>
+          <div class="mbars"><i style="height:40%"></i><i style="height:55%"></i><i style="height:48%"></i><i style="height:72%"></i><i style="height:100%"></i></div>
+          <div class="lk">View Lions <svg><use href="#i-chev"/></svg></div>
+        </div>
+
+        <div class="story tinted" onclick="openRep('rep-animal')">
+          <div class="em">🐅</div>
+          <div class="hl"><b>Tiger-021</b> underwent <b>7 investigations</b> in the last 60 days.</div>
+          <div class="mtl"><span class="d"></span><span class="l"></span><span class="d"></span><span class="l"></span><span class="d"></span><span class="l"></span><span class="d"></span><span class="l"></span><span class="d"></span></div>
+          <div class="lk">View Journey <svg><use href="#i-chev"/></svg></div>
+        </div>
+
+        <div class="story" onclick="openRep('rep-site')">
+          <div class="em">📍</div>
+          <div class="hl"><b>Safari Zone</b> generated the highest laboratory activity this month.</div>
+          <div class="mbars"><i style="height:100%;background:linear-gradient(180deg,var(--brand-400),var(--brand-700))"></i><i style="height:58%;background:#cdd8d0"></i><i style="height:34%;background:#cdd8d0"></i></div>
+          <div class="lk">View Site <svg><use href="#i-chev"/></svg></div>
+        </div>
+
+        <div class="story" onclick="toast('CBC · most requested test')">
+          <div class="em">🧪</div>
+          <div class="hl"><b>CBC</b> remains the most requested test across all sites.</div>
+          <svg class="spark" viewBox="0 0 280 36" preserveAspectRatio="none"><polyline points="0,28 40,24 80,26 120,18 160,20 200,12 240,14 280,6" fill="none" stroke="var(--brand-600)" stroke-width="3" stroke-linecap="round"/></svg>
+          <div class="lk">View Details <svg><use href="#i-chev"/></svg></div>
+        </div>
+
+        <div class="story" onclick="toast('12 elephants · no activity in 12 months')">
+          <div class="em">🐘</div>
+          <div class="hl"><b>12 elephants</b> have no laboratory activity recorded in the last 12 months.</div>
+          <div class="lk">View Animals <svg><use href="#i-chev"/></svg></div>
+        </div>
+
+        <!-- Activity heatmap -->
+        <div class="vi-h">Activity heatmap<span class="sm">Tests by site × species · tap a cell</span></div>
+        <div class="card" style="padding:14px">
+          <div class="hm-row"><span></span><span class="hm-head">Lion</span><span class="hm-head">Tiger</span><span class="hm-head">Elephant</span></div>
+          <div class="hm-row"><span class="hm-lbl">Main Zoo</span><div class="hm-cell" style="background:rgba(19,101,74,.62)" onclick="openRep('rep-species')">42</div><div class="hm-cell" style="background:rgba(19,101,74,.34)" onclick="openRep('rep-species')">18</div><div class="hm-cell" style="background:rgba(19,101,74,.18)" onclick="openRep('rep-species')">6</div></div>
+          <div class="hm-row"><span class="hm-lbl">Safari</span><div class="hm-cell" style="background:rgba(19,101,74,.95)" onclick="openRep('rep-site')">61</div><div class="hm-cell" style="background:rgba(19,101,74,.55)" onclick="openRep('rep-species')">33</div><div class="hm-cell" style="background:rgba(19,101,74,.3)" onclick="openRep('rep-species')">14</div></div>
+          <div class="hm-row"><span class="hm-lbl">Rescue</span><div class="hm-cell" style="background:rgba(19,101,74,.3)" onclick="openRep('rep-species')">12</div><div class="hm-cell" style="background:rgba(19,101,74,.16)" onclick="openRep('rep-species')">5</div><div class="hm-cell empty">—</div></div>
+        </div>
+
+        <!-- Monitoring intensity -->
+        <div class="vi-h">Monitoring intensity<span class="sm">Bubble size = tests · colour = recent activity</span></div>
+        <div class="card" style="padding:6px"><div class="bubbles">
+          <div class="bub" style="width:96px;height:96px;left:14px;top:54px;background:linear-gradient(135deg,var(--brand-500),var(--brand-700))" onclick="openRep('rep-species')">Lions<small>128</small></div>
+          <div class="bub" style="width:68px;height:68px;left:128px;top:20px;background:linear-gradient(135deg,var(--brand-400),var(--brand-600))" onclick="peek()">Tigers<small>71</small></div>
+          <div class="bub" style="width:50px;height:50px;left:206px;top:104px;background:linear-gradient(135deg,var(--teal),#0b8a8a)" onclick="peek()">Reptiles<small>38</small></div>
+          <div class="bub" style="width:44px;height:44px;left:128px;top:118px;background:#aab4af" onclick="peek()">Eleph.<small>20</small></div>
+          <div class="bub" style="width:40px;height:40px;left:262px;top:36px;background:linear-gradient(135deg,#9d86ff,var(--violet))" onclick="peek()">Birds<small>16</small></div>
+        </div></div>
+
+        <!-- Active investigation journeys -->
+        <div class="vi-h">Active investigation journeys</div>
+        <div class="carousel">
+          <div class="jcard" onclick="openRep('rep-animal')">
+            <div class="jh"><div class="avatar sm" style="background:linear-gradient(135deg,#ffe0b0,#ffb86b)">🐅</div><div><div style="font-weight:700;font-size:14px">Tiger-021</div><div class="muted" style="font-size:11.5px">Bengal Tiger · Safari</div></div></div>
+            <div class="labj"><div class="jn"><span class="mo">Jan</span><span class="dot"></span><span class="pill">CBC</span></div><div class="conn"></div><div class="jn"><span class="mo">Feb</span><span class="dot"></span><span class="pill">CBC</span></div><div class="conn"></div><div class="jn"><span class="mo">Mar</span><span class="dot"></span><span class="pill">Biochem</span></div><div class="conn"></div><div class="jn"><span class="mo">Apr</span><span class="dot"></span><span class="pill">Culture</span></div></div>
+            <div class="lk" style="color:var(--brand-600);font-weight:800;font-size:12px;margin-top:4px">View Journey →</div>
+          </div>
+          <div class="jcard" onclick="openRep('rep-animal')">
+            <div class="jh"><div class="avatar sm av-g1">🦁</div><div><div style="font-weight:700;font-size:14px">Leo · LION-04</div><div class="muted" style="font-size:11.5px">African Lion · Savannah</div></div></div>
+            <div class="labj"><div class="jn"><span class="mo">Feb</span><span class="dot"></span><span class="pill">CBC</span></div><div class="conn"></div><div class="jn"><span class="mo">Apr</span><span class="dot"></span><span class="pill">CBC</span></div><div class="conn"></div><div class="jn"><span class="mo">May</span><span class="dot"></span><span class="pill">Liver</span></div><div class="conn"></div><div class="jn"><span class="mo">Jun</span><span class="dot"></span><span class="pill">CBC</span></div></div>
+            <div class="lk" style="color:var(--brand-600);font-weight:800;font-size:12px;margin-top:4px">View Journey →</div>
+          </div>
+        </div>
+
+        <!-- Coverage intelligence -->
+        <div class="vi-h">Coverage intelligence<span class="sm">Who's being monitored — and who's missed</span></div>
+        <div class="cov" onclick="openRep('rep-species')">
+          <div class="ring" style="background:conic-gradient(var(--brand-600) 0 67%,#e6ece8 67% 100%)"><div class="inner">67%</div></div>
+          <div class="cm"><div class="a">Lions</div><div class="b">42 animals · 28 tested</div><div class="lk">View missing animals <svg><use href="#i-chev"/></svg></div></div>
+        </div>
+        <div class="cov" onclick="openRep('rep-species')">
+          <div class="ring" style="background:conic-gradient(var(--warn) 0 25%,#e6ece8 25% 100%)"><div class="inner" style="color:#9a6406">25%</div></div>
+          <div class="cm"><div class="a">Elephants</div><div class="b">12 animals · 3 tested</div><div class="lk">View details <svg><use href="#i-chev"/></svg></div></div>
+        </div>
+        <div class="filters" style="margin-top:4px">
+          <button class="fchip on">Never tested</button><button class="fchip">Not this year</button><button class="fchip">No CBC history</button><button class="fchip">No recent monitoring</button><button class="fchip">No follow-up</button>
+        </div>
+      </div>
+
+      <!-- ===== EXPLORE ===== -->
+      <div data-vi="explore" style="display:none">
+        <div class="search" style="margin-top:8px"><svg><use href="#i-search"/></svg><input placeholder="Search animals, species, sites, tests…" readonly onclick="toast('Search')"></div>
+        <div class="vi-h">Explore by</div>
+        <div class="expl" onclick="openRep('rep-animal')"><div class="ei" style="background:var(--av-g1,#ffe6b8)">🦁</div><div><div class="et">Animals</div><div class="es">Drill into one animal's full lab story</div></div><svg style="width:18px;height:18px;color:var(--ink-300)"><use href="#i-chev"/></svg></div>
+        <div class="expl" onclick="openRep('rep-species')"><div class="ei" style="background:var(--teal-bg)">🧬</div><div><div class="et">Species</div><div class="es">Population-level monitoring patterns</div></div><svg style="width:18px;height:18px;color:var(--ink-300)"><use href="#i-chev"/></svg></div>
+        <div class="expl" onclick="openRep('rep-site')"><div class="ei" style="background:var(--info-bg)">📍</div><div><div class="et">Sites</div><div class="es">What's happening at each site</div></div><svg style="width:18px;height:18px;color:var(--ink-300)"><use href="#i-chev"/></svg></div>
+        <div class="expl" onclick="toast('Tests explorer')"><div class="ei" style="background:var(--warn-bg)">🧪</div><div><div class="et">Tests</div><div class="es">Frequency & footprint by test</div></div><svg style="width:18px;height:18px;color:var(--ink-300)"><use href="#i-chev"/></svg></div>
+        <div class="expl" onclick="toast('Departments explorer')"><div class="ei" style="background:var(--violet-bg)">🏛️</div><div><div class="et">Departments</div><div class="es">Haematology, Biochem, Microbiology…</div></div><svg style="width:18px;height:18px;color:var(--ink-300)"><use href="#i-chev"/></svg></div>
+        <div class="expl" onclick="toast('Sample types explorer')"><div class="ei" style="background:#e7eee9">🩸</div><div><div class="et">Sample types</div><div class="es">Blood, serum, tissue, swab…</div></div><svg style="width:18px;height:18px;color:var(--ink-300)"><use href="#i-chev"/></svg></div>
+
+        <div class="vi-h">Suggested explorations</div>
+        <div class="expl" onclick="openRep('rep-animal')"><div class="ei" style="background:var(--brand-50)">⭐</div><div class="et" style="flex:1">Most monitored animals</div><svg style="width:18px;height:18px;color:var(--ink-300)"><use href="#i-chev"/></svg></div>
+        <div class="expl" onclick="openRep('rep-species')"><div class="ei" style="background:var(--brand-50)">🔬</div><div class="et" style="flex:1">Most tested species</div><svg style="width:18px;height:18px;color:var(--ink-300)"><use href="#i-chev"/></svg></div>
+        <div class="expl" onclick="openRep('rep-site')"><div class="ei" style="background:var(--brand-50)">📈</div><div class="et" style="flex:1">Sites with highest growth</div><svg style="width:18px;height:18px;color:var(--ink-300)"><use href="#i-chev"/></svg></div>
+        <div class="expl" onclick="openRep('rep-animal')"><div class="ei" style="background:var(--brand-50)">🧭</div><div class="et" style="flex:1">Animals with longest histories</div><svg style="width:18px;height:18px;color:var(--ink-300)"><use href="#i-chev"/></svg></div>
+        <div class="expl" onclick="openRep('rep-species')"><div class="ei" style="background:var(--brand-50)">⚡</div><div class="et" style="flex:1">Species with increasing activity</div><svg style="width:18px;height:18px;color:var(--ink-300)"><use href="#i-chev"/></svg></div>
+      </div>
+
+      <!-- ===== COMPARE ===== -->
+      <div data-vi="compare" style="display:none">
+        <div class="vi-h">Compare</div>
+        <div class="expl" onclick="toast('Pick two animals')"><div class="ei" style="background:var(--av-g1,#ffe6b8)">🆚</div><div class="et" style="flex:1">Animal vs Animal</div><svg style="width:18px;height:18px;color:var(--ink-300)"><use href="#i-chev"/></svg></div>
+        <div class="expl" onclick="toast('Pick two species')"><div class="ei" style="background:var(--teal-bg)">🆚</div><div class="et" style="flex:1">Species vs Species</div><svg style="width:18px;height:18px;color:var(--ink-300)"><use href="#i-chev"/></svg></div>
+        <div class="expl" onclick="toast('Pick two sites')"><div class="ei" style="background:var(--info-bg)">🆚</div><div class="et" style="flex:1">Site vs Site</div><svg style="width:18px;height:18px;color:var(--ink-300)"><use href="#i-chev"/></svg></div>
+        <div class="expl" onclick="toast('Pick two periods')"><div class="ei" style="background:var(--warn-bg)">🆚</div><div class="et" style="flex:1">Period vs Period</div><svg style="width:18px;height:18px;color:var(--ink-300)"><use href="#i-chev"/></svg></div>
+
+        <div class="vi-h">Example · Lion-021 vs Lion-017<span class="sm">Investigation frequency · last 6 months</span></div>
+        <div style="position:relative"><span class="vs-badge">VS</span>
+          <div class="split">
+            <div class="sp"><div class="avatar av-g1" style="margin:0 auto 8px">🦁</div><div style="font-weight:700;font-size:13.5px">Lion-021</div><div class="muted" style="font-size:11.5px;margin-bottom:8px">Safari</div><div style="font-family:'Sora';font-size:26px;font-weight:700;color:var(--brand-700)">14</div><div class="muted" style="font-size:11px">investigations</div></div>
+            <div class="sp"><div class="avatar av-g2" style="margin:0 auto 8px">🦁</div><div style="font-weight:700;font-size:13.5px">Lion-017</div><div class="muted" style="font-size:11.5px;margin-bottom:8px">Main Zoo</div><div style="font-family:'Sora';font-size:26px;font-weight:700;color:var(--ink-500)">6</div><div class="muted" style="font-size:11px">investigations</div></div>
+          </div>
+        </div>
+        <div class="card" style="padding:16px;margin-top:12px">
+          <div style="font-size:12px;font-weight:700;color:var(--ink-500);margin-bottom:10px">Overlay trend</div>
+          <svg class="spark" viewBox="0 0 280 60" preserveAspectRatio="none" style="height:60px"><polyline points="0,46 56,40 112,30 168,34 224,18 280,10" fill="none" stroke="var(--brand-600)" stroke-width="3"/><polyline points="0,52 56,50 112,48 168,46 224,44 280,42" fill="none" stroke="#aab4af" stroke-width="3"/></svg>
+          <div style="display:flex;gap:16px;font-size:11.5px;font-weight:700;margin-top:8px"><span style="color:var(--brand-700)">● Lion-021</span><span class="muted">● Lion-017</span></div>
+        </div>
+      </div>
+
+      <!-- ===== LIBRARY ===== -->
+      <div data-vi="library" style="display:none">
+        <div class="vi-h">Saved views</div>
+        <div class="card tap" style="margin-bottom:10px" onclick="openRep('rep-species')"><div class="li"><div class="avatar sm" style="background:var(--brand-50)"><svg style="width:18px;color:var(--brand-700)"><use href="#i-reports"/></svg></div><div class="meta"><div class="t1">Lion population · monthly</div><div class="t2">Species intelligence · saved 02 Jun</div></div><svg style="width:18px;height:18px;color:var(--ink-300)"><use href="#i-chev"/></svg></div></div>
+        <div class="card tap" style="margin-bottom:10px" onclick="openRep('rep-site')"><div class="li"><div class="avatar sm" style="background:var(--info-bg)"><svg style="width:18px;color:var(--info)"><use href="#i-loc"/></svg></div><div class="meta"><div class="t1">Safari Zone footprint</div><div class="t2">Site intelligence · saved 28 May</div></div><svg style="width:18px;height:18px;color:var(--ink-300)"><use href="#i-chev"/></svg></div></div>
+
+        <div class="vi-h">Bookmarked animals</div>
+        <div class="card tap" style="margin-bottom:10px" onclick="openRep('rep-animal')"><div class="li"><div class="avatar sm" style="background:linear-gradient(135deg,#ffe0b0,#ffb86b)">🐅</div><div class="meta"><div class="t1">Tiger-021</div><div class="t2">7 investigations · last 60 days</div></div><svg style="width:18px;height:18px;color:var(--ink-300)"><use href="#i-chev"/></svg></div></div>
+
+        <div class="vi-h">Exported reports</div>
+        <div class="card" style="margin-bottom:10px"><div class="li"><div class="avatar sm av-g3"><svg style="width:18px;color:var(--info)"><use href="#i-doc"/></svg></div><div class="meta"><div class="t1">Lion coverage · May 2026.pdf</div><div class="t2">Exported 31 May</div></div><svg style="width:18px;height:18px;color:var(--ink-300)" onclick="toast('Downloading')"><use href="#i-share"/></svg></div></div>
+        <div class="empty" style="padding:24px 30px 6px"><div class="em-ic"><svg><use href="#i-archive"/></svg></div><h3>Your shelf</h3><p>Saved views, bookmarks, comparisons and exports live here for quick return.</p></div>
+      </div>
+    </section>
+
+    <!-- ===== SPECIES INTELLIGENCE ===== -->
+    <section class="screen" data-screen="rep-species">
+      <div class="vi-hero">
+        <div style="display:flex;align-items:center;gap:12px"><div style="font-size:34px">🦁</div><div><div style="font-family:'Sora';font-size:20px;font-weight:700">Lion</div><div style="font-size:12px;color:var(--brand-400);font-weight:600">Panthera leo · 67% coverage</div></div></div>
+        <div class="grid4"><div><div class="v">42</div><div class="k">Animals</div></div><div><div class="v">128</div><div class="k">Tests</div></div><div><div class="v">28</div><div class="k">Tested / mo</div></div></div>
+        <div style="display:flex;gap:18px;margin-top:14px;position:relative;z-index:2;font-size:11.5px"><span style="color:var(--brand-400);font-weight:700">Most requested<br><b style="color:#fff;font-size:13px">CBC</b></span><span style="color:var(--brand-400);font-weight:700">Most active site<br><b style="color:#fff;font-size:13px">Safari</b></span></div>
+      </div>
+
+      <div class="vi-h">Population explorer<span class="sm">Each cell = one lion · tap to peek</span></div>
+      <div class="card" style="padding:14px">
+        <div class="popgrid" id="popgrid"></div>
+        <div class="poplegend"><span><i style="background:var(--brand-600)"></i>Recently tested</span><span><i style="background:var(--brand-400)"></i>Most monitored</span><span><i style="background:#d7e6dd"></i>Inactive</span><span><i style="background:#e6ece8"></i>Never tested</span></div>
+      </div>
+
+      <div class="vi-h">Monitoring stories</div>
+      <div class="card" style="padding:4px 16px">
+        <div class="wc"><div class="wi">🧪</div><div class="wt"><b>CBC</b> represented <b>62%</b> of investigations.</div></div>
+        <div class="wc"><div class="wi">🦁</div><div class="wt"><b>Lion-021</b> was the most monitored animal.</div></div>
+        <div class="wc"><div class="wi">📈</div><div class="wt">Testing activity increased vs the previous month.</div></div>
+        <div class="wc"><div class="wi">📍</div><div class="wt">Most activity originated from <b>Safari</b>.</div></div>
+      </div>
+
+      <div class="vi-h">Test distribution<span class="sm">Species → department → test</span></div>
+      <div class="card" style="padding:18px 16px;display:flex;align-items:center;gap:16px">
+        <div class="sunburst" style="background:conic-gradient(var(--brand-600) 0 62%,var(--teal) 62% 82%,var(--violet) 82% 100%)">
+          <div class="ring2" style="background:conic-gradient(var(--brand-400) 0 40%,var(--brand-500) 40% 62%,#1fae7c 62% 82%,#9d86ff 82% 100%)"></div>
+          <div class="hole2">128<br>tests</div>
+        </div>
+        <div class="legend">
+          <div class="lg"><span class="sw" style="background:var(--brand-600)"></span>Haematology<span class="n">62%</span></div>
+          <div class="lg"><span class="sw" style="background:var(--teal)"></span>Biochemistry<span class="n">20%</span></div>
+          <div class="lg"><span class="sw" style="background:var(--violet)"></span>Microbiology<span class="n">18%</span></div>
+        </div>
+      </div>
+
+      <div class="vi-h">Species timeline<span class="sm">Monthly activity</span></div>
+      <div class="card" style="padding:16px 14px 12px"><div class="bars">
+        <div class="b"><div class="bar" style="height:48%"></div><div class="bl">Jan</div></div><div class="b"><div class="bar" style="height:60%"></div><div class="bl">Feb</div></div><div class="b"><div class="bar" style="height:52%"></div><div class="bl">Mar</div></div><div class="b"><div class="bar" style="height:78%"></div><div class="bl">Apr</div></div><div class="b"><div class="bar" style="height:66%"></div><div class="bl">May</div></div><div class="b"><div class="bar" style="height:100%"></div><div class="bl">Jun</div></div>
+      </div></div>
+
+      <div class="vi-h">Coverage explorer</div>
+      <div class="expl" onclick="toast('14 lions never tested')"><div class="ei" style="background:#fce5e5">⚪</div><div class="et" style="flex:1">Animals never tested<span class="es">14 lions</span></div><svg style="width:18px;height:18px;color:var(--ink-300)"><use href="#i-chev"/></svg></div>
+      <div class="expl" onclick="toast('6 lions inactive')"><div class="ei" style="background:var(--warn-bg)">🕒</div><div class="et" style="flex:1">Animals inactive<span class="es">6 lions · no recent activity</span></div><svg style="width:18px;height:18px;color:var(--ink-300)"><use href="#i-chev"/></svg></div>
+      <div class="expl" onclick="toast('9 lions missing recent history')"><div class="ei" style="background:var(--info-bg)">📋</div><div class="et" style="flex:1">Missing recent history<span class="es">9 lions</span></div><svg style="width:18px;height:18px;color:var(--ink-300)"><use href="#i-chev"/></svg></div>
+    </section>
+
+    <!-- ===== ANIMAL INTELLIGENCE (flagship) ===== -->
+    <section class="screen" data-screen="rep-animal">
+      <div class="vi-hero">
+        <div style="display:flex;align-items:center;gap:12px"><div style="font-size:34px">🐅</div><div><div style="font-family:'Sora';font-size:20px;font-weight:700">Tiger-021</div><div style="font-size:12px;color:var(--brand-400);font-weight:600">Bengal Tiger · ♂ · 8y</div></div><button class="icon-btn" style="margin-left:auto;background:rgba(255,255,255,.12)" onclick="toast('Bookmarked')"><svg style="width:18px"><use href="#i-archive"/></svg></button></div>
+        <div style="display:flex;gap:16px;margin-top:12px;position:relative;z-index:2;font-size:11.5px;color:var(--brand-400);font-weight:600"><span>📍 Safari Zone</span><span>Section 4</span><span>Enclosure E-12</span></div>
+      </div>
+
+      <div class="vi-h">Laboratory summary</div>
+      <div class="card" style="padding:6px 0">
+        <div class="li" style="padding:11px 16px"><div class="meta"><div class="t2">First test</div></div><b>12 Jan 2026</b></div><div class="divider"></div>
+        <div class="li" style="padding:11px 16px"><div class="meta"><div class="t2">Last test</div></div><b>04 Jun 2026</b></div><div class="divider"></div>
+        <div class="li" style="padding:11px 16px"><div class="meta"><div class="t2">Monitoring duration</div></div><b>5 months</b></div><div class="divider"></div>
+        <div class="li" style="padding:11px 16px"><div class="meta"><div class="t2">Departments · Sample types</div></div><b>3 · 2</b></div><div class="divider"></div>
+        <div class="li" style="padding:11px 16px"><div class="meta"><div class="t2">Tests performed · Reports</div></div><b>16 · 6</b></div>
+      </div>
+
+      <div class="vi-h">Laboratory journey<span class="sm">Tap any node</span></div>
+      <div class="card" style="padding:8px 12px">
+        <div class="labj">
+          <div class="jn" onclick="toast('Jan · CBC')"><span class="mo">Jan</span><span class="dot"></span><span class="pill">CBC</span></div><div class="conn"></div>
+          <div class="jn" onclick="toast('Feb · CBC')"><span class="mo">Feb</span><span class="dot"></span><span class="pill">CBC</span></div><div class="conn"></div>
+          <div class="jn" onclick="toast('Mar · Biochemistry')"><span class="mo">Mar</span><span class="dot"></span><span class="pill">Biochem</span></div><div class="conn"></div>
+          <div class="jn" onclick="toast('Apr · Culture')"><span class="mo">Apr</span><span class="dot"></span><span class="pill">Culture</span></div><div class="conn"></div>
+          <div class="jn" onclick="toast('May · CBC')"><span class="mo">May</span><span class="dot"></span><span class="pill">CBC</span></div><div class="conn"></div>
+          <div class="jn" onclick="toast('Jun · Histopathology')"><span class="mo">Jun</span><span class="dot"></span><span class="pill">Histo</span></div>
+        </div>
+      </div>
+
+      <div class="vi-h">Investigation footprint</div>
+      <div class="card" style="padding:18px 16px"><div class="hbar">
+        <div class="it"><div class="top"><span>CBC</span><span class="muted">8×</span></div><div class="track"><i style="width:100%;background:var(--brand-600)"></i></div></div>
+        <div class="it"><div class="top"><span>Biochemistry</span><span class="muted">5×</span></div><div class="track"><i style="width:62%;background:var(--brand-500)"></i></div></div>
+        <div class="it"><div class="top"><span>Culture</span><span class="muted">2×</span></div><div class="track"><i style="width:25%;background:var(--teal)"></i></div></div>
+        <div class="it"><div class="top"><span>Urinalysis</span><span class="muted">1×</span></div><div class="track"><i style="width:12%;background:var(--violet)"></i></div></div>
+      </div></div>
+
+      <div class="vi-h">Result evolution<span class="sm">CBC · Haemoglobin</span></div>
+      <div class="filters" style="margin-bottom:10px">
+        <button class="fchip">30D</button><button class="fchip">90D</button><button class="fchip on">6M</button><button class="fchip">1Y</button><button class="fchip">Custom</button>
+      </div>
+      <div class="card" style="padding:16px 10px 10px">
+        <svg viewBox="0 0 300 110" style="width:100%;height:110px"><defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1fae7c" stop-opacity=".25"/><stop offset="1" stop-color="#1fae7c" stop-opacity="0"/></linearGradient></defs>
+          <polyline points="14,30 70,34 126,40 182,48 238,52 286,60" fill="none" stroke="#13654a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <polygon points="14,30 70,34 126,40 182,48 238,52 286,60 286,110 14,110" fill="url(#g2)"/>
+          <circle cx="286" cy="60" r="4.5" fill="#fff" stroke="#13654a" stroke-width="3"/></svg>
+        <div class="row-between" style="padding:0 10px;font-size:10.5px;color:var(--ink-400);font-weight:600"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span></div>
+      </div>
+
+      <div class="vi-h">Quick value comparison<span class="sm">Latest vs previous · no interpretation</span></div>
+      <div class="qvc">
+        <div class="qv"><div class="v">11.4</div><div class="k">Latest Hb (g/dL)</div></div>
+        <div class="qv"><div class="v" style="color:var(--ink-400)">12.1</div><div class="k">Previous</div></div>
+        <div class="qv"><div class="v trend-down">−0.7 ↓</div><div class="k">Difference</div></div>
+      </div>
+
+      <div class="vi-h">Test history matrix<span class="sm">Frequency by month</span></div>
+      <div class="card" style="padding:14px">
+        <div class="mx-row"><span></span><span class="mx-head">Jan</span><span class="mx-head">Feb</span><span class="mx-head">Mar</span><span class="mx-head">Apr</span><span class="mx-head">May</span><span class="mx-head">Jun</span></div>
+        <div class="mx-row"><span class="mx-lbl">CBC</span><div class="mx-cell" style="background:rgba(19,101,74,.8)">2</div><div class="mx-cell" style="background:rgba(19,101,74,.5)">1</div><div class="mx-cell"></div><div class="mx-cell" style="background:rgba(19,101,74,.5)">1</div><div class="mx-cell" style="background:rgba(19,101,74,.8)">2</div><div class="mx-cell" style="background:rgba(19,101,74,.5)">1</div></div>
+        <div class="mx-row"><span class="mx-lbl">Biochem</span><div class="mx-cell"></div><div class="mx-cell"></div><div class="mx-cell" style="background:rgba(21,155,155,.6)">2</div><div class="mx-cell" style="background:rgba(21,155,155,.4)">1</div><div class="mx-cell" style="background:rgba(21,155,155,.6)">2</div><div class="mx-cell"></div></div>
+        <div class="mx-row"><span class="mx-lbl">Culture</span><div class="mx-cell"></div><div class="mx-cell"></div><div class="mx-cell"></div><div class="mx-cell" style="background:rgba(124,92,255,.5)">1</div><div class="mx-cell"></div><div class="mx-cell" style="background:rgba(124,92,255,.5)">1</div></div>
+      </div>
+
+      <div class="vi-h">What changed?</div>
+      <div class="card" style="padding:4px 16px">
+        <div class="wc"><div class="wi">🔁</div><div class="wt"><b>CBC</b> repeated 6 times in the last 4 months.</div></div>
+        <div class="wc"><div class="wi">🆕</div><div class="wt"><b>Culture</b> performed for the first time this month.</div></div>
+        <div class="wc"><div class="wi">📈</div><div class="wt">Testing frequency increased recently.</div></div>
+        <div class="wc"><div class="wi">🧪</div><div class="wt">Biochemistry introduced after repeated CBC testing.</div></div>
+      </div>
+
+      <div class="sticky-cta"><button class="btn btn-primary" onclick="peek()"><svg><use href="#i-info"/></svg>Quick peek</button></div>
+    </section>
+
+    <!-- ===== SITE INTELLIGENCE ===== -->
+    <section class="screen" data-screen="rep-site">
+      <div class="vi-hero">
+        <div style="display:flex;align-items:center;gap:12px"><div style="font-size:30px">📍</div><div><div style="font-family:'Sora';font-size:20px;font-weight:700">Safari Zone</div><div style="font-size:12px;color:var(--brand-400);font-weight:600">73% coverage · highest activity</div></div></div>
+        <div class="grid4"><div><div class="v">96</div><div class="k">Animals</div></div><div><div class="v">11</div><div class="k">Species</div></div><div><div class="v">214</div><div class="k">Tests</div></div></div>
+        <div class="grid4" style="margin-top:10px"><div><div class="v">188</div><div class="k">Requests</div></div><div><div class="v">142</div><div class="k">Reports</div></div><div><div class="v">73%</div><div class="k">Coverage</div></div></div>
+      </div>
+
+      <div class="vi-h">This month at Safari</div>
+      <div class="card" style="padding:4px 16px">
+        <div class="wc"><div class="wi">🔬</div><div class="wt"><b>68 animals</b> tested this month.</div></div>
+        <div class="wc"><div class="wi">🦁</div><div class="wt">Most investigated species: <b>Lions</b>.</div></div>
+        <div class="wc"><div class="wi">🏛️</div><div class="wt">Most requested department: <b>Haematology</b>.</div></div>
+        <div class="wc"><div class="wi">🧪</div><div class="wt">Most requested test: <b>CBC</b>.</div></div>
+        <div class="wc"><div class="wi">🏠</div><div class="wt">Most active enclosure: <b>E-12</b> · Section 4.</div></div>
+      </div>
+
+      <div class="vi-h">Species distribution<span class="sm">Share of site activity</span></div>
+      <div class="card" style="padding:14px"><div class="treemap">
+        <div class="tm" style="flex:1 1 56%;height:96px;background:linear-gradient(135deg,var(--brand-500),var(--brand-700))">Lions<small>42%</small></div>
+        <div class="tm" style="flex:1 1 38%;height:96px;background:linear-gradient(135deg,var(--brand-400),var(--brand-600))">Tigers<small>26%</small></div>
+        <div class="tm" style="flex:1 1 30%;height:64px;background:linear-gradient(135deg,var(--teal),#0b8a8a)">Reptiles<small>16%</small></div>
+        <div class="tm" style="flex:1 1 28%;height:64px;background:linear-gradient(135deg,#9d86ff,var(--violet))">Birds<small>9%</small></div>
+        <div class="tm" style="flex:1 1 34%;height:64px;background:#aab4af">Others<small>7%</small></div>
+      </div></div>
+
+      <div class="vi-h">Testing activity trend</div>
+      <div class="card" style="padding:16px 14px 12px"><div class="bars">
+        <div class="b"><div class="bar" style="height:50%"></div><div class="bl">Jan</div></div><div class="b"><div class="bar" style="height:62%"></div><div class="bl">Feb</div></div><div class="b"><div class="bar" style="height:58%"></div><div class="bl">Mar</div></div><div class="b"><div class="bar" style="height:74%"></div><div class="bl">Apr</div></div><div class="b"><div class="bar" style="height:84%"></div><div class="bl">May</div></div><div class="b"><div class="bar" style="height:100%"></div><div class="bl">Jun</div></div>
+      </div></div>
+
+      <div class="vi-h">Coverage map<span class="sm">Site → sections → enclosures</span></div>
+      <div class="card" style="padding:16px"><div class="hbar">
+        <div class="it"><div class="top"><span>Section 1 · Big Cats</span><span class="muted">88%</span></div><div class="track"><i style="width:88%;background:var(--brand-600)"></i></div></div>
+        <div class="it"><div class="top"><span>Section 4 · Aviary</span><span class="muted">64%</span></div><div class="track"><i style="width:64%;background:var(--brand-500)"></i></div></div>
+        <div class="it"><div class="top"><span>Section 7 · Reptiles</span><span class="muted">41%</span></div><div class="track"><i style="width:41%;background:var(--warn)"></i></div></div>
+      </div></div>
+
+      <div class="vi-h">Laboratory footprint<span class="sm">Department usage</span></div>
+      <div class="card" style="padding:18px 16px"><div class="hbar">
+        <div class="it"><div class="top"><span>Haematology</span><span class="muted">45%</span></div><div class="track"><i style="width:45%;background:var(--brand-600)"></i></div></div>
+        <div class="it"><div class="top"><span>Biochemistry</span><span class="muted">30%</span></div><div class="track"><i style="width:30%;background:var(--brand-500)"></i></div></div>
+        <div class="it"><div class="top"><span>Microbiology</span><span class="muted">20%</span></div><div class="track"><i style="width:20%;background:var(--teal)"></i></div></div>
+        <div class="it"><div class="top"><span>Others</span><span class="muted">5%</span></div><div class="track"><i style="width:5%;background:var(--violet)"></i></div></div>
+      </div></div>
+    </section>
+
+  </div><!-- /viewport -->
+
+  <!-- FABs -->
+  <button class="fab" id="fab" style="display:none" onclick="openSheet('sheet-storreq')"><svg><use href="#i-plus"/></svg>Storage request</button>
+  <button class="fab" id="fab-req" style="display:none" onclick="openSheet('sheet-newreq')"><svg><use href="#i-plus"/></svg>New Request</button>
+
+  <!-- BOTTOM NAV -->
+  <nav class="tabbar">
+    <button class="tab active" data-tab="requests" onclick="navTo('req-home',this)"><span class="ind"></span><svg><use href="#i-requests"/></svg>Requests</button>
+    <button class="tab" data-tab="samples" onclick="navTo('smp-home',this)"><span class="ind"></span><svg><use href="#i-samples"/></svg>Samples</button>
+    <button class="tab" data-tab="tests" onclick="navTo('tst-home',this)"><span class="ind"></span><span class="pip">14</span><svg><use href="#i-tests"/></svg>Tests</button>
+    <button class="tab" data-tab="storage" onclick="navTo('sto-home',this)"><span class="ind"></span><svg><use href="#i-storage"/></svg>Storage</button>
+    <button class="tab" data-tab="reports" onclick="navTo('rep-home',this)"><span class="ind"></span><svg><use href="#i-reports"/></svg>Reports</button>
+  </nav>
+
+  <!-- ===== SHEETS ===== -->
+  <div class="scrim" id="scrim" onclick="closeSheet()"></div>
+
+  <!-- Test info sheet -->
+  <div class="sheet" id="sheet-test">
+    <div class="grab"></div>
+    <div class="sh-head"><h3>Complete Blood Count</h3><button class="icon-btn" style="background:var(--bg-2);color:var(--ink-500)" onclick="closeSheet()"><svg><use href="#i-close"/></svg></button></div>
+    <div class="sh-body">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+        <span class="chip neutral">Haematology</span><span class="chip teal">Site lab</span><span class="chip ok">TAT 4h</span>
+      </div>
+      <p style="font-size:13.5px;color:var(--ink-700);line-height:1.55;margin:0 0 16px">Quantifies red cells, white cells and platelets to screen for anaemia, infection and inflammation. Routine for health checks and pre-anaesthetic workups.</p>
+      <div class="opt" style="background:var(--bg-2)"><div class="oi"><svg><use href="#i-vial"/></svg></div><div class="om"><div class="a">Sample required</div><div class="b">Whole blood · EDTA (purple-top) · 0.5–2 ml</div></div></div>
+      <div class="opt" style="background:var(--bg-2)"><div class="oi"><svg><use href="#i-clock"/></svg></div><div class="om"><div class="a">Turnaround</div><div class="b">~4 hours at site lab · same-day</div></div></div>
+      <div class="opt" style="background:var(--bg-2)"><div class="oi"><svg><use href="#i-info"/></svg></div><div class="om"><div class="a">Method</div><div class="b">Automated haematology analyser + smear review</div></div></div>
+    </div>
+    <div class="sh-foot"><button class="btn btn-ghost" onclick="closeSheet()">Close</button><button class="btn btn-primary" onclick="closeSheet();toast('Add this test when creating a request')"><svg><use href="#i-plus"/></svg>Add to a request</button></div>
+  </div>
+
+  <!-- Date range sheet -->
+  <div class="sheet" id="sheet-range">
+    <div class="grab"></div>
+    <div class="sh-head"><h3>Date range</h3><button class="icon-btn" style="background:var(--bg-2);color:var(--ink-500)" onclick="closeSheet()"><svg><use href="#i-close"/></svg></button></div>
+    <div class="sh-body">
+      <div class="opt" onclick="pickRange(this,'Last 7 days')"><div class="om"><div class="a">Last 7 days</div></div><div class="check"><svg><use href="#i-check"/></svg></div></div>
+      <div class="opt sel" onclick="pickRange(this,'Last 30 days')"><div class="om"><div class="a">Last 30 days</div></div><div class="check"><svg><use href="#i-check"/></svg></div></div>
+      <div class="opt" onclick="pickRange(this,'This quarter')"><div class="om"><div class="a">This quarter</div></div><div class="check"><svg><use href="#i-check"/></svg></div></div>
+      <div class="opt" onclick="pickRange(this,'Year to date')"><div class="om"><div class="a">Year to date</div></div><div class="check"><svg><use href="#i-check"/></svg></div></div>
+    </div>
+    <div class="sh-foot"><button class="btn btn-primary" onclick="closeSheet();toast('Analytics updated')">Apply</button></div>
+  </div>
+
+  <!-- Create storage request sheet (multi-step) -->
+  <div class="sheet" id="sheet-storreq">
+    <div class="grab"></div>
+    <div class="sh-head"><h3 id="sr-title">New storage request</h3><button class="icon-btn" style="background:var(--bg-2);color:var(--ink-500)" onclick="closeSheet()"><svg><use href="#i-close"/></svg></button></div>
+    <div class="sh-body" id="sr-body">
+      <!-- step 1 -->
+      <div data-step="1">
+        <div style="font-size:13px;color:var(--ink-500);margin-bottom:12px">Step 1 of 3 · Select samples to store</div>
+        <div class="opt sel" onclick="this.classList.toggle('sel')"><div class="oi">🔬</div><div class="om"><div class="a">SMP-0395 · Tissue</div><div class="b">Flamingo · AVE-50 · necropsy</div></div><div class="check"><svg><use href="#i-check"/></svg></div></div>
+        <div class="opt" onclick="this.classList.toggle('sel')"><div class="oi">🩸</div><div class="om"><div class="a">SMP-0412 · Blood</div><div class="b">Leo · LION-04</div></div><div class="check"><svg><use href="#i-check"/></svg></div></div>
+        <div class="opt" onclick="this.classList.toggle('sel')"><div class="oi">💧</div><div class="om"><div class="a">SMP-0408 · Serum</div><div class="b">Mara · ELE-11</div></div><div class="check"><svg><use href="#i-check"/></svg></div></div>
+      </div>
+      <!-- step 2 -->
+      <div data-step="2" style="display:none">
+        <div style="font-size:13px;color:var(--ink-500);margin-bottom:12px">Step 2 of 3 · Destination & type</div>
+        <div class="field"><label>Store at</label><select><option>Central Reference Lab</option><option>Savannah Site lab</option></select></div>
+        <div style="font-size:12.5px;font-weight:700;color:var(--ink-700);margin-bottom:8px">Retention type</div>
+        <div class="opt sel" onclick="selOne(this)"><div class="oi"><svg><use href="#i-archive"/></svg></div><div class="om"><div class="a">Long-term archive</div><div class="b">Necropsy / biobank · up to 5 years</div></div><div class="check"><svg><use href="#i-check"/></svg></div></div>
+        <div class="opt" onclick="selOne(this)"><div class="oi"><svg><use href="#i-snow"/></svg></div><div class="om"><div class="a">Regular retention</div><div class="b">Standard 30–90 days</div></div><div class="check"><svg><use href="#i-check"/></svg></div></div>
+      </div>
+      <!-- step 3 -->
+      <div data-step="3" style="display:none">
+        <div style="font-size:13px;color:var(--ink-500);margin-bottom:12px">Step 3 of 3 · Details</div>
+        <div class="field"><label>Storage temperature</label><select><option>−80 °C (ultra-low)</option><option>−20 °C (frozen)</option><option>+4 °C (refrigerated)</option></select></div>
+        <div class="field"><label>Reason / notes</label><textarea rows="3" placeholder="e.g. Retain necropsy tissue for histopath archive & future genetics.">Retain necropsy tissue for histopath archive.</textarea></div>
+        <div class="card" style="background:var(--brand-50);box-shadow:none;padding:13px 14px;display:flex;gap:10px;align-items:flex-start">
+          <svg style="width:18px;height:18px;color:var(--brand-700);flex:0 0 auto;margin-top:1px"><use href="#i-info"/></svg>
+          <div style="font-size:12.5px;color:var(--brand-800);line-height:1.5">Central lab will confirm capacity & assign a freezer position. You'll be notified once stored.</div>
+        </div>
+      </div>
+    </div>
+    <div class="sh-foot">
+      <button class="btn btn-ghost" id="sr-back" onclick="srPrev()">Back</button>
+      <button class="btn btn-primary" id="sr-next" onclick="srNext()">Continue</button>
+    </div>
+  </div>
+
+  <!-- New Lab Request type picker -->
+  <div class="sheet" id="sheet-newreq">
+    <div class="grab"></div>
+    <div class="sh-head"><h3>New Lab Request</h3><button class="icon-btn" style="background:var(--bg-2);color:var(--ink-500)" onclick="closeSheet()"><svg><use href="#i-close"/></svg></button></div>
+    <div class="sh-body">
+      <div class="opt" onclick="closeSheet();toast('Animal request — building once the Animal board image arrives')"><div class="oi">🦁</div><div class="om"><div class="a">Animal Test</div><div class="b">Request tests for one or more animals</div></div><svg style="width:18px;height:18px;color:var(--ink-300)"><use href="#i-chev"/></svg></div>
+      <div class="opt" onclick="closeSheet();go('req-create')"><div class="oi">🌿</div><div class="om"><div class="a">Non Animal Test</div><div class="b">Feed, environmental, water & other samples</div></div><svg style="width:18px;height:18px;color:var(--ink-300)"><use href="#i-chev"/></svg></div>
+    </div>
+  </div>
+
+  <!-- Search Tests sheet -->
+  <div class="sheet" id="sheet-tests">
+    <div class="grab"></div>
+    <div class="sh-head"><h3>Search Tests</h3><button class="icon-btn" style="background:var(--bg-2);color:var(--ink-500)" onclick="closeSheet()"><svg><use href="#i-close"/></svg></button></div>
+    <div class="sh-body">
+      <div class="row-between" style="margin-bottom:4px"><span style="font-size:13px;font-weight:700;color:var(--ink-700)">Selected Tests · <span id="sel-n">4</span></span><span style="font-size:12.5px;font-weight:700;color:var(--brand-700)">＋ Add Test</span></div>
+      <div class="save-panel"><svg><use href="#i-archive"/></svg>Save these tests as a Panel</div>
+      <div class="utabs" style="margin-bottom:6px"><button class="on">Recently Used</button><button onclick="toast('Custom Panels')">Custom Panels</button><button onclick="toast('Global Panels')">Global Panels</button></div>
+      <div class="check-row on" onclick="toggleCheck(this)"><div class="box"><svg><use href="#i-check"/></svg></div><div class="tx"><div class="a">Water Purity</div><div class="b">Environmental</div></div></div>
+      <div class="check-row on" onclick="toggleCheck(this)"><div class="box"><svg><use href="#i-check"/></svg></div><div class="tx"><div class="a">Fiber Analysis</div><div class="b">Feed / Nutrition</div></div></div>
+      <div class="check-row" onclick="toggleCheck(this)"><div class="box"><svg><use href="#i-check"/></svg></div><div class="tx"><div class="a">Water Hardness</div><div class="b">Environmental</div></div></div>
+      <div class="check-row on" onclick="toggleCheck(this)"><div class="box"><svg><use href="#i-check"/></svg></div><div class="tx"><div class="a">Fat Analysis</div><div class="b">Feed / Nutrition</div></div></div>
+      <div class="check-row on" onclick="toggleCheck(this)"><div class="box"><svg><use href="#i-check"/></svg></div><div class="tx"><div class="a">Protein Analysis</div><div class="b">Feed / Nutrition</div></div></div>
+      <div class="check-row" onclick="toggleCheck(this)"><div class="box"><svg><use href="#i-check"/></svg></div><div class="tx"><div class="a">pH</div><div class="b">Environmental</div></div></div>
+    </div>
+    <div class="sh-foot"><button class="btn btn-ghost" onclick="closeSheet()"><span id="sel-n2">4</span> Selected</button><button class="btn btn-primary" onclick="addTests()"><svg><use href="#i-check"/></svg>Add</button></div>
+  </div>
+
+  <!-- Sample containers (barcodes) sheet -->
+  <div class="sheet" id="sheet-containers">
+    <div class="grab"></div>
+    <div class="sh-head"><h3>Serum · 12 ml</h3><button class="icon-btn" style="background:var(--bg-2);color:var(--ink-500)" onclick="closeSheet()"><svg><use href="#i-close"/></svg></button></div>
+    <div class="sh-body">
+      <div style="font-size:12.5px;color:var(--ink-500);font-weight:600;margin-bottom:12px">4 Samples · 12 Containers</div>
+      <div class="card" style="padding:13px 14px;margin-bottom:11px">
+        <div class="t1" style="font-size:14px">Plain Red Top Tube · 5 ml</div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:9px">
+          <span class="kbd" style="background:var(--brand-50);color:var(--brand-800)"><svg style="width:11px;height:11px;vertical-align:-1px"><use href="#i-qr"/></svg> BC15678824</span>
+          <span class="kbd" style="background:var(--brand-50);color:var(--brand-800)">BC15678825</span>
+          <span class="kbd" style="background:var(--brand-50);color:var(--brand-800)">BC15678826</span>
+        </div>
+      </div>
+      <div class="card" style="padding:13px 14px">
+        <div class="t1" style="font-size:14px">Yellow Top Serum Tube · 4 ml</div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:9px">
+          <span class="kbd" style="background:var(--brand-50);color:var(--brand-800)"><svg style="width:11px;height:11px;vertical-align:-1px"><use href="#i-qr"/></svg> BC15678827</span>
+          <span class="kbd" style="background:var(--brand-50);color:var(--brand-800)">BC15678828</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Request ⋮ menu -->
+  <div class="sheet" id="sheet-req-menu">
+    <div class="grab"></div>
+    <div class="sh-body" style="padding-top:10px">
+      <div class="opt" onclick="closeSheet();go('req-detail')"><div class="oi"><svg><use href="#i-info"/></svg></div><div class="om"><div class="a">View Detail</div></div></div>
+      <div class="opt" onclick="closeSheet();openSheet('sheet-cancel-req')"><div class="oi" style="background:#fce5e5"><svg style="color:#cf332c"><use href="#i-trash"/></svg></div><div class="om"><div class="a" style="color:#cf332c">Cancel Request</div></div></div>
+    </div>
+  </div>
+
+  <!-- Cancel Test (pink) -->
+  <div class="sheet danger" id="sheet-cancel-test">
+    <div class="grab"></div>
+    <div class="sh-head"><h3>Reason to Cancel Test</h3><button class="icon-btn" style="background:#fff;color:var(--ink-500)" onclick="closeSheet()"><svg><use href="#i-close"/></svg></button></div>
+    <div class="sh-body"><div style="font-size:13px;font-weight:700;margin-bottom:8px">Fiber Analysis</div><textarea class="cancel-field" placeholder="Enter reason to cancel"></textarea></div>
+    <div class="sh-foot"><button class="btn btn-danger" onclick="doCancelTest()">Cancel Test</button></div>
+  </div>
+
+  <!-- Cancel Request (pink) -->
+  <div class="sheet danger" id="sheet-cancel-req">
+    <div class="grab"></div>
+    <div class="sh-head"><h3>Reason to Cancel Request</h3><button class="icon-btn" style="background:#fff;color:var(--ink-500)" onclick="closeSheet()"><svg><use href="#i-close"/></svg></button></div>
+    <div class="sh-body"><textarea class="cancel-field" placeholder="Enter reason to cancel"></textarea></div>
+    <div class="sh-foot"><button class="btn btn-danger" onclick="doCancelReq()">Cancel Request</button></div>
+  </div>
+
+  <!-- Delivery type -->
+  <div class="sheet" id="sheet-delivery">
+    <div class="grab"></div>
+    <div class="sh-head"><h3>Delivery type</h3><button class="icon-btn" style="background:var(--bg-2);color:var(--ink-500)" onclick="closeSheet()"><svg><use href="#i-close"/></svg></button></div>
+    <div class="sh-body">
+      <div class="opt" onclick="closeSheet();openSheet('sheet-shipdetails')"><div class="oi">🚚</div><div class="om"><div class="a">Ship to Lab</div><div class="b">Send via courier — enter delivery details</div></div><svg style="width:18px;height:18px;color:var(--ink-300)"><use href="#i-chev"/></svg></div>
+      <div class="opt" onclick="closeSheet();toast('Pickup requested from Central Lab')"><div class="oi">📍</div><div class="om"><div class="a">Request Pickup</div><div class="b">Ask the lab to collect from your site</div></div><svg style="width:18px;height:18px;color:var(--ink-300)"><use href="#i-chev"/></svg></div>
+    </div>
+  </div>
+
+  <!-- Ship details -->
+  <div class="sheet" id="sheet-shipdetails">
+    <div class="grab"></div>
+    <div class="sh-head"><h3>Delivery details</h3><button class="icon-btn" style="background:var(--bg-2);color:var(--ink-500)" onclick="closeSheet()"><svg><use href="#i-close"/></svg></button></div>
+    <div class="sh-body">
+      <div class="field"><label>Courier / transporter</label><input value="ZooLogistics" /></div>
+      <div class="field"><label>Tracking / consignment no.</label><input placeholder="e.g. C-204-88231" /></div>
+      <div class="field"><label>Dispatch date</label><input value="17 Jun 2026" /></div>
+      <div class="field"><label>Transport temperature</label><select><option>+4 °C (cold chain)</option><option>−20 °C (frozen)</option><option>Ambient</option></select></div>
+      <div class="field" style="margin-bottom:0"><label>Notes (optional)</label><textarea rows="2" placeholder="Handling instructions…"></textarea></div>
+    </div>
+    <div class="sh-foot"><button class="btn btn-primary" onclick="submitShip()"><svg><use href="#i-check"/></svg>Submit · move to In Transit</button></div>
+  </div>
+
+  <!-- Re-submit (container / sample level) -->
+  <div class="sheet" id="sheet-resubmit">
+    <div class="grab"></div>
+    <div class="sh-head"><h3>Re-Submit</h3><button class="icon-btn" style="background:var(--bg-2);color:var(--ink-500)" onclick="closeSheet()"><svg><use href="#i-close"/></svg></button></div>
+    <div class="sh-body">
+      <div style="font-size:12.5px;color:var(--ink-500);margin-bottom:10px">Rio · AVE-19 · rejected at reception</div>
+      <div class="opt sel" onclick="selOne(this)"><div class="oi"><svg><use href="#i-vial"/></svg></div><div class="om"><div class="a">Sample-level</div><div class="b">Recollect the whole sample &amp; all its containers</div></div><div class="check"><svg><use href="#i-check"/></svg></div></div>
+      <div class="opt" onclick="selOne(this)"><div class="oi"><svg><use href="#i-qr"/></svg></div><div class="om"><div class="a">Container-level</div><div class="b">Recollect only the affected container(s)</div></div><div class="check"><svg><use href="#i-check"/></svg></div></div>
+    </div>
+    <div class="sh-foot"><button class="btn btn-primary" onclick="closeSheet();navTo('smp-home',document.querySelector('[data-tab=samples]'));smpReset('collect');toast('New collection created — back in To Collect')"><svg><use href="#i-check"/></svg>Start re-collection</button></div>
+  </div>
+
+  <!-- Date range (request list) -->
+  <div class="sheet" id="sheet-range2">
+    <div class="grab"></div>
+    <div class="sh-head"><h3>Date range</h3><button class="icon-btn" style="background:var(--bg-2);color:var(--ink-500)" onclick="closeSheet()"><svg><use href="#i-close"/></svg></button></div>
+    <div class="sh-body">
+      <div class="opt sel" onclick="pickRange(this,'Last 7 days')"><div class="om"><div class="a">Last 7 days</div></div><div class="check"><svg><use href="#i-check"/></svg></div></div>
+      <div class="opt" onclick="pickRange(this,'Last 30 days')"><div class="om"><div class="a">Last 30 days</div></div><div class="check"><svg><use href="#i-check"/></svg></div></div>
+      <div class="opt" onclick="pickRange(this,'This quarter')"><div class="om"><div class="a">This quarter</div></div><div class="check"><svg><use href="#i-check"/></svg></div></div>
+    </div>
+    <div class="sh-foot"><button class="btn btn-primary" onclick="closeSheet();toast('Range updated')">Apply</button></div>
+  </div>
+
+  <!-- Quick Peek (available everywhere) -->
+  <div class="sheet" id="sheet-peek">
+    <div class="grab"></div>
+    <div class="sh-head"><h3 style="display:flex;align-items:center;gap:9px"><span style="font-size:22px">🐅</span>Tiger-021</h3><button class="icon-btn" style="background:var(--bg-2);color:var(--ink-500)" onclick="closeSheet()"><svg><use href="#i-close"/></svg></button></div>
+    <div class="sh-body">
+      <div class="muted" style="font-size:12px;font-weight:600;margin-bottom:12px">Bengal Tiger · Safari Zone · last test 04 Jun</div>
+      <div class="sec-title" style="margin:4px 0 8px">Last 3 investigations</div>
+      <div class="trow" style="margin-bottom:8px"><div><div class="st done">04 Jun</div><div class="nm">CBC · Haematology</div></div><span class="chip ok">Resulted</span></div>
+      <div class="trow" style="margin-bottom:8px"><div><div class="st done">18 Apr</div><div class="nm">Culture · Microbiology</div></div><span class="chip ok">Resulted</span></div>
+      <div class="trow"><div><div class="st done">12 Mar</div><div class="nm">Biochemistry</div></div><span class="chip ok">Resulted</span></div>
+      <div class="sec-title" style="margin:16px 0 6px">Haemoglobin trend</div>
+      <svg class="spark" viewBox="0 0 280 40" preserveAspectRatio="none" style="height:44px"><polyline points="0,12 56,16 112,20 168,26 224,28 280,34" fill="none" stroke="var(--brand-600)" stroke-width="3" stroke-linecap="round"/></svg>
+    </div>
+    <div class="sh-foot"><button class="btn btn-ghost" onclick="closeSheet();toast('Report downloaded')"><svg><use href="#i-doc"/></svg>Download</button><button class="btn btn-primary" onclick="closeSheet();openRep('rep-animal')">View full journey</button></div>
+  </div>
+
+  <!-- toast -->
+  <div class="toast" id="toast"><svg><use href="#i-check"/></svg><span id="toast-msg">Done</span></div>
+
+</div>
+
+<script>
+/* ============ Router ============ */
+const headers = {
+  'req-home':{tab:'requests', title:'Elephant Camp', caret:true, light:true, actions:['bell'], fabReq:true},
+  'req-detail':{back:'req-home', title:'Request Details', light:true, actions:['more']},
+  'req-create':{back:'req-home', title:'Lab Test Request', sub:'Non Animal', light:true, highToggle:true},
+  'smp-home':{tab:'samples', title:'Samples', sub:'28 active', light:true, actions:['filter']},
+  'smp-collect':{back:'smp-home', title:'Manage Sample', sub:'LT11-00023', light:true},
+  'smp-scan':{back:'smp-collect', title:'Scan Containers', light:true},
+  'smp-ready':{back:'smp-home', title:'Ready to Deliver', light:true},
+  'sto-home':{tab:'storage', title:'Sample Storage', sub:'Savannah Site', light:true, actions:['filter'], fab:true},
+  'sto-detail':{back:'sto-home', title:'Stored sample', sub:'SMP-0412', light:true, actions:['share']},
+  'sto-requests':{back:'sto-home', title:'My storage requests', light:true, actions:[]},
+  'tst-home':{tab:'tests', title:'Tests', sub:'Tracker & catalog', light:true, actions:['filter']},
+  'tst-detail':{back:'tst-home', title:'Test', sub:'Liver Panel', light:true, actions:['share']},
+  'rep-home':{tab:'reports', title:'Intelligence', sub:'Lab insights · your sites', light:true, actions:[]},
+  'rep-species':{back:'rep-home', title:'Species Intelligence', sub:'Lion', light:true, actions:['share']},
+  'rep-animal':{back:'rep-home', title:'Animal Intelligence', sub:'Tiger-021', light:true, actions:['share']},
+  'rep-site':{back:'rep-home', title:'Site Intelligence', sub:'Safari Zone', light:true, actions:['share']},
+};
+let stack = ['req-home'];
+
+const ICONS={bell:'i-bell',filter:'i-filter',share:'i-share',more:'i-more'};
+function renderHeader(){
+  const id = stack[stack.length-1];
+  const h = headers[id]||{};
+  const bar = document.getElementById('appbar');
+  bar.className = 'appbar' + (h.light?' light':'');
+  const sbar = document.getElementById('statusbar');
+  sbar.className = 'statusbar' + (h.light?' light':'');
+  let left = h.back
+    ? `<button class="icon-btn" onclick="back()"><svg><use href="#i-back"/></svg></button>`
+    : '';
+  let acts = (h.actions||[]).map(a=>{
+    const dot = a==='bell'?'<span class="badge-dot"></span>':'';
+    const fn = a==='bell'?"toast('3 new notifications')":a==='filter'?"toast('Filter & sort options')":a==='more'?"openSheet('sheet-req-menu')":"toast('Share / export')";
+    return `<button class="icon-btn" onclick="${fn}"><svg><use href="#${ICONS[a]}"/></svg>${dot}</button>`;
+  }).join('');
+  if(h.highToggle){
+    acts += `<button class="icon-btn" id="hi-tgl" style="width:auto;padding:0 11px;gap:6px;font-size:12px;font-weight:800;background:var(--bg-2);color:var(--ink-500)" onclick="this.classList.toggle('on');this.style.background=this.classList.contains('on')?'#fce5e5':'var(--bg-2)';this.style.color=this.classList.contains('on')?'#cf332c':'var(--ink-500)'">High</button>`;
+  }
+  const caret = h.caret ? ` <span style="font-size:13px;color:var(--brand-600)">▾</span>` : '';
+  const ttl = h.caret ? `<h1 style="display:flex;align-items:center;gap:4px"><svg style="width:17px;height:17px;color:var(--brand-700)"><use href="#i-loc"/></svg>${h.title}${caret}</h1>` : `<h1>${h.title||''}</h1>`;
+  document.getElementById('appbar-row').innerHTML =
+    `${left}<div style="flex:1">${ttl}${h.sub?`<div class="sub">${h.sub}</div>`:''}</div>${acts}`;
+  document.getElementById('appbar-extra').innerHTML = '';
+  document.getElementById('fab').style.display = h.fab?'flex':'none';
+  document.getElementById('fab-req').style.display = h.fabReq?'flex':'none';
+}
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active', s.dataset.screen===id));
+  const el = document.querySelector(`[data-screen="${id}"]`);
+  if(el) el.scrollTop=0;
+  if(id==='req-detail') resetDetail();
+  if(id==='smp-scan') resetScan();
+  renderHeader();
+  runCounters(el);
+}
+function go(id){ stack.push(id); show(id); }
+function back(){ if(stack.length>1){ stack.pop(); show(stack[stack.length-1]); } }
+function navTo(id, btn){
+  stack=[id]; show(id);
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+}
+
+/* ============ Counters ============ */
+function runCounters(scope){
+  (scope||document).querySelectorAll('.count-up').forEach(el=>{
+    if(el.dataset.done) return; el.dataset.done=1;
+    const to=+el.dataset.to; let cur=0; const step=Math.max(1,Math.round(to/26));
+    const t=setInterval(()=>{cur+=step; if(cur>=to){cur=to;clearInterval(t);} el.textContent=cur;},22);
+  });
+}
+
+/* ============ Segments / tabs ============ */
+function stoSeg(btn,which){
+  btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('on')); btn.classList.add('on');
+  document.getElementById('sto-list-site').style.display = which==='site'?'':'none';
+  document.getElementById('sto-list-central').style.display = which==='central'?'':'none';
+}
+function tstTab(btn,which){
+  btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('on')); btn.classList.add('on');
+  document.getElementById('tst-my').style.display = which==='my'?'':'none';
+  document.getElementById('tst-cat').style.display = which==='cat'?'':'none';
+}
+
+/* ===== Request Detail: tabs + cancellation ===== */
+function rdTab(btn,which){
+  document.querySelectorAll('#rd-tabs button').forEach(b=>b.classList.remove('on')); btn.classList.add('on');
+  document.querySelectorAll('[data-rdtab]').forEach(d=>d.style.display = d.dataset.rdtab===which?'':'none');
+}
+let detailTestsHTML=null;
+function resetDetail(){
+  document.getElementById('banner-test').style.display='none';
+  document.getElementById('banner-req').style.display='none';
+  document.querySelectorAll('#rd-tabs button').forEach((b,i)=>b.classList.toggle('on',i===0));
+  document.querySelectorAll('[data-rdtab]').forEach((d,i)=>d.style.display=i===0?'':'none');
+  if(detailTestsHTML!==null) document.querySelector('[data-rdtab="tests"]').innerHTML=detailTestsHTML;
+  const animal = detailType==='animal';
+  document.getElementById('rd-navy').style.display = animal?'none':'';
+  document.getElementById('rd-white').style.display = animal?'':'none';
+}
+function doCancelTest(){
+  closeSheet();
+  const f=document.getElementById('trow-fiber');
+  f.classList.add('cancelled');
+  f.innerHTML='<div><div class="st canc">Cancelled</div><div class="nm">Fiber Analysis</div></div><div class="rt"><span class="dept" style="background:#fce5e5;color:#cf332c">Cancelled</span></div>';
+  document.getElementById('banner-test').style.display='flex';
+  document.querySelector('[data-screen=req-detail]').scrollTop=0;
+}
+function doCancelReq(){
+  closeSheet();
+  document.getElementById('banner-req').style.display='block';
+  document.querySelectorAll('[data-rdtab=tests] .trow').forEach(t=>{
+    t.classList.add('cancelled');
+    const nm=t.querySelector('.nm').textContent;
+    t.innerHTML=`<div><div class="st canc">Cancelled</div><div class="nm">${nm}</div></div><div class="rt"><span class="dept" style="background:#fce5e5;color:#cf332c">Cancelled</span></div>`;
+  });
+  document.querySelector('[data-screen=req-detail]').scrollTop=0;
+}
+
+/* ===== Create request ===== */
+function creSeg(btn){ btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('on')); btn.classList.add('on'); }
+function addTests(){ closeSheet(); document.getElementById('sel-tests').style.display='block'; toast('4 tests added'); }
+function toggleCheck(row){
+  row.classList.toggle('on');
+  const n=document.querySelectorAll('#sheet-tests .check-row.on').length;
+  document.getElementById('sel-n').textContent=n;
+  document.getElementById('sel-n2').textContent=n;
+}
+
+/* ===== generic tab/toggle helpers (make everything clickable) ===== */
+function pick(btn){ btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('on')); btn.classList.add('on'); }
+function swap(btn,showId){
+  pick(btn);
+  const wrap=btn.closest('#req-nonanimal,#req-animal');
+  wrap.querySelectorAll('[id$="-pending"],[id$="-completed"]').forEach(d=>d.style.display='none');
+  document.getElementById(showId).style.display='';
+}
+function entToggle(btn,which){
+  pick(btn);
+  document.getElementById('req-nonanimal').style.display = which==='nonanimal'?'':'none';
+  document.getElementById('req-animal').style.display = which==='animal'?'':'none';
+}
+
+/* ===== request detail: animal (white) vs non-animal (navy) ===== */
+let detailType='nonanimal';
+function openReqDetail(t){ detailType=t; go('req-detail'); }
+
+/* ===== sample management flow ===== */
+function smpSeg(btn,which){
+  btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('on')); btn.classList.add('on');
+  document.querySelectorAll('[data-smp]').forEach(d=>d.style.display = d.dataset.smp===which?'':'none');
+}
+function smpReset(which){
+  document.querySelectorAll('.smp-seg button').forEach((b,i)=>b.classList.toggle('on', (which==='collect'&&i===0)));
+  document.querySelectorAll('[data-smp]').forEach(d=>d.style.display = d.dataset.smp===which?'':'none');
+}
+function startCollect(){ go('smp-collect'); }
+let scanned=0;
+function simScan(){
+  if(scanned>=3) return;
+  scanned++;
+  document.getElementById('sc'+scanned).classList.add('scanned');
+  document.getElementById('scanN').textContent=scanned;
+  document.getElementById('scanBar').style.width=(scanned/3*100)+'%';
+  if(scanned>=3){
+    const cta=document.getElementById('scanCta'); cta.style.opacity='1'; cta.style.pointerEvents='auto';
+    document.getElementById('scanSim').style.display='none';
+    toast('All containers scanned');
+  }
+}
+function resetScan(){
+  scanned=0;
+  document.getElementById('scanN').textContent='0';
+  document.getElementById('scanBar').style.width='0%';
+  ['sc1','sc2','sc3'].forEach(id=>document.getElementById(id).classList.remove('scanned'));
+  const cta=document.getElementById('scanCta'); cta.style.opacity='.5'; cta.style.pointerEvents='none';
+  document.getElementById('scanSim').style.display='';
+}
+function submitShip(){
+  closeSheet();
+  navTo('smp-home',document.querySelector('[data-tab=samples]'));
+  smpSeg(document.querySelectorAll('.smp-seg button')[2],'shipped');
+  toast('Samples submitted · now In Transit');
+}
+
+/* ============ Sheets ============ */
+let activeSheet=null;
+function openSheet(id){
+  activeSheet=id; document.getElementById('scrim').classList.add('show');
+  document.getElementById(id).classList.add('show');
+  if(id==='sheet-storreq'){ srStep=1; renderSR(); }
+}
+function closeSheet(){
+  document.getElementById('scrim').classList.remove('show');
+  if(activeSheet) document.getElementById(activeSheet).classList.remove('show');
+  activeSheet=null;
+}
+function selOne(el){ el.parentElement.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel')); el.classList.add('sel'); }
+function pickRange(el,label){
+  el.parentElement.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel')); el.classList.add('sel');
+}
+
+/* ===== Storage request stepper ===== */
+let srStep=1;
+function renderSR(){
+  document.querySelectorAll('#sr-body [data-step]').forEach(s=>s.style.display = (+s.dataset.step===srStep)?'':'none');
+  document.getElementById('sr-back').style.display = srStep===1?'none':'flex';
+  document.getElementById('sr-next').textContent = srStep===3?'Submit request':'Continue';
+  document.getElementById('sr-title').textContent = srStep===3?'Confirm & submit':'New storage request';
+}
+function srNext(){ if(srStep<3){ srStep++; renderSR(); } else { closeSheet(); toast('Storage request sent to Central lab'); } }
+function srPrev(){ if(srStep>1){ srStep--; renderSR(); } }
+
+/* ============ Toast ============ */
+let toastT;
+function toast(msg){
+  document.getElementById('toast-msg').textContent=msg;
+  const t=document.getElementById('toast'); t.classList.add('show');
+  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+/* ===== Veterinary Intelligence (Reports) ===== */
+function viView(btn,which){
+  pick(btn);
+  document.querySelectorAll('[data-vi]').forEach(d=>d.style.display = d.dataset.vi===which?'':'none');
+  document.querySelector('[data-screen="rep-home"]').scrollTop=0;
+}
+function openRep(id){ go(id); }
+function peek(){ openSheet('sheet-peek'); }
+/* build the species population grid */
+(function(){
+  const g=document.getElementById('popgrid'); if(!g) return;
+  const states=['var(--brand-600)','var(--brand-600)','var(--brand-400)','#d7e6dd','#e6ece8','var(--brand-600)','#d7e6dd'];
+  let h=''; for(let i=0;i<36;i++){ h+=`<div class="popcell" style="background:${states[(i*5+2)%states.length]}" onclick="peek()"></div>`; }
+  g.innerHTML=h;
+})();
+
+/* make all filter chips selectable */
+document.getElementById('viewport').addEventListener('click',e=>{
+  const f=e.target.closest('.fchip');
+  if(f&&f.parentElement){ f.parentElement.querySelectorAll('.fchip').forEach(c=>c.classList.remove('on')); f.classList.add('on'); toast('Filtered'); return; }
+  const tr=e.target.closest('.trow');
+  if(tr && !e.target.closest('.cancel-act') && !tr.classList.contains('cancelled')){ toast('Test status & history'); }
+});
+
+/* init */
+detailTestsHTML = document.querySelector('[data-rdtab="tests"]').innerHTML;
+show('req-home');
+</script>
+</body>
+</html>
