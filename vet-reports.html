@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>VetLab Reports · Apple Health-style</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   VetLab Reports — "Apple Health for veterinary lab history"
+   Animal-centric · fact-based · Phase 1 (no reference ranges,
+   no diagnosis, no good/bad coloring — direction indicators only)
+   ============================================================ */
+:root{
+  /* ===== Antz design system tokens ===== */
+  --bg:#EFF5F2;           /* Background */
+  --card:#FFFFFF;         /* Surface */
+  --ink:#0c1f17;          /* near-black, green-tinted */
+  --ink2:#44544A;         /* OnSurfaceVariant */
+  --muted:#7A8684;        /* neutralSecondary */
+  --faint:#C3CEC7;        /* OutlineVariant */
+  --hair:#DAE7DF;         /* SurfaceVariant */
+  --accent:#37BD69;       /* Primary */
+  --accent-2:#52F990;     /* PrimaryContainer */
+  --accent-soft:#E8F4F2;  /* displaybgPrimary */
+  --on-green:#006D35;     /* OnSurface (dark green) */
+  --navy:#1F515B;         /* OnPrimaryContainer (deep teal) */
+  --teal:#00ABAB;         /* SecondaryDark */
+  --tertiary:#FA6140;     /* orange */
+  --error:#E93353; --error-bg:#FFEBEF;
+  --gold:#E4B819; --gold-bg:#FCF4AE;
+  --purple:#8479F9; --purple-bg:#E8EAFA;
+  /* categorical (NON-semantic) chart hues — brand palette */
+  --c-blue:#00AFD6; --c-teal:#00ABAB; --c-purple:#8479F9; --c-amber:#E4B819; --c-pink:#FA6140; --c-green:#37BD69;
+  --r:22px; --r-sm:16px; --r-xs:12px;
+  --sh:0 1px 2px rgba(15,40,30,.05), 0 4px 16px rgba(15,40,30,.04);
+  --ease:cubic-bezier(.22,1,.36,1);
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{background:#c9d2ce;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px 0;color:var(--ink)}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* phone */
+.phone{position:relative;width:402px;height:872px;background:var(--bg);border-radius:46px;overflow:hidden;display:flex;flex-direction:column;
+  box-shadow:0 40px 90px rgba(8,30,22,.35),0 0 0 11px #0b0f0d,0 0 0 13px #232a27}
+@media(max-width:430px){body{padding:0}.phone{width:100vw;height:100vh;border-radius:0;box-shadow:none}}
+.notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:122px;height:30px;background:#0b0f0d;border-radius:0 0 18px 18px;z-index:90}
+.sbar{height:50px;flex:0 0 50px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 28px 6px;font-size:14px;font-weight:600;z-index:30}
+.sbar .r{display:flex;gap:7px;align-items:center}
+
+/* viewport + screens */
+.vp{flex:1;position:relative;overflow:hidden}
+.screen{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;opacity:0;transform:translateX(16px);pointer-events:none;transition:opacity .28s var(--ease),transform .28s var(--ease)}
+.screen.on{opacity:1;transform:none;pointer-events:auto}
+.screen::-webkit-scrollbar{width:0}
+.pad{padding:0 18px}
+.bottom-space{height:120px}
+.drill-space{height:40px}
+
+/* large nav header (Apple Health "Summary") */
+.lhead{padding:8px 18px 6px}
+.lhead .big{font-size:34px;font-weight:600;letter-spacing:-.5px}
+.lhead .row{display:flex;align-items:center;justify-content:space-between}
+.avatar-btn{width:38px;height:38px;border-radius:50%;background:var(--accent-soft);display:grid;place-items:center;font-size:18px}
+/* landing top section — site selector + deep-teal stats card */
+.rhead{display:flex;align-items:center;justify-content:space-between;padding:12px 18px 8px}
+.site-sel{display:inline-flex;align-items:center;gap:9px;font-size:23px;font-weight:600;color:var(--navy);letter-spacing:-.4px}
+.site-sel .pin{width:22px;height:22px;color:var(--navy)}
+.site-sel .cv{width:16px;height:16px;color:var(--muted)}
+.statcard{background:#1F515B;border-radius:var(--r);padding:18px 18px 20px;box-shadow:var(--sh);margin-top:4px}
+.sc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.sc-title{color:#fff;font-size:17px;font-weight:600}
+.sc-range{display:inline-flex;align-items:center;gap:6px;color:#fff;font-size:13.5px;font-weight:600;background:rgba(255,255,255,.13);padding:7px 12px;border-radius:999px}
+.sc-range svg{width:12px;height:12px}
+.sc-stats{display:flex;gap:6px}
+.sc-stat{flex:1;text-align:left;transition:.12s var(--ease)}
+.sc-stat:active{transform:scale(.95);opacity:.7}
+.sc-stat .v{font-size:28px;font-weight:600;letter-spacing:-.8px;line-height:1}
+.sc-stat .k{font-size:12.5px;color:rgba(255,255,255,.8);font-weight:600;margin-top:8px}
+
+/* filter chips row (Site + Date) — persistent */
+.filters{display:flex;gap:10px;padding:8px 18px 4px;position:sticky;top:0;z-index:20;background:linear-gradient(var(--bg),var(--bg) 70%,rgba(238,241,240,0))}
+.fbtn{display:inline-flex;align-items:center;gap:7px;background:var(--card);box-shadow:var(--sh);padding:9px 14px;border-radius:999px;font-size:14px;font-weight:600}
+.fbtn .lab{color:var(--muted);font-weight:600}
+.fbtn svg{width:13px;height:13px;color:var(--muted)}
+
+/* back header for drill screens */
+.bhead{position:sticky;top:0;z-index:20;background:rgba(238,241,240,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;align-items:center;gap:6px;padding:10px 12px;border-bottom:1px solid var(--hair)}
+.back{display:inline-flex;align-items:center;gap:3px;color:var(--accent);font-size:16px;font-weight:600;padding:4px 6px}
+.back svg{width:19px;height:19px}
+.bhead .htitle{font-size:16px;font-weight:600;position:absolute;left:50%;transform:translateX(-50%)}
+.bhead .right{margin-left:auto;display:flex;gap:4px}
+.icobtn{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:var(--accent)}
+.icobtn svg{width:19px;height:19px}
+
+/* section label */
+.slabel{display:flex;align-items:center;justify-content:space-between;margin:22px 0 12px}
+.slabel .t{font-size:20px;font-weight:600;letter-spacing:-.3px}
+.slabel a{color:var(--accent);font-size:15px;font-weight:600}
+
+/* ===== cards ===== */
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);transition:transform .12s var(--ease)}
+.tap:active{transform:scale(.985)}
+
+/* Tier 1 — stat / metric card */
+.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.stat{padding:15px 16px 16px;border-radius:var(--r);background:var(--card);box-shadow:var(--sh);position:relative}
+.stat .ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;margin-bottom:11px}
+.stat .ic svg{width:17px;height:17px}
+.stat .v{font-size:33px;font-weight:600;letter-spacing:-1px;line-height:1}
+.stat .l{font-size:13px;color:var(--muted);font-weight:600;margin-top:6px;line-height:1.35}
+.stat .chev{position:absolute;top:16px;right:14px;color:var(--faint)}
+.stat .chev svg{width:16px;height:16px}
+
+/* most active — horizontal animal cards */
+.hscroll{display:flex;gap:13px;overflow-x:auto;padding:2px 18px 8px;scroll-snap-type:x mandatory}
+.hscroll::-webkit-scrollbar{display:none}
+.acard{flex:0 0 180px;scroll-snap-align:start;background:var(--card);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
+.acard .ph{height:104px;display:grid;place-items:center;font-size:50px}
+.acard .b{padding:12px 14px 14px}
+.acard .nm{font-size:17px;font-weight:600;letter-spacing:-.3px}
+.acard .sp{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:1px}
+.acard .meta{display:flex;gap:14px;margin-top:11px}
+.acard .meta .n{font-size:17px;font-weight:600}
+.acard .meta .k{font-size:11px;color:var(--muted);font-weight:600}
+.acard .last{font-size:12px;color:var(--ink2);font-weight:600;margin-top:10px}
+/* most tested animals — Figma identity card + lab-insight footer */
+.mt-sub{font-size:13px;color:var(--muted);font-weight:500;margin:-4px 4px 14px}
+.mt-card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;margin-bottom:13px}
+.mt-top{display:flex;gap:14px;padding:15px 16px 13px;align-items:flex-start}
+.mt-top:active{background:#f6f9f7}
+.mt-pic{display:flex;flex-direction:column;align-items:center;gap:8px;flex:0 0 auto}
+.mt-photo{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;font-size:31px}
+.mt-sex{font-size:12px;font-weight:600;color:var(--navy);background:var(--accent-soft);min-width:30px;height:24px;padding:0 7px;border-radius:8px;display:grid;place-items:center}
+.mt-idb{flex:1;min-width:0}
+.mt-idline{font-size:15.5px;font-weight:600;color:var(--ink)}
+.mt-common{font-size:14.5px;color:var(--ink2);font-weight:500;margin-top:1px}
+.mt-sci{font-size:13px;color:var(--muted);font-style:italic;margin-top:1px}
+.mt-loc{font-size:12.5px;color:var(--muted);font-weight:500;margin-top:5px;line-height:1.4}
+.mt-rank{flex:0 0 auto;font-size:12px;font-weight:600;color:var(--faint)}
+.mt-foot{display:flex;align-items:center;padding:12px 16px;background:#f4f8f6;border-top:1px solid var(--hair)}
+.mt-foot:active{background:#eef3f0}
+.mt-metric{display:flex;flex-direction:column;gap:1px;padding-right:20px}
+.mt-metric .mv{font-size:16px;font-weight:600;color:var(--ink)}
+.mt-metric .mk{font-size:11px;color:var(--muted);font-weight:500}
+.mt-recent{margin-left:auto;display:flex;align-items:center;gap:7px}
+.mt-rchip{display:inline-flex;align-items:center;gap:6px;background:var(--accent-soft);color:var(--on-green);font-size:12px;font-weight:600;padding:6px 11px;border-radius:999px;white-space:nowrap}
+.mt-more{background:var(--navy);color:#fff;font-size:11px;font-weight:600;padding:5px 8px;border-radius:8px}
+.mt-foot .arr{color:var(--muted);font-size:17px;margin-left:5px}
+/* recent-tests bottom sheet */
+.rtcard{background:var(--card);border-radius:16px;box-shadow:var(--sh);padding:15px 16px;margin-bottom:12px}
+.rtcard .h{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.rtcard .tn{font-size:16px;font-weight:600}
+.rtcard .meta{font-size:12.5px;color:var(--muted);font-weight:500;margin-top:3px;line-height:1.45}
+.rtcard .vals{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.rtcard .val{background:var(--accent-soft);border-radius:9px;padding:7px 11px;font-size:12.5px;font-weight:500;color:var(--ink2)}
+.rtcard .val b{color:var(--ink);font-weight:600}
+.rtcard .narr{font-size:13px;color:var(--ink2);font-weight:500;margin-top:11px;background:#f4f8f6;border-radius:10px;padding:11px 12px;line-height:1.5}
+.rtcard .prev{display:flex;align-items:center;justify-content:space-between;margin-top:13px;padding-top:13px;border-top:1px solid var(--hair)}
+.rtcard .prev .ptxt{font-size:12.5px;color:var(--muted);font-weight:500}
+.rtcard .prev a{color:var(--accent);font-weight:600;font-size:13.5px}
+/* insight carousel (District-style) */
+.icar{display:flex;gap:14px;overflow-x:auto;margin:0 -18px 4px;padding:2px 18px 10px;scroll-snap-type:x mandatory}
+.icar::-webkit-scrollbar{display:none}
+.icard2{flex:0 0 306px;scroll-snap-align:start;background:var(--card);border-radius:22px;box-shadow:var(--sh);overflow:hidden}
+.ic-hd{padding:16px;position:relative;display:flex;flex-direction:column;justify-content:center;min-height:80px}
+.ic-hd .t{font-size:19px;font-weight:600;letter-spacing:-.3px;max-width:215px;line-height:1.2}
+.ic-hd .s{font-size:12.5px;color:var(--ink2);font-weight:500;margin-top:3px;max-width:210px}
+.ic-hd .em{position:absolute;right:14px;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.55);display:grid;place-items:center;font-size:25px}
+.ic-list{padding:2px 14px}
+.ic-row{display:flex;align-items:center;gap:11px;padding:10px 0}
+.ic-row+.ic-row{border-top:1px solid var(--hair)}
+.ic-row:active{opacity:.6}
+.ic-rk{width:18px;font-size:13px;font-weight:600;color:var(--faint);flex:0 0 auto;text-align:center}
+.ic-av{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:18px;flex:0 0 auto}
+.ic-mid{flex:1;min-width:0}
+.ic-nm{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ic-sb{font-size:11.5px;color:var(--muted);font-weight:500;margin-top:1px}
+.ic-r{text-align:right;flex:0 0 auto}
+.ic-val{font-size:16px;font-weight:600;color:var(--ink)}
+.ic-valk{font-size:10px;color:var(--muted)}
+.ic-va{display:flex;align-items:center;justify-content:center;margin:10px 14px 16px;padding:13px;background:var(--accent-soft);color:var(--on-green);font-weight:600;font-size:14px;border-radius:14px}
+.ic-va:active{background:#dcefe4}
+/* search + filters row */
+.searchrow{display:flex;gap:10px;align-items:center;margin:2px 0 11px}
+.searchrow .search{flex:1;margin:0}
+.filtbtn{width:48px;height:48px;border-radius:13px;background:var(--card);box-shadow:var(--sh);display:grid;place-items:center;color:var(--navy);flex:0 0 auto;position:relative}
+.filtbtn svg{width:21px;height:21px}
+.filtbtn .badge{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;border-radius:9px;background:var(--accent);color:#fff;font-size:10px;font-weight:600;display:grid;place-items:center;padding:0 4px}
+.fchip2{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:8px 13px;border-radius:999px;background:var(--card);box-shadow:var(--sh);color:var(--ink2);flex:0 0 auto}
+.fchip2 svg{width:13px;height:13px;color:var(--muted)}
+.fchip2.set{background:var(--accent-soft);color:var(--on-green)}
+.rangepill{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1.5px solid var(--accent);color:var(--accent);font-size:13px;font-weight:600;padding:7px 13px;border-radius:999px}
+.rangepill svg{width:13px;height:13px;color:var(--accent)}
+
+/* animal list (explorer) row */
+.arow{display:flex;gap:14px;padding:14px;align-items:center}
+.arow+.arow{border-top:1px solid var(--hair)}
+.arow .ph{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;font-size:28px;flex:0 0 auto}
+.arow .mid{flex:1;min-width:0}
+.arow .nm{font-size:17px;font-weight:600;letter-spacing:-.2px}
+.arow .sp{font-size:13px;color:var(--muted);font-weight:600;margin-top:1px}
+.arow .stats{display:flex;gap:13px;margin-top:7px}
+.arow .stats span{font-size:12.5px;color:var(--ink2);font-weight:600}
+.arow .stats b{font-weight:600}
+.arow .rt{display:flex;flex-direction:column;align-items:flex-end;gap:7px}
+.arow .chev{color:var(--faint)}.arow .chev svg{width:18px;height:18px}
+
+/* status pill (report status — neutral, not valenced) */
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px;white-space:nowrap}
+.pill.done{background:var(--accent-soft);color:var(--on-green)}
+.pill.pend{background:#eef1ef;color:#6b736f}
+.pill.final{background:var(--purple-bg);color:var(--purple)}
+.dotk{width:6px;height:6px;border-radius:50%}
+
+/* search */
+.search{display:flex;align-items:center;gap:9px;background:#e4e8e6;border-radius:12px;padding:10px 13px;margin:2px 0 12px}
+.search svg{width:17px;height:17px;color:var(--muted)}
+.search input{border:none;background:none;outline:none;flex:1;font-size:16px;color:var(--ink)}
+.search input::placeholder{color:var(--muted)}
+
+/* sort chips */
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin:0 0 6px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;font-size:13.5px;font-weight:600;padding:8px 14px;border-radius:999px;background:var(--card);box-shadow:var(--sh);color:var(--ink2)}
+.chip.on{background:var(--ink);color:#fff}
+
+/* ===== animal detail header ===== */
+.ahero{padding:6px 18px 4px;text-align:center}
+.ahero .ph{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;font-size:48px;margin:6px auto 12px;box-shadow:var(--sh)}
+.ahero .nm{font-size:27px;font-weight:600;letter-spacing:-.5px}
+.ahero .sub{font-size:14px;color:var(--muted);font-weight:600;margin-top:3px}
+.summary-metrics{display:flex;background:var(--card);border-radius:var(--r);box-shadow:var(--sh);margin:16px 0 4px;overflow:hidden}
+.summary-metrics .m{flex:1;text-align:center;padding:14px 4px;position:relative}
+.summary-metrics .m+.m:before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:1px;background:var(--hair)}
+.summary-metrics .m .v{font-size:21px;font-weight:600;letter-spacing:-.5px}
+.summary-metrics .m .k{font-size:10.5px;color:var(--muted);font-weight:600;margin-top:3px;text-transform:uppercase;letter-spacing:.03em}
+
+/* segmented tabs */
+.seg{display:flex;background:#e2e6e4;border-radius:11px;padding:3px;margin:16px 0 4px;position:sticky;top:54px;z-index:10}
+.seg button{flex:1;font-size:13.5px;font-weight:600;padding:8px 4px;border-radius:9px;color:var(--ink2);transition:.2s var(--ease)}
+.seg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08);font-weight:600}
+
+/* ===== Tier 2 trend card ===== */
+.trend{padding:16px 16px 14px;border-radius:var(--r);background:var(--card);box-shadow:var(--sh);margin-bottom:14px}
+.trend .top{display:flex;align-items:flex-start;justify-content:space-between}
+.trend .ttl{font-size:15px;font-weight:600;color:var(--ink2)}
+.trend .now{font-size:30px;font-weight:600;letter-spacing:-1px;margin-top:4px}
+.trend .now small{font-size:15px;font-weight:600;color:var(--muted);letter-spacing:0}
+.delta{display:inline-flex;align-items:center;gap:3px;font-size:13px;font-weight:600;padding:4px 9px;border-radius:999px;background:#eef1f0;color:var(--ink2)}
+.delta svg{width:12px;height:12px}
+.chart{margin-top:12px}
+.chart svg{width:100%;display:block}
+.axis{display:flex;justify-content:space-between;margin-top:7px;font-size:11px;color:var(--muted);font-weight:600}
+.range-foot{display:flex;justify-content:space-between;margin-top:13px;padding-top:13px;border-top:1px solid var(--hair)}
+.range-foot .rf{text-align:center;flex:1}
+.range-foot .rf .v{font-size:16px;font-weight:600}
+.range-foot .rf .k{font-size:11px;color:var(--muted);font-weight:600;margin-top:2px}
+
+/* bars (testing activity) */
+.bars{display:flex;align-items:flex-end;gap:10px;height:130px;margin-top:8px}
+.bars .b{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:8px;height:100%}
+.bars .bar{width:100%;max-width:30px;border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,var(--accent-2),var(--accent));transition:.2s var(--ease)}
+.bars .bar.tapme:active{filter:brightness(1.1)}
+.bars .lab{font-size:11.5px;color:var(--muted);font-weight:600}
+.bars .cap{font-size:11px;color:var(--ink2);font-weight:600}
+
+/* Tier 4 frequency card */
+.freq{display:flex;gap:13px;align-items:center;padding:14px 16px}
+.freq+.freq{border-top:1px solid var(--hair)}
+.freq .ic{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;font-size:20px;flex:0 0 auto}
+.freq .mid{flex:1}
+.freq .nm{font-size:16px;font-weight:600}
+.freq .sub{font-size:13px;color:var(--muted);font-weight:600;margin-top:2px}
+.freq .ct{font-size:22px;font-weight:600;letter-spacing:-.5px}
+.freq .ctk{font-size:11px;color:var(--muted);font-weight:600;text-align:right}
+
+/* Tier 5 timeline */
+.tl{position:relative;padding-left:30px}
+.tl:before{content:"";position:absolute;left:9px;top:8px;bottom:8px;width:2px;background:var(--hair)}
+.tli{position:relative;padding:0 0 6px}
+.tli .nub{position:absolute;left:-26px;top:3px;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px var(--accent-soft);display:grid;place-items:center}
+.tli .nub i{width:7px;height:7px;border-radius:50%;background:var(--accent);display:block}
+.tli .nub.pend i{background:var(--faint)}
+.tlcard{background:var(--card);border-radius:var(--r-sm);box-shadow:var(--sh);padding:13px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.tlcard .mid{flex:1}
+.tlcard .nm{font-size:15.5px;font-weight:600}
+.tlcard .dt{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:2px}
+.tlcard .act{color:var(--accent);font-size:14px;font-weight:600}
+.month-h{font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin:18px 4px 12px}
+
+/* comparison */
+.cmp-pick{display:flex;align-items:center;justify-content:space-between;background:var(--card);border-radius:var(--r-sm);box-shadow:var(--sh);padding:14px 16px;margin-bottom:8px}
+.cmp-pick .nm{font-size:17px;font-weight:600}
+.cmp-pick .sub{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:2px}
+.cmp-pick .pickbtn{color:var(--accent);font-weight:600;font-size:14px;display:flex;align-items:center;gap:3px}
+.toggle2{display:flex;background:#e2e6e4;border-radius:10px;padding:3px;margin:14px 0;width:160px}
+.toggle2 button{flex:1;font-size:13px;font-weight:600;padding:7px;border-radius:8px;color:var(--ink2)}
+.toggle2 button.on{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08);font-weight:600}
+.cmp-headrow,.cmp-row{display:grid;grid-template-columns:1.3fr .9fr .9fr .9fr .7fr;align-items:center;gap:6px;padding:13px 14px}
+.cmp-headrow{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.cmp-row{border-top:1px solid var(--hair)}
+.cmp-row .pn{font-size:15px;font-weight:600}
+.cmp-row .cv{font-size:15px;font-weight:600;text-align:center;color:var(--ink2)}
+.cmp-row .cv.now{color:var(--ink);font-weight:600}
+.cmp-row .dl{font-size:12.5px;font-weight:600;text-align:right;display:inline-flex;align-items:center;justify-content:flex-end;gap:2px;color:var(--muted)}
+.cmp-row .dl svg{width:11px;height:11px}
+.cmp-note{font-size:12px;color:var(--muted);font-weight:600;padding:12px 14px;text-align:center}
+
+/* parameter trend mini cards (test detail) */
+.pcard{display:flex;align-items:center;gap:14px;padding:14px 16px}
+.pcard+.pcard{border-top:1px solid var(--hair)}
+.pcard .mid{flex:1}
+.pcard .nm{font-size:15.5px;font-weight:600}
+.pcard .now{font-size:23px;font-weight:600;letter-spacing:-.5px;margin-top:2px}
+.pcard .now small{font-size:12px;color:var(--muted);font-weight:600}
+.pcard .last{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:2px}
+.pcard .spark{width:78px;height:38px;flex:0 0 auto}
+.pcard .chev{color:var(--faint)}.pcard .chev svg{width:18px;height:18px}
+
+/* param detail big chart */
+.bigchart{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:18px 14px 14px;margin-bottom:14px}
+.bigchart .now{font-size:34px;font-weight:600;letter-spacing:-1px}
+.bigchart .now small{font-size:16px;color:var(--muted);font-weight:600;letter-spacing:0}
+.bigchart .when{font-size:13px;color:var(--muted);font-weight:600;margin-top:2px}
+.rangesel{display:flex;background:#e2e6e4;border-radius:10px;padding:3px;margin:16px 0 6px}
+.rangesel button{flex:1;font-size:13px;font-weight:600;padding:7px 0;border-radius:8px;color:var(--ink2)}
+.rangesel button.on{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08);font-weight:600}
+
+/* data table */
+.dtable{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
+.dthead,.dtrow{display:grid;grid-template-columns:1fr .7fr 1.1fr auto;gap:8px;align-items:center;padding:13px 16px}
+.dthead{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.03em;background:#f6f8f7}
+.dtrow{border-top:1px solid var(--hair)}
+.dtrow .d{font-size:14px;font-weight:600}
+.dtrow .v{font-size:15px;font-weight:600}
+.dtrow .rq{font-size:12.5px;color:var(--muted);font-weight:600}
+.dtrow .chev{color:var(--faint)}.dtrow .chev svg{width:16px;height:16px}
+.dtrow.revoked{opacity:.55}
+.dtrow.revoked .v{text-decoration:line-through}
+
+/* report (document) cards + viewer */
+.rcard{display:flex;align-items:center;gap:13px;padding:14px 16px}
+.rcard+.rcard{border-top:1px solid var(--hair)}
+.rcard .ic{width:44px;height:44px;border-radius:13px;background:#e8eafa;display:grid;place-items:center;flex:0 0 auto}
+.rcard .ic svg{width:22px;height:22px;color:#8479f9}
+.rcard .mid{flex:1}
+.rcard .nm{font-size:15.5px;font-weight:600}
+.rcard .dt{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:2px}
+.rcard .acts{display:flex;gap:8px}
+.miniact{font-size:12.5px;font-weight:600;color:var(--accent);padding:6px 10px;border-radius:9px;background:var(--accent-soft)}
+.doc{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:20px 18px;margin-bottom:14px}
+.doc h2{font-size:20px;font-weight:600;margin:0 0 4px}
+.doc .meta{font-size:13px;color:var(--muted);font-weight:600;margin-bottom:16px}
+.doc h3{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--accent);margin:18px 0 7px}
+.doc p{font-size:14.5px;line-height:1.6;color:var(--ink2);margin:0 0 10px}
+.doc .kv{display:flex;justify-content:space-between;font-size:14px;padding:9px 0;border-bottom:1px solid var(--hair)}
+.doc .kv span{color:var(--muted);font-weight:600}.doc .kv b{font-weight:600}
+
+/* big action buttons */
+.actbar{display:flex;gap:11px;margin:6px 0 14px}
+.btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;height:50px;border-radius:15px;font-size:15px;font-weight:600}
+.btn svg{width:18px;height:18px}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-ghost{background:var(--card);box-shadow:var(--sh);color:var(--accent)}
+
+/* empty + skeleton */
+.empty{text-align:center;padding:56px 34px}
+.empty .e{width:78px;height:78px;border-radius:24px;background:var(--accent-soft);display:grid;place-items:center;font-size:36px;margin:0 auto 16px}
+.empty h3{font-size:19px;font-weight:600;margin:0 0 6px}
+.empty p{font-size:14px;color:var(--muted);font-weight:600;line-height:1.5;margin:0 0 18px}
+.skel{background:linear-gradient(90deg,#e9ece b 25%,#e0e4e2 37%,#e9eceb 63%);background:linear-gradient(90deg,#e7eae8 25%,#dfe3e1 37%,#e7eae8 63%);background-size:400% 100%;animation:sk 1.3s infinite;border-radius:10px}
+@keyframes sk{0%{background-position:100% 0}100%{background-position:-100% 0}}
+
+/* bottom nav */
+.nav{position:absolute;left:0;right:0;bottom:0;height:84px;background:linear-gradient(180deg,#43c97e,#2aa75f);display:flex;padding-bottom:14px;z-index:40}
+.nav .t{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font-size:10.5px;font-weight:600;color:rgba(255,255,255,.82)}
+.nav .ico{width:42px;height:30px;border-radius:11px;display:grid;place-items:center;transition:.18s var(--ease)}
+.nav .ico svg{width:23px;height:23px}
+.nav .t.on{color:#fff}
+.nav .t.on .ico{background:#fff;color:var(--accent)}
+
+/* sheet */
+.scrim{position:absolute;inset:0;background:rgba(8,20,15,.4);opacity:0;pointer-events:none;transition:.28s var(--ease);z-index:60;backdrop-filter:blur(2px)}
+.scrim.on{opacity:1;pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--bg);border-radius:26px 26px 0 0;z-index:70;transform:translateY(110%);transition:transform .34s var(--ease);max-height:84%;display:flex;flex-direction:column}
+.sheet.on{transform:none}
+.sheet .grab{width:40px;height:5px;border-radius:9px;background:#cfd5d2;margin:11px auto 4px}
+.sheet h3{font-size:19px;font-weight:600;padding:6px 20px 12px;margin:0}
+.sheet .body{padding:0 16px 24px;overflow-y:auto}
+.opt{display:flex;align-items:center;gap:13px;padding:15px 16px;background:var(--card);border-radius:14px;margin-bottom:10px;font-size:16px;font-weight:600;box-shadow:var(--sh)}
+.opt .ck{margin-left:auto;color:var(--accent)}.opt .ck svg{width:20px;height:20px;opacity:0}
+.opt.sel .ck svg{opacity:1}
+.opt.sel{box-shadow:inset 0 0 0 2px var(--accent)}
+
+/* toast */
+.toast{position:absolute;left:50%;bottom:100px;transform:translate(-50%,18px);background:#0f1714;color:#fff;font-size:13.5px;font-weight:600;padding:12px 18px;border-radius:13px;z-index:95;opacity:0;pointer-events:none;transition:.3s var(--ease);box-shadow:0 12px 30px rgba(0,0,0,.3);max-width:84%;text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.fade{animation:fade .4s var(--ease) both}@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="notch"></div>
+  <div class="sbar"><span class="tnum">9:41</span><span class="r">
+    <svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="4.5" y="4" width="3" height="8" rx="1"/><rect x="9" y="2" width="3" height="10" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1"/></svg>
+    <svg width="24" height="12" viewBox="0 0 24 12" fill="none"><rect x=".5" y=".5" width="20" height="11" rx="3" stroke="currentColor" stroke-opacity=".4"/><rect x="2" y="2" width="16" height="8" rx="1.6" fill="currentColor"/><rect x="22" y="4" width="1.5" height="4" rx=".7" fill="currentColor" fill-opacity=".4"/></svg>
+  </span></div>
+
+  <div class="vp" id="vp">
+
+    <!-- ===================== HOME ===================== -->
+    <section class="screen on" data-s="home">
+      <div class="rhead">
+        <button class="site-sel" onclick="sheet('sheet-site')"><svg class="pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.6"/></svg>Gagna <svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="avatar-btn" onclick="toast('Dr. profile')">👩‍⚕️</button>
+      </div>
+
+      <div class="pad">
+        <div class="statcard">
+          <div class="sc-head"><span class="sc-title">Lab Activity</span><button class="sc-range" onclick="openRange(this)"><span class="rl">Last 6 Months</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+          <div class="sc-stats">
+            <button class="sc-stat" onclick="nav('list-animals')"><div class="v tnum" style="color:#34d8c8">48</div><div class="k">Animals</div></button>
+            <button class="sc-stat" onclick="nav('list-tests')"><div class="v tnum" style="color:#52F990">612</div><div class="k">Tests</div></button>
+            <button class="sc-stat" onclick="nav('list-reports')"><div class="v tnum" style="color:#7fb8ff">188</div><div class="k">Reports</div></button>
+            <button class="sc-stat" onclick="nav('list-pending')"><div class="v tnum" style="color:#ff7a52">17</div><div class="k">Pending</div></button>
+          </div>
+        </div>
+
+        <div class="slabel"><div class="t" style="font-size:17px">Highlights</div><button class="rangepill" onclick="openRange(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4" stroke-linecap="round"/></svg><span class="rl">Last 6 Months</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+        <div class="icar">
+          <div class="icard2">
+            <div class="ic-hd" style="background:linear-gradient(135deg,#e8f6ee,#d6efe0)"><div class="t">Most Tested Animals</div><div class="em">🐾</div></div>
+            <div class="ic-list">
+              <div class="ic-row" onclick="openAnimal('maya')"><div class="ic-av" style="background:#d9e6d2">🐘</div><div class="ic-mid"><div class="ic-nm">Maya · ELE-11</div><div class="ic-sb">African Elephant</div></div><div class="ic-r"><div class="ic-val tnum">84</div><div class="ic-valk">tests</div></div></div>
+              <div class="ic-row" onclick="openAnimal('papaya')"><div class="ic-av" style="background:#ffe8c2">🦁</div><div class="ic-mid"><div class="ic-nm">Papaya · LION-04</div><div class="ic-sb">African Lion</div></div><div class="ic-r"><div class="ic-val tnum">62</div><div class="ic-valk">tests</div></div></div>
+              <div class="ic-row" onclick="openAnimal('papaya')"><div class="ic-av" style="background:#ffe0b8">🐯</div><div class="ic-mid"><div class="ic-nm">Ember · LION-08</div><div class="ic-sb">Bengal Tiger</div></div><div class="ic-r"><div class="ic-val tnum">27</div><div class="ic-valk">tests</div></div></div>
+              <div class="ic-row" onclick="openAnimal('kaa')"><div class="ic-av" style="background:#d7e9e7">🐍</div><div class="ic-mid"><div class="ic-nm">Kaa · REP-19</div><div class="ic-sb">Reticulated Python</div></div><div class="ic-r"><div class="ic-val tnum">21</div><div class="ic-valk">tests</div></div></div>
+              <div class="ic-row" onclick="openAnimal('papaya')"><div class="ic-av" style="background:#ffd9c2">🦜</div><div class="ic-mid"><div class="ic-nm">Rio · BI23000123</div><div class="ic-sb">Scarlet Macaw</div></div><div class="ic-r"><div class="ic-val tnum">18</div><div class="ic-valk">tests</div></div></div>
+            </div>
+            <button class="ic-va" onclick="nav('list-animals')">View All Animals</button>
+          </div>
+
+          <div class="icard2">
+            <div class="ic-hd" style="background:linear-gradient(135deg,#e2f4f4,#cdeceb)"><div class="t">Most Performed Tests</div><div class="em">🧪</div></div>
+            <div class="ic-list">
+              <div class="ic-row" onclick="nav('list-tests')"><div class="ic-mid"><div class="ic-nm">CBC</div></div><div class="ic-r"><div class="ic-val tnum">142</div><div class="ic-valk">times</div></div></div>
+              <div class="ic-row" onclick="nav('list-tests')"><div class="ic-mid"><div class="ic-nm">Liver Panel</div></div><div class="ic-r"><div class="ic-val tnum">96</div><div class="ic-valk">times</div></div></div>
+              <div class="ic-row" onclick="nav('list-tests')"><div class="ic-mid"><div class="ic-nm">Urine Analysis</div></div><div class="ic-r"><div class="ic-val tnum">74</div><div class="ic-valk">times</div></div></div>
+              <div class="ic-row" onclick="nav('list-tests')"><div class="ic-mid"><div class="ic-nm">Culture &amp; Sensitivity</div></div><div class="ic-r"><div class="ic-val tnum">58</div><div class="ic-valk">times</div></div></div>
+              <div class="ic-row" onclick="nav('list-tests')"><div class="ic-mid"><div class="ic-nm">Histopathology</div></div><div class="ic-r"><div class="ic-val tnum">31</div><div class="ic-valk">times</div></div></div>
+            </div>
+            <button class="ic-va" onclick="nav('list-tests')">View All Tests</button>
+          </div>
+
+          <div class="icard2">
+            <div class="ic-hd" style="background:linear-gradient(135deg,#e6eefb,#d6e2f7)"><div class="t">Recently Tested Animals</div><div class="em">🕒</div></div>
+            <div class="ic-list">
+              <div class="ic-row" onclick="openAnimal('papaya')"><div class="ic-av" style="background:#ffe8c2">🦁</div><div class="ic-mid"><div class="ic-nm">Papaya</div><div class="ic-sb">LION-04</div></div><div class="ic-r"><div class="ic-val">2d</div><div class="ic-valk">ago</div></div></div>
+              <div class="ic-row" onclick="openAnimal('papaya')"><div class="ic-av" style="background:#ffd9c2">🦜</div><div class="ic-mid"><div class="ic-nm">Rio</div><div class="ic-sb">BI23000123</div></div><div class="ic-r"><div class="ic-val">4d</div><div class="ic-valk">ago</div></div></div>
+              <div class="ic-row" onclick="openAnimal('papaya')"><div class="ic-av" style="background:#ffe0b8">🐯</div><div class="ic-mid"><div class="ic-nm">Ember</div><div class="ic-sb">LION-08</div></div><div class="ic-r"><div class="ic-val">5d</div><div class="ic-valk">ago</div></div></div>
+              <div class="ic-row" onclick="openAnimal('maya')"><div class="ic-av" style="background:#d9e6d2">🐘</div><div class="ic-mid"><div class="ic-nm">Maya</div><div class="ic-sb">ELE-11</div></div><div class="ic-r"><div class="ic-val">6d</div><div class="ic-valk">ago</div></div></div>
+              <div class="ic-row" onclick="openAnimal('kaa')"><div class="ic-av" style="background:#d7e9e7">🐍</div><div class="ic-mid"><div class="ic-nm">Kaa</div><div class="ic-sb">REP-19</div></div><div class="ic-r"><div class="ic-val">9d</div><div class="ic-valk">ago</div></div></div>
+            </div>
+            <button class="ic-va" onclick="nav('list-animals')">View All</button>
+          </div>
+        </div>
+
+        <div class="slabel" style="margin-top:22px"><div class="t" style="font-size:17px">All Tested Animals</div><a onclick="toast('48 animals')">48</a></div>
+        <div class="searchrow">
+          <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4" stroke-linecap="round"/></svg><input placeholder="Search animals, ID, species…" onfocus="this.blur();toast('Search is illustrative')"></div>
+          <button class="filtbtn" onclick="sheet('sheet-filter')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M7 12h10M10 18h4" stroke-linecap="round"/></svg><span class="badge">1</span></button>
+        </div>
+        <div class="chips">
+          <button class="fchip2 set" onclick="openRange(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4" stroke-linecap="round"/></svg><span class="rl">Last 6 Months</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="fchip2" onclick="sheet('sheet-species')">Species <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="fchip2" onclick="toast('Filter by test')">Tests <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+        <div id="mt-list" style="margin-top:8px"></div>
+        <div class="bottom-space"></div>
+      </div>
+    </section>
+
+    <!-- ===================== LIST: ANIMALS TESTED ===================== -->
+    <section class="screen" data-s="list-animals">
+      <div class="bhead"><button class="back" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Reports</button><div class="htitle">Animals Tested</div></div>
+      <div class="pad" style="padding-top:12px">
+        <div style="font-size:14px;color:var(--muted);font-weight:600;margin:4px 4px 12px">48 animals with ≥1 completed test · Gagna · Last 6 Months</div>
+        <div class="card" style="overflow:hidden">
+          <div class="arow tap" onclick="openAnimal('maya')"><div class="ph" style="background:linear-gradient(135deg,#d9e6d2,#b9d6c0)">🐘</div><div class="mid"><div class="nm">Maya</div><div class="sp">Elephant</div><div class="stats"><span><b>84</b> Tests</span><span>Last 12 Jun</span></div></div><div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          <div class="arow tap" onclick="openAnimal('papaya')"><div class="ph" style="background:linear-gradient(135deg,#ffe8c2,#ffd29e)">🦁</div><div class="mid"><div class="nm">Papaya</div><div class="sp">Lion</div><div class="stats"><span><b>62</b> Tests</span><span>Last 19 Jun</span></div></div><div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          <div class="arow tap" onclick="openAnimal('kaa')"><div class="ph" style="background:linear-gradient(135deg,#d7e9e7,#aed9d2)">🐍</div><div class="mid"><div class="nm">Kaa</div><div class="sp">Python</div><div class="stats"><span><b>21</b> Tests</span><span>Last 13 Jun</span></div></div><div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          <div class="arow tap" onclick="openAnimal('papaya')"><div class="ph" style="background:linear-gradient(135deg,#ffdbe4,#ffc1d2)">🦩</div><div class="mid"><div class="nm">Coral</div><div class="sp">Flamingo</div><div class="stats"><span><b>12</b> Tests</span><span>Last 08 Jun</span></div></div><div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        </div>
+        <div class="drill-space"></div>
+      </div>
+    </section>
+
+    <!-- ===================== LIST: TESTS PERFORMED (animal-centric, no departments) ===================== -->
+    <section class="screen" data-s="list-tests">
+      <div class="bhead"><button class="back" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Reports</button><div class="htitle">Tests Performed</div></div>
+      <div class="pad" style="padding-top:12px">
+        <div style="font-size:14px;color:var(--muted);font-weight:600;margin:4px 4px 12px">612 completed tests · grouped by test, not department</div>
+        <div class="card" style="overflow:hidden">
+          <div class="freq tap" onclick="toast('CBC across animals')"><div class="ic" style="background:#e1f4fa">🩸</div><div class="mid"><div class="nm">CBC</div><div class="sub">142 performed · 38 animals</div></div><div><div class="ct tnum">142</div><div class="ctk">tests</div></div></div>
+          <div class="freq tap" onclick="toast('Liver Panel')"><div class="ic" style="background:#fcf4ae">🧪</div><div class="mid"><div class="nm">Liver Panel (LFT)</div><div class="sub">96 performed · 29 animals</div></div><div><div class="ct tnum">96</div><div class="ctk">tests</div></div></div>
+          <div class="freq tap" onclick="toast('Urine Analysis')"><div class="ic" style="background:#e8eafa">💧</div><div class="mid"><div class="nm">Urine Analysis</div><div class="sub">74 performed · 31 animals</div></div><div><div class="ct tnum">74</div><div class="ctk">tests</div></div></div>
+          <div class="freq tap" onclick="toast('Culture & Sensitivity')"><div class="ic" style="background:#e8f6f0">🧫</div><div class="mid"><div class="nm">Culture &amp; Sensitivity</div><div class="sub">58 performed · text reports</div></div><div><div class="ct tnum">58</div><div class="ctk">tests</div></div></div>
+          <div class="freq tap" onclick="toast('Histopathology')"><div class="ic" style="background:#fbeef4">🔬</div><div class="mid"><div class="nm">Histopathology</div><div class="sub">31 performed · text reports</div></div><div><div class="ct tnum">31</div><div class="ctk">tests</div></div></div>
+        </div>
+        <div class="drill-space"></div>
+      </div>
+    </section>
+
+    <!-- ===================== LIST: REPORTS GENERATED ===================== -->
+    <section class="screen" data-s="list-reports">
+      <div class="bhead"><button class="back" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Reports</button><div class="htitle">Reports Generated</div></div>
+      <div class="pad" style="padding-top:12px">
+        <div style="font-size:14px;color:var(--muted);font-weight:600;margin:4px 4px 12px">188 reports · newest first</div>
+        <div class="card" style="overflow:hidden">
+          <div class="rcard tap" onclick="nav('report')"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h7l5 5v13H7z" stroke-linejoin="round"/><path d="M14 3v5h5"/></svg></div><div class="mid"><div class="nm">CBC Report · Papaya</div><div class="dt">19 Jun 2026 · Completed</div></div><div class="acts"><button class="miniact" onclick="event.stopPropagation();nav('report')">View</button></div></div>
+          <div class="rcard tap" onclick="nav('report')"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h7l5 5v13H7z" stroke-linejoin="round"/><path d="M14 3v5h5"/></svg></div><div class="mid"><div class="nm">Culture &amp; Sensitivity · Maya</div><div class="dt">12 Jun 2026 · Final Report</div></div><div class="acts"><button class="miniact" onclick="event.stopPropagation();nav('report')">View</button></div></div>
+          <div class="rcard tap" onclick="nav('report')"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h7l5 5v13H7z" stroke-linejoin="round"/><path d="M14 3v5h5"/></svg></div><div class="mid"><div class="nm">Histopathology · Coral</div><div class="dt">28 May 2026 · Final Report</div></div><div class="acts"><button class="miniact" onclick="event.stopPropagation();toast('Download')">Get</button></div></div>
+        </div>
+        <div class="drill-space"></div>
+      </div>
+    </section>
+
+    <!-- ===================== LIST: PENDING ===================== -->
+    <section class="screen" data-s="list-pending">
+      <div class="bhead"><button class="back" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Reports</button><div class="htitle">Pending Requests</div></div>
+      <div class="pad" style="padding-top:12px">
+        <div style="font-size:14px;color:var(--muted);font-weight:600;margin:4px 4px 12px">17 requests not yet fully completed</div>
+        <div class="tl" style="margin-top:6px">
+          <div class="tli"><span class="nub pend"><i></i></span><div class="tlcard tap" onclick="toast('Open request LT-2051')"><div class="mid"><div class="nm">LT-2051 · Kaa · CBC + Biochem</div><div class="dt">Awaiting results · created 13 Jun</div></div><span class="pill pend">Pending</span></div></div>
+          <div class="tli"><span class="nub pend"><i></i></span><div class="tlcard tap" onclick="toast('Open request LT-2048')"><div class="mid"><div class="nm">LT-2048 · Maya · Culture</div><div class="dt">In testing · created 11 Jun</div></div><span class="pill pend">Pending</span></div></div>
+          <div class="tli"><span class="nub pend"><i></i></span><div class="tlcard tap" onclick="toast('Open request LT-2040')"><div class="mid"><div class="nm">LT-2040 · Nova · Urine Analysis</div><div class="dt">Sample received · created 09 Jun</div></div><span class="pill pend">Pending</span></div></div>
+        </div>
+        <div class="drill-space"></div>
+      </div>
+    </section>
+
+    <!-- ===================== ANIMAL DETAIL ===================== -->
+    <section class="screen" data-s="animal">
+      <div class="bhead"><button class="back" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Back</button><div class="right"><button class="icobtn" onclick="toast('Share animal record')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3v13M12 3l-4 4M12 3l4 4" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" stroke-linecap="round"/></svg></button></div></div>
+      <div class="ahero">
+        <div class="ph" id="a-photo" style="background:linear-gradient(135deg,#ffe8c2,#ffd29e)">🦁</div>
+        <div class="nm" id="a-name">Papaya</div>
+        <div class="sub" id="a-sub">Lion · ♂ · 6y · Gagna Site</div>
+      </div>
+      <div class="pad">
+        <div class="summary-metrics">
+          <div class="m"><div class="v tnum">14</div><div class="k">Requests</div></div>
+          <div class="m"><div class="v tnum">62</div><div class="k">Tests</div></div>
+          <div class="m"><div class="v">3d</div><div class="k">Last test</div></div>
+          <div class="m"><div class="v tnum">11</div><div class="k">Reports</div></div>
+        </div>
+        <div class="seg" id="a-seg">
+          <button class="on" onclick="atab(this,'sum')">Summary</button>
+          <button onclick="atab(this,'his')">History</button>
+          <button onclick="atab(this,'cmp')">Comparison</button>
+          <button onclick="atab(this,'rep')">Reports</button>
+        </div>
+
+        <!-- SUMMARY TAB -->
+        <div data-atab="sum">
+          <div class="slabel"><div class="t" style="font-size:17px">Testing Activity</div></div>
+          <div class="trend">
+            <div class="top"><div><div class="ttl">Tests per month</div><div class="now tnum">23 <small>last 6 months</small></div></div></div>
+            <div class="bars">
+              <div class="b"><div class="cap tnum">3</div><div class="bar tapme" style="height:30%" onclick="toast('Jan · 3 tests')"></div><div class="lab">Jan</div></div>
+              <div class="b"><div class="cap tnum">5</div><div class="bar tapme" style="height:52%" onclick="toast('Feb · 5 tests')"></div><div class="lab">Feb</div></div>
+              <div class="b"><div class="cap tnum">1</div><div class="bar tapme" style="height:14%" onclick="toast('Mar · 1 test')"></div><div class="lab">Mar</div></div>
+              <div class="b"><div class="cap tnum">8</div><div class="bar tapme" style="height:88%" onclick="toast('Apr · 8 tests')"></div><div class="lab">Apr</div></div>
+              <div class="b"><div class="cap tnum">2</div><div class="bar tapme" style="height:24%" onclick="toast('May · 2 tests')"></div><div class="lab">May</div></div>
+              <div class="b"><div class="cap tnum">4</div><div class="bar tapme" style="height:46%" onclick="toast('Jun · 4 tests')"></div><div class="lab">Jun</div></div>
+            </div>
+          </div>
+
+          <div class="slabel"><div class="t" style="font-size:17px">Frequently Performed</div></div>
+          <div class="card" style="overflow:hidden">
+            <div class="freq tap" onclick="nav('test')"><div class="ic" style="background:#e1f4fa">🩸</div><div class="mid"><div class="nm">CBC</div><div class="sub">Last performed 5 days ago</div></div><div><div class="ct tnum">8</div><div class="ctk">times</div></div></div>
+            <div class="freq tap" onclick="nav('test')"><div class="ic" style="background:#fcf4ae">🧪</div><div class="mid"><div class="nm">Liver Panel</div><div class="sub">Last performed 12 days ago</div></div><div><div class="ct tnum">5</div><div class="ctk">times</div></div></div>
+            <div class="freq tap" onclick="nav('test')"><div class="ic" style="background:#e8eafa">💧</div><div class="mid"><div class="nm">Urine Analysis</div><div class="sub">Last performed 18 days ago</div></div><div><div class="ct tnum">4</div><div class="ctk">times</div></div></div>
+          </div>
+
+          <div class="slabel"><div class="t" style="font-size:17px">Recent Activity</div></div>
+          <div class="tl">
+            <div class="tli"><span class="nub"><i></i></span><div class="tlcard tap" onclick="nav('report')"><div class="mid"><div class="nm">CBC completed</div><div class="dt">19 Jun 2026 · Request LT-2049</div></div><span class="act">Report ›</span></div></div>
+            <div class="tli"><span class="nub"><i></i></span><div class="tlcard tap" onclick="nav('report')"><div class="mid"><div class="nm">Urine Analysis completed</div><div class="dt">12 Jun 2026 · Request LT-2041</div></div><span class="act">Report ›</span></div></div>
+            <div class="tli"><span class="nub"><i></i></span><div class="tlcard tap" onclick="nav('report')"><div class="mid"><div class="nm">Culture &amp; Sensitivity completed</div><div class="dt">28 May 2026 · Request LT-2028</div></div><span class="act">Report ›</span></div></div>
+            <div class="tli"><span class="nub pend"><i></i></span><div class="tlcard tap" onclick="toast('Pending request')"><div class="mid"><div class="nm">Biochemistry pending</div><div class="dt">Created 13 Jun 2026 · LT-2051</div></div><span class="pill pend">Pending</span></div></div>
+          </div>
+          <div class="drill-space"></div>
+        </div>
+
+        <!-- HISTORY TAB -->
+        <div data-atab="his" style="display:none">
+          <div class="month-h">June 2026</div>
+          <div class="tl">
+            <div class="tli"><span class="nub"><i></i></span><div class="tlcard tap" onclick="nav('report')"><div class="mid"><div class="nm">CBC · Completed</div><div class="dt">19 Jun · LT-2049</div></div><span class="act">View ›</span></div></div>
+            <div class="tli"><span class="nub"><i></i></span><div class="tlcard tap" onclick="nav('report')"><div class="mid"><div class="nm">Urine Analysis · Completed</div><div class="dt">12 Jun · LT-2041</div></div><span class="act">View ›</span></div></div>
+            <div class="tli"><span class="nub"><i></i></span><div class="tlcard tap" onclick="nav('test')"><div class="mid"><div class="nm">Liver Panel · Completed</div><div class="dt">07 Jun · LT-2036</div></div><span class="act">View ›</span></div></div>
+          </div>
+          <div class="month-h">May 2026</div>
+          <div class="tl">
+            <div class="tli"><span class="nub"><i></i></span><div class="tlcard tap" onclick="nav('report')"><div class="mid"><div class="nm">Culture &amp; Sensitivity · Final Report</div><div class="dt">28 May · LT-2028</div></div><span class="act">View ›</span></div></div>
+            <div class="tli"><span class="nub"><i></i></span><div class="tlcard tap" onclick="nav('test')"><div class="mid"><div class="nm">CBC · Completed</div><div class="dt">15 May · LT-2019</div></div><span class="act">View ›</span></div></div>
+          </div>
+          <div class="drill-space"></div>
+        </div>
+
+        <!-- COMPARISON TAB -->
+        <div data-atab="cmp" style="display:none">
+          <div class="cmp-pick" style="margin-top:14px">
+            <div><div class="nm">CBC</div><div class="sub">8 records · Jan – Jun 2026</div></div>
+            <button class="pickbtn" onclick="sheet('sheet-test')">Change <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+          <div class="toggle2"><button class="on" onclick="cmpView(this,'tbl')">Table</button><button onclick="cmpView(this,'cht')">Chart</button></div>
+
+          <div data-cmpv="tbl">
+            <div class="card" style="overflow:hidden">
+              <div class="cmp-headrow"><span>Parameter</span><span style="text-align:center">Current</span><span style="text-align:center">Prev</span><span style="text-align:center">Oldest</span><span style="text-align:right">Δ</span></div>
+              <div class="cmp-row tap" onclick="nav('param')"><span class="pn">Hemoglobin</span><span class="cv now tnum">14.2</span><span class="cv tnum">13.8</span><span class="cv tnum">12.9</span><span class="dl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>0.4</span></div>
+              <div class="cmp-row tap" onclick="nav('param')"><span class="pn">WBC</span><span class="cv now tnum">8.4</span><span class="cv tnum">7.5</span><span class="cv tnum">6.7</span><span class="dl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>0.9</span></div>
+              <div class="cmp-row tap" onclick="nav('param')"><span class="pn">RBC</span><span class="cv now tnum">6.1</span><span class="cv tnum">5.9</span><span class="cv tnum">5.7</span><span class="dl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>0.2</span></div>
+              <div class="cmp-row tap" onclick="nav('param')"><span class="pn">Platelets</span><span class="cv now tnum">320</span><span class="cv tnum">285</span><span class="cv tnum">260</span><span class="dl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>35</span></div>
+              <div class="cmp-note">Δ compares Current vs Oldest · direction only, no clinical interpretation</div>
+            </div>
+            <div style="text-align:center;margin:12px 0 4px"><button class="pickbtn" style="justify-content:center" onclick="sheet('sheet-dates')">Compare other dates ›</button></div>
+          </div>
+
+          <div data-cmpv="cht" style="display:none">
+            <div class="trend">
+              <div class="top"><div><div class="ttl">Hemoglobin · g/dL</div><div class="now tnum">14.2</div></div><span class="delta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>0.4</span></div>
+              <div class="chart" id="cmp-chart"></div>
+              <div class="axis"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span></div>
+            </div>
+            <div class="trend">
+              <div class="top"><div><div class="ttl">WBC · ×10³/µL</div><div class="now tnum">8.4</div></div><span class="delta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>0.9</span></div>
+              <div class="chart" id="cmp-chart2"></div>
+              <div class="axis"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span></div>
+            </div>
+          </div>
+          <div class="drill-space"></div>
+        </div>
+
+        <!-- REPORTS TAB -->
+        <div data-atab="rep" style="display:none">
+          <div class="search" style="margin-top:14px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4" stroke-linecap="round"/></svg><input placeholder="Search reports…" onfocus="this.blur()"></div>
+          <div class="card" style="overflow:hidden">
+            <div class="rcard tap" onclick="nav('report')"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h7l5 5v13H7z" stroke-linejoin="round"/><path d="M14 3v5h5"/></svg></div><div class="mid"><div class="nm">CBC Report</div><div class="dt">19 Jun 2026 · Completed</div></div><div class="acts"><button class="miniact" onclick="event.stopPropagation();nav('report')">View</button></div></div>
+            <div class="rcard tap" onclick="nav('report')"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h7l5 5v13H7z" stroke-linejoin="round"/><path d="M14 3v5h5"/></svg></div><div class="mid"><div class="nm">Culture &amp; Sensitivity Report</div><div class="dt">02 Jun 2026 · Final Report</div></div><div class="acts"><button class="miniact" onclick="event.stopPropagation();toast('Download')">Get</button></div></div>
+            <div class="rcard tap" onclick="nav('report')"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h7l5 5v13H7z" stroke-linejoin="round"/><path d="M14 3v5h5"/></svg></div><div class="mid"><div class="nm">Histopathology Report</div><div class="dt">28 May 2026 · Final Report</div></div><div class="acts"><button class="miniact" onclick="event.stopPropagation();toast('Download')">Get</button></div></div>
+          </div>
+          <div class="drill-space"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TEST DETAIL (CBC) ===================== -->
+    <section class="screen" data-s="test">
+      <div class="bhead"><button class="back" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Papaya</button><div class="htitle">CBC</div></div>
+      <div class="pad" style="padding-top:10px">
+        <div class="lhead" style="padding:6px 0 2px"><div class="big" style="font-size:28px">CBC</div></div>
+        <div style="font-size:14px;color:var(--muted);font-weight:600;margin:0 2px 8px">Performed 8 times · last 19 Jun 2026 · tap a parameter for its trend</div>
+        <div class="card" style="overflow:hidden">
+          <div class="pcard tap" onclick="nav('param')"><div class="mid"><div class="nm">Hemoglobin</div><div class="now tnum">14.2 <small>g/dL</small></div><div class="last">Last 19 Jun</div></div><svg class="spark" viewBox="0 0 80 38" id="sp1"></svg><div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          <div class="pcard tap" onclick="nav('param')"><div class="mid"><div class="nm">WBC</div><div class="now tnum">8.4 <small>×10³/µL</small></div><div class="last">Last 19 Jun</div></div><svg class="spark" viewBox="0 0 80 38" id="sp2"></svg><div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          <div class="pcard tap" onclick="nav('param')"><div class="mid"><div class="nm">RBC</div><div class="now tnum">6.1 <small>×10⁶/µL</small></div><div class="last">Last 19 Jun</div></div><svg class="spark" viewBox="0 0 80 38" id="sp3"></svg><div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          <div class="pcard tap" onclick="nav('param')"><div class="mid"><div class="nm">Platelets</div><div class="now tnum">320 <small>×10³/µL</small></div><div class="last">Last 19 Jun</div></div><svg class="spark" viewBox="0 0 80 38" id="sp4"></svg><div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          <div class="pcard tap" onclick="nav('param')"><div class="mid"><div class="nm">MCV</div><div class="now tnum">86 <small>fL</small></div><div class="last">Last 19 Jun</div></div><svg class="spark" viewBox="0 0 80 38" id="sp5"></svg><div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        </div>
+        <div class="drill-space"></div>
+      </div>
+    </section>
+
+    <!-- ===================== PARAMETER DETAIL (Hemoglobin) ===================== -->
+    <section class="screen" data-s="param">
+      <div class="bhead"><button class="back" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>CBC</button><div class="htitle">Hemoglobin</div></div>
+      <div class="pad" style="padding-top:10px">
+        <div class="bigchart">
+          <div class="now tnum">14.2 <small>g/dL</small></div>
+          <div class="when">Latest · 19 Jun 2026 · Papaya</div>
+          <div class="chart" id="big-chart" style="margin-top:14px"></div>
+          <div class="axis"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span></div>
+          <div class="range-foot">
+            <div class="rf"><div class="v tnum">14.2</div><div class="k">Latest</div></div>
+            <div class="rf"><div class="v tnum">14.2</div><div class="k">Highest</div></div>
+            <div class="rf"><div class="v tnum">12.9</div><div class="k">Lowest</div></div>
+            <div class="rf"><div class="v tnum">6</div><div class="k">Records</div></div>
+          </div>
+        </div>
+        <div class="rangesel">
+          <button onclick="rng(this)">1M</button><button onclick="rng(this)">3M</button><button class="on" onclick="rng(this)">6M</button><button onclick="rng(this)">12M</button><button onclick="rng(this)">All</button>
+        </div>
+        <div class="slabel"><div class="t" style="font-size:17px">All Records</div></div>
+        <div class="dtable">
+          <div class="dthead"><span>Date</span><span>Value</span><span>Request</span><span></span></div>
+          <div class="dtrow tap" onclick="nav('report')"><span class="d">19 Jun</span><span class="v tnum">14.2</span><span class="rq">LT-2049</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          <div class="dtrow tap" onclick="nav('report')"><span class="d">15 May</span><span class="v tnum">14.0</span><span class="rq">LT-2019</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          <div class="dtrow tap" onclick="nav('report')"><span class="d">18 Apr</span><span class="v tnum">13.8</span><span class="rq">LT-1998</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          <div class="dtrow tap" onclick="nav('report')"><span class="d">12 Mar</span><span class="v tnum">13.4</span><span class="rq">LT-1971</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          <div class="dtrow revoked"><span class="d">21 Feb</span><span class="v tnum">13.1</span><span class="rq">Result revoked</span><span class="chev"></span></div>
+          <div class="dtrow tap" onclick="nav('report')"><span class="d">14 Jan</span><span class="v tnum">12.9</span><span class="rq">LT-1925</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+        </div>
+        <div class="drill-space"></div>
+      </div>
+    </section>
+
+    <!-- ===================== TEXT REPORT VIEWER ===================== -->
+    <section class="screen" data-s="report">
+      <div class="bhead"><button class="back" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Back</button><div class="htitle">Report</div><div class="right"><button class="icobtn" onclick="toast('Share report')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3v13M12 3l-4 4M12 3l4 4" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" stroke-linecap="round"/></svg></button></div></div>
+      <div class="pad" style="padding-top:12px">
+        <div class="actbar">
+          <button class="btn btn-ghost" onclick="toast('Opening original request LT-2028')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M9 5h7a2 2 0 0 1 2 2v12H6V7a2 2 0 0 1 2-2" stroke-linejoin="round"/><path d="M9 5a1.5 1.5 0 0 1 3 0M9 5h3" stroke-linecap="round"/></svg>Request</button>
+          <button class="btn btn-primary" onclick="toast('Downloading PDF…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 19h14" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</button>
+        </div>
+        <div class="doc">
+          <h2>Culture &amp; Sensitivity</h2>
+          <div class="meta">Maya · Elephant · LT-2028 · Final Report</div>
+          <div class="kv"><span>Reported</span><b>02 Jun 2026</b></div>
+          <div class="kv"><span>Sample</span><b>Swab · SMP-1842</b></div>
+          <div class="kv"><span>Lab</span><b>Central Reference Lab</b></div>
+          <h3>Specimen</h3>
+          <p>Deep wound swab received in transport medium, good condition. Cultured aerobically at 37 °C for 48 hours.</p>
+          <h3>Findings</h3>
+          <p>Moderate growth of a single organism isolated. Gram-negative bacilli on microscopy. No anaerobic growth detected.</p>
+          <h3>Organism</h3>
+          <p><b>Pseudomonas aeruginosa</b> — moderate growth.</p>
+          <h3>Sensitivity</h3>
+          <p>Susceptible: Gentamicin, Ciprofloxacin, Ceftazidime. Resistant: Amoxicillin, Tetracycline.</p>
+          <h3>Comments</h3>
+          <p>Results reported as observed. No interpretation provided — refer to attending veterinarian for clinical correlation.</p>
+        </div>
+        <div class="drill-space"></div>
+      </div>
+    </section>
+
+    <!-- ===================== EMPTY STATE (demo) ===================== -->
+    <section class="screen" data-s="empty">
+      <div class="bhead"><button class="back" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Back</button><div class="htitle">Comparison</div></div>
+      <div class="empty">
+        <div class="e">📈</div>
+        <h3>Not enough records to compare</h3>
+        <p>This animal has only one CBC result in the selected range. Trends and comparisons appear once there are two or more records.</p>
+        <button class="btn btn-primary" style="max-width:230px;margin:0 auto" onclick="sheet('sheet-range')">Widen date range</button>
+      </div>
+    </section>
+
+  </div><!-- /vp -->
+
+  <!-- bottom nav (home + lists) -->
+  <nav class="nav" id="nav">
+    <button class="t" onclick="toast('Requests')"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 4h8a2 2 0 0 1 2 2v14H6V6a2 2 0 0 1 2-2" stroke-linejoin="round"/><path d="M9 9h6M9 13h6M9 17h3" stroke-linecap="round"/></svg></span>Requests</button>
+    <button class="t" onclick="toast('Samples')"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 3h6M10 3v7l-3 6.5A2.4 2.4 0 0 0 9 20h6a2.4 2.4 0 0 0 2-3.5L14 10V3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Samples</button>
+    <button class="t" onclick="toast('Tests')"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 3h6M10 3v6L5.5 17A2.5 2.5 0 0 0 7.7 21h8.6a2.5 2.5 0 0 0 2.2-4L14 9V3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Tests</button>
+    <button class="t" onclick="toast('Storage')"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M12 4v16" stroke-linecap="round"/></svg></span>Storage</button>
+    <button class="t on"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M5 3v16a2 2 0 0 0 2 2h14M9 16l3-4 3 3 4-6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Reports</button>
+  </nav>
+
+  <!-- scrim + sheets -->
+  <div class="scrim" id="scrim" onclick="closeSheet()"></div>
+
+  <div class="sheet" id="sheet-site"><div class="grab"></div><h3>Site</h3><div class="body">
+    <div class="opt sel" onclick="pickSite(this,'Gagna')">Gagna Site<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    <div class="opt" onclick="pickSite(this,'Central')">Central Reference Lab<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    <div class="opt" onclick="pickSite(this,'All Sites')">All Sites<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+  </div></div>
+
+  <div class="sheet" id="sheet-range"><div class="grab"></div><h3>Date Range</h3><div class="body">
+    <div class="opt" onclick="chooseRange(this,'Last 30 Days')">Last 30 Days<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    <div class="opt" onclick="chooseRange(this,'Last 3 Months')">Last 3 Months<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    <div class="opt sel" onclick="chooseRange(this,'Last 6 Months')">Last 6 Months<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    <div class="opt" onclick="chooseRange(this,'Last 12 Months')">Last 12 Months<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    <div class="opt" onclick="chooseRange(this,'Custom Range')">Custom Range…<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+  </div></div>
+
+  <div class="sheet" id="sheet-test"><div class="grab"></div><h3>Compare which test?</h3><div class="body">
+    <div class="opt sel" onclick="closeSheet()">CBC<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    <div class="opt" onclick="closeSheet();toast('Liver Panel loaded')">Liver Panel (LFT)<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    <div class="opt" onclick="closeSheet();toast('Urine Analysis loaded')">Urine Analysis<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+  </div></div>
+
+  <div class="sheet" id="sheet-dates"><div class="grab"></div><h3>Compare dates</h3><div class="body">
+    <div style="font-size:13px;color:var(--muted);font-weight:600;margin:0 4px 12px">Pick any two records to compare side by side.</div>
+    <div class="opt sel" onclick="closeSheet()">19 Jun 2026 (Current)<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    <div class="opt sel" onclick="closeSheet()">14 Jan 2026 (Oldest)<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    <div class="opt" onclick="closeSheet()">15 May 2026<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+  </div></div>
+
+  <div class="sheet" id="sheet-filter"><div class="grab"></div><h3>Filters</h3><div class="body">
+    <div style="font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.04em;margin:2px 4px 9px">DATE RANGE</div>
+    <div class="opt" onclick="pickf(this)">Last 30 Days<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    <div class="opt" onclick="pickf(this)">Last 3 Months<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    <div class="opt sel" onclick="pickf(this)">Last 6 Months<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    <div style="font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.04em;margin:16px 4px 9px">SPECIES</div>
+    <div class="opt sel" onclick="pickf(this)">All Species<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    <div class="opt" onclick="pickf(this)">Mammals<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    <div class="opt" onclick="pickf(this)">Birds<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    <div class="opt" onclick="pickf(this)">Reptiles<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    <div style="font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.04em;margin:16px 4px 9px">TEST</div>
+    <div class="opt sel" onclick="pickf(this)">All Tests<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    <div class="opt" onclick="pickf(this)">CBC<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    <div class="opt" onclick="pickf(this)">Liver Panel<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+  </div><div class="sh-foot" style="padding:14px 20px 24px;border-top:1px solid var(--hair)"><button class="btn btn-primary" onclick="closeSheet();toast('Filters applied')">Apply Filters</button></div></div>
+
+  <div class="sheet" id="sheet-species"><div class="grab"></div><h3>Species</h3><div class="body">
+    <div class="opt sel" onclick="pickRange(this,'All Species')">All Species<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    <div class="opt" onclick="pickRange(this,'Lion')">Lion<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    <div class="opt" onclick="pickRange(this,'Elephant')">Elephant<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    <div class="opt" onclick="pickRange(this,'Bird')">Birds<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    <div class="opt" onclick="pickRange(this,'Reptile')">Reptiles<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+  </div></div>
+
+  <div class="sheet" id="sheet-recent"><div class="grab"></div><h3 id="rec-title">Recent tests</h3><div class="body" id="rec-body"></div></div>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<script>
+/* ---------- router ---------- */
+let stack=['home'];
+const homeScreens=['home','list-animals','list-tests','list-reports','list-pending'];
+function render(){
+  const id=stack[stack.length-1];
+  document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.dataset.s===id));
+  const el=document.querySelector('[data-s="'+id+'"]'); if(el) el.scrollTop=0;
+  document.getElementById('nav').style.display = id==='home' ? 'flex':'none';
+}
+function nav(id){stack.push(id);render();}
+function back(){if(stack.length>1){stack.pop();render();}}
+function openAnimal(key){
+  const map={papaya:['🦁','Papaya','Lion · ♂ · 6y · Gagna Site','linear-gradient(135deg,#ffe8c2,#ffd29e)'],
+             maya:['🐘','Maya','Elephant · ♀ · 22y · Gagna Site','linear-gradient(135deg,#d9e6d2,#b9d6c0)'],
+             kaa:['🐍','Kaa','Reticulated Python · 9y · Gagna Site','linear-gradient(135deg,#d7e9e7,#aed9d2)']};
+  const a=map[key]||map.papaya;
+  document.getElementById('a-photo').textContent=a[0];
+  document.getElementById('a-photo').style.background=a[3];
+  document.getElementById('a-name').textContent=a[1];
+  document.getElementById('a-sub').textContent=a[2];
+  // reset to summary tab
+  document.querySelectorAll('#a-seg button').forEach((b,i)=>b.classList.toggle('on',i===0));
+  document.querySelectorAll('[data-atab]').forEach((d,i)=>d.style.display=i===0?'':'none');
+  nav('animal');
+}
+/* ---------- tabs / toggles ---------- */
+function atab(btn,which){document.querySelectorAll('#a-seg button').forEach(b=>b.classList.remove('on'));btn.classList.add('on');document.querySelectorAll('[data-atab]').forEach(d=>d.style.display=d.dataset.atab===which?'':'none');}
+function cmpView(btn,v){btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('on'));btn.classList.add('on');document.querySelectorAll('[data-cmpv]').forEach(d=>d.style.display=d.dataset.cmpv===v?'':'none');}
+function rng(btn){btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('on'));btn.classList.add('on');toast('Range: '+btn.textContent);}
+/* ---------- sheets ---------- */
+let active=null;
+function sheet(id){active=id;document.getElementById('scrim').classList.add('on');document.getElementById(id).classList.add('on');}
+function closeSheet(){document.getElementById('scrim').classList.remove('on');if(active)document.getElementById(active).classList.remove('on');active=null;}
+function pickSite(el,name){el.parentElement.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');closeSheet();toast(name+' · module re-scoped');}
+function pickRange(el,name){el.parentElement.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');closeSheet();toast(name+' · updated');}
+function pickf(el){let n=el;while(n&&n.classList&&n.classList.contains('opt')){n.classList.remove('sel');n=n.previousElementSibling;}n=el.nextElementSibling;while(n&&n.classList&&n.classList.contains('opt')){n.classList.remove('sel');n=n.nextElementSibling;}el.classList.add('sel');}
+let rangeTrigger=null;
+function openRange(btn){rangeTrigger=btn;sheet('sheet-range');}
+function chooseRange(el,label){el.parentElement.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');if(rangeTrigger){const rl=rangeTrigger.querySelector('.rl');if(rl)rl.textContent=label;}closeSheet();toast(label+' applied');}
+/* ---------- toast ---------- */
+let tT;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('on'),1900);}
+/* ---------- charts ---------- */
+function linePath(vals,w,h,pad){const mn=Math.min(...vals),mx=Math.max(...vals),rg=(mx-mn)||1;const n=vals.length;return vals.map((v,i)=>{const x=pad+(w-2*pad)*(i/(n-1));const y=h-pad-(h-2*pad)*((v-mn)/rg);return (i?'L':'M')+x.toFixed(1)+' '+y.toFixed(1);}).join(' ');}
+function drawTrend(elId,vals,color){const el=document.getElementById(elId);if(!el)return;const w=320,h=120,pad=14;const d=linePath(vals,w,h,pad);const area=d+` L${w-pad} ${h-pad} L${pad} ${h-pad} Z`;const mn=Math.min(...vals),mx=Math.max(...vals),rg=(mx-mn)||1;const lx=w-pad,ly=h-pad-(h-2*pad)*((vals[vals.length-1]-mn)/rg);
+  el.innerHTML=`<svg viewBox="0 0 ${w} ${h}" style="width:100%"><defs><linearGradient id="g${elId}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${color}" stop-opacity=".22"/><stop offset="1" stop-color="${color}" stop-opacity="0"/></linearGradient></defs><path d="${area}" fill="url(#g${elId})"/><path d="${d}" fill="none" stroke="${color}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="${lx}" cy="${ly}" r="4.5" fill="#fff" stroke="${color}" stroke-width="3"/></svg>`;}
+function drawSpark(id,vals,color){const el=document.getElementById(id);if(!el)return;const d=linePath(vals,80,38,4);el.innerHTML=`<path d="${d}" fill="none" stroke="${color}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`;el.setAttribute('fill','none');}
+/* init charts */
+drawTrend('cmp-chart',[12.9,13.1,13.4,13.8,14.0,14.2],'#00AFD6');
+drawTrend('cmp-chart2',[6.7,6.9,7.1,7.5,8.0,8.4],'#00ABAB');
+drawTrend('big-chart',[12.9,13.1,13.4,13.8,14.0,14.2],'#37BD69');
+drawSpark('sp1',[12.9,13.4,13.8,14.0,14.2],'#00AFD6');
+drawSpark('sp2',[6.7,7.1,7.5,8.0,8.4],'#00ABAB');
+drawSpark('sp3',[5.7,5.8,5.9,6.0,6.1],'#8479F9');
+drawSpark('sp4',[260,275,285,300,320],'#E4B819');
+drawSpark('sp5',[83,84,85,85,86],'#FA6140');
+
+/* ---------- Most Tested Animals ---------- */
+const MT=[
+ {key:'maya',id:'ELE-11',common:'Maya',sci:'Loxodonta africana',loc:'Savannah Enclosure · Sec 52 · Gagna',sex:'F',emoji:'🐘',bg:'linear-gradient(135deg,#d9e6d2,#b9d6c0)',tests:84,reqs:18,recent:[
+   {name:'Liver Panel (LFT)',ago:'6d ago',req:'LT-2038',by:'Dr. Rao',date:'16 Jun 2026',subs:5,vals:['ALT <b>41</b>','AST <b>68</b>','ALP <b>96</b>','GGT <b>14</b>'],prev:'5×'},
+   {name:'CBC',ago:'9d ago',req:'LT-2031',by:'Dr. Rao',date:'13 Jun 2026',subs:6,vals:['Hb <b>13.6</b>','WBC <b>9.1</b>','RBC <b>5.4</b>','PLT <b>295</b>'],prev:'8×'},
+   {name:'Culture & Sensitivity',ago:'21d ago',req:'LT-2028',by:'Dr. Mehta',date:'01 Jun 2026',subs:1,vals:[],narr:'Pseudomonas aeruginosa — moderate growth. Susceptible: Gentamicin, Ciprofloxacin.',prev:null}]},
+ {key:'papaya',id:'LION-04',common:'Papaya',sci:'Panthera leo',loc:'Big Cat Enclosure · Sec 54 · Gagna',sex:'M',emoji:'🦁',bg:'linear-gradient(135deg,#ffe8c2,#ffd29e)',tests:62,reqs:14,recent:[
+   {name:'CBC',ago:'2d ago',req:'LT-2049',by:'Dr. Rao',date:'19 Jun 2026',subs:6,vals:['Hb <b>14.2</b>','WBC <b>8.4</b>','RBC <b>6.1</b>','PLT <b>320</b>','MCV <b>86</b>'],prev:'8×'},
+   {name:'Urine Analysis',ago:'10d ago',req:'LT-2041',by:'Dr. Rao',date:'12 Jun 2026',subs:4,vals:['pH <b>6.5</b>','SG <b>1.020</b>','Protein <b>Neg</b>'],prev:'4×'},
+   {name:'Liver Panel (LFT)',ago:'15d ago',req:'LT-2036',by:'Dr. Mehta',date:'07 Jun 2026',subs:5,vals:['ALT <b>52</b>','AST <b>61</b>','ALP <b>88</b>'],prev:'5×'}]},
+ {key:'ember',id:'LION-08',common:'Ember',sci:'Panthera tigris',loc:'Big Cat Enclosure · Sec 55 · Gagna',sex:'F',emoji:'🐯',bg:'linear-gradient(135deg,#ffe0b8,#ffcf94)',tests:27,reqs:7,recent:[
+   {name:'CBC',ago:'5d ago',req:'LT-2044',by:'Dr. Rao',date:'17 Jun 2026',subs:6,vals:['Hb <b>15.1</b>','WBC <b>7.8</b>','PLT <b>340</b>'],prev:'6×'},
+   {name:'Biochemistry',ago:'12d ago',req:'LT-2030',by:'Dr. Mehta',date:'10 Jun 2026',subs:7,vals:['Glucose <b>96</b>','Urea <b>34</b>','Creat <b>1.4</b>'],prev:'3×'}]},
+ {key:'kaa',id:'REP-19',common:'Kaa',sci:'Malayopython reticulatus',loc:'Reptile House · Sec 12 · Gagna',sex:'M',emoji:'🐍',bg:'linear-gradient(135deg,#d7e9e7,#aed9d2)',tests:21,reqs:6,recent:[
+   {name:'Culture & Sensitivity',ago:'9d ago',req:'LT-2033',by:'Dr. Rao',date:'13 Jun 2026',subs:1,vals:[],narr:'No significant growth after 48h aerobic incubation.',prev:'2×'}]},
+ {key:'rio',id:'BI23000123',common:'Rio',sci:'Ara macao',loc:'Birds Enclosure · Sec 54 · Gagna',sex:'M',emoji:'🦜',bg:'linear-gradient(135deg,#ffd9c2,#ff9e7a)',tests:18,reqs:5,recent:[
+   {name:'CBC',ago:'4d ago',req:'LT-2046',by:'Dr. Rao',date:'18 Jun 2026',subs:5,vals:['Hb <b>12.8</b>','WBC <b>11.2</b>','PLT <b>260</b>'],prev:'3×'},
+   {name:'Fecal Float',ago:'19d ago',req:'LT-2027',by:'Dr. Mehta',date:'03 Jun 2026',subs:1,vals:[],narr:'No ova or parasites seen.',prev:null}]},
+ {key:'tula',id:'REP-07',common:'Tula',sci:'Chelonoidis niger',loc:'Reptile House · Sec 10 · Gagna',sex:'F',emoji:'🐢',bg:'linear-gradient(135deg,#dcecd3,#bcdcae)',tests:15,reqs:5,recent:[
+   {name:'Biochemistry',ago:'8d ago',req:'LT-2035',by:'Dr. Rao',date:'14 Jun 2026',subs:7,vals:['Ca <b>11.2</b>','Phos <b>5.1</b>','UA <b>3.8</b>'],prev:'4×'}]},
+ {key:'coral',id:'AVE-50',common:'Coral',sci:'Phoenicopterus roseus',loc:'Birds Enclosure · Sec 54 · Gagna',sex:'F',emoji:'🦩',bg:'linear-gradient(135deg,#ffdbe4,#ffc1d2)',tests:12,reqs:3,recent:[
+   {name:'Histopathology',ago:'14d ago',req:'LT-2024',by:'Dr. Mehta',date:'08 Jun 2026',subs:1,vals:[],narr:'Mild chronic inflammation of integumentary tissue. Reported as observed.',prev:'2×'}]},
+ {key:'bandit',id:'MAM-09',common:'Bandit',sci:'Ailurus fulgens',loc:'Himalaya Enclosure · Sec 41 · Gagna',sex:'M',emoji:'🦝',bg:'linear-gradient(135deg,#f3ddc6,#e6c1a0)',tests:11,reqs:4,recent:[
+   {name:'Fecal Float',ago:'11d ago',req:'LT-2032',by:'Dr. Rao',date:'11 Jun 2026',subs:1,vals:[],narr:'Light Coccidia oocysts present.',prev:'3×'}]},
+ {key:'nova',id:'MAM-22',common:'Nova',sci:'Aonyx cinereus',loc:'Wetland Enclosure · Sec 33 · Gagna',sex:'F',emoji:'🦦',bg:'linear-gradient(135deg,#e7e0ff,#d3c4ff)',tests:9,reqs:4,recent:[
+   {name:'Urine Analysis',ago:'21d ago',req:'LT-2026',by:'Dr. Mehta',date:'01 Jun 2026',subs:4,vals:['pH <b>6.8</b>','SG <b>1.018</b>'],prev:'2×'}]},
+ {key:'pebble',id:'AVE-61',common:'Pebble',sci:'Spheniscus demersus',loc:'Aquatic Enclosure · Sec 20 · Gagna',sex:'M',emoji:'🐧',bg:'linear-gradient(135deg,#d3e6f7,#aecdec)',tests:8,reqs:3,recent:[
+   {name:'Culture & Sensitivity',ago:'30d ago',req:'LT-2011',by:'Dr. Rao',date:'23 May 2026',subs:1,vals:[],narr:'Aspergillus fumigatus isolated. Reported as observed.',prev:null}]}
+];
+const MTKEYS={maya:1,papaya:1,kaa:1};
+function mtCard(a,i){
+  const r=a.recent[0];
+  const more=a.recent.length>1?`<span class="mt-more">+${a.recent.length-1}</span>`:'';
+  const detailKey=MTKEYS[a.key]?a.key:'papaya';
+  return `<div class="mt-card">
+    <div class="mt-top" onclick="openAnimal('${detailKey}')">
+      <div class="mt-pic"><div class="mt-photo" style="background:${a.bg}">${a.emoji}</div><div class="mt-sex">${a.sex}</div></div>
+      <div class="mt-idb"><div class="mt-idline">ID: ${a.id}</div><div class="mt-common">${a.common}</div><div class="mt-sci">${a.sci}</div><div class="mt-loc">${a.loc}</div></div>
+    </div>
+    <div class="mt-foot" onclick="openRecent('${a.key}')">
+      <div class="mt-metric"><span class="mv tnum">${a.tests}</span><span class="mk">Tests</span></div>
+      <div class="mt-metric"><span class="mv tnum">${a.reqs}</span><span class="mk">Requests</span></div>
+      <div class="mt-recent"><span class="mt-rchip">${r.name.split(' (')[0]} · ${r.ago}</span>${more}<span class="arr">›</span></div>
+    </div>
+  </div>`;
+}
+function renderMT(){document.getElementById('mt-list').innerHTML=MT.map(mtCard).join('');}
+function openRecent(key){
+  const a=MT.find(x=>x.key===key); if(!a) return;
+  document.getElementById('rec-title').textContent='Recent tests · '+a.common;
+  document.getElementById('rec-body').innerHTML=a.recent.map(t=>{
+    const body = t.vals && t.vals.length ? `<div class="vals">${t.vals.map(v=>`<span class="val">${v}</span>`).join('')}</div>` : (t.narr?`<div class="narr">${t.narr}</div>`:'');
+    const prev = t.prev ? `<div class="prev"><span class="ptxt">Performed ${t.prev} before</span><a onclick="closeSheet();nav('param')">See previous results ›</a></div>`
+                        : `<div class="prev"><span class="ptxt">First time performed</span></div>`;
+    return `<div class="rtcard"><div class="h"><div><div class="tn">${t.name}</div><div class="meta">${t.req} · by ${t.by} · ${t.date}<br>${t.subs} sub-test${t.subs>1?'s':''}</div></div><span class="mt-rchip">${t.ago}</span></div>${body}${prev}</div>`;
+  }).join('');
+  sheet('sheet-recent');
+}
+function pickChip(btn){btn.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));btn.classList.add('on');toast('Sorted by '+btn.textContent);}
+renderMT();
+
+render();
+</script>
+</body>
+</html>
