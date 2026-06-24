@@ -131,27 +131,24 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .acard .last{font-size:12px;color:var(--ink2);font-weight:600;margin-top:10px}
 /* most tested animals — Figma identity card + lab-insight footer */
 .mt-sub{font-size:13px;color:var(--muted);font-weight:500;margin:-4px 4px 14px}
-.mt-card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;margin-bottom:13px}
-.mt-top{display:flex;gap:14px;padding:15px 16px 13px;align-items:flex-start}
-.mt-top:active{background:#f6f9f7}
-.mt-pic{display:flex;flex-direction:column;align-items:center;gap:8px;flex:0 0 auto}
-.mt-photo{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;font-size:31px}
-.mt-sex{font-size:12px;font-weight:600;color:var(--navy);background:var(--accent-soft);min-width:30px;height:24px;padding:0 7px;border-radius:8px;display:grid;place-items:center}
+.mt-card{background:var(--card);border-radius:20px;box-shadow:var(--sh);padding:8px;margin-bottom:13px}
+.mt-hd{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:15px;background:var(--accent-soft)}
+.mt-hd:active{background:#dcefe4}
+.mt-pic{display:flex;flex-direction:column;align-items:center;gap:6px;flex:0 0 auto}
+.mt-photo{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-size:25px}
+.mt-sex{font-size:11.5px;font-weight:600;color:var(--navy);background:#fff;min-width:28px;height:22px;padding:0 6px;border-radius:7px;display:grid;place-items:center;box-shadow:var(--sh)}
 .mt-idb{flex:1;min-width:0}
-.mt-idline{font-size:15.5px;font-weight:600;color:var(--ink)}
-.mt-common{font-size:14.5px;color:var(--ink2);font-weight:500;margin-top:1px}
-.mt-sci{font-size:13px;color:var(--muted);font-style:italic;margin-top:1px}
-.mt-loc{font-size:12.5px;color:var(--muted);font-weight:500;margin-top:5px;line-height:1.4}
-.mt-rank{flex:0 0 auto;font-size:12px;font-weight:600;color:var(--faint)}
-.mt-foot{display:flex;align-items:center;padding:12px 16px;background:#f4f8f6;border-top:1px solid var(--hair)}
-.mt-foot:active{background:#eef3f0}
-.mt-metric{display:flex;flex-direction:column;gap:1px;padding-right:20px}
-.mt-metric .mv{font-size:16px;font-weight:600;color:var(--ink)}
-.mt-metric .mk{font-size:11px;color:var(--muted);font-weight:500}
-.mt-recent{margin-left:auto;display:flex;align-items:center;gap:7px}
-.mt-rchip{display:inline-flex;align-items:center;gap:6px;background:var(--accent-soft);color:var(--on-green);font-size:12px;font-weight:600;padding:6px 11px;border-radius:999px;white-space:nowrap}
-.mt-more{background:var(--navy);color:#fff;font-size:11px;font-weight:600;padding:5px 8px;border-radius:8px}
-.mt-foot .arr{color:var(--muted);font-size:17px;margin-left:5px}
+.mt-idline{font-size:16px;font-weight:600;color:var(--ink)}
+.mt-common{font-size:15px;color:var(--ink2);font-weight:500;margin-top:2px}
+.mt-chev{color:var(--muted);flex:0 0 auto;display:grid;place-items:center}
+.mt-chev svg{width:20px;height:20px}
+.mt-body{padding:13px 14px 11px}
+.mt-recent{font-size:14.5px;font-weight:500;color:var(--muted)}
+.mt-recent b{color:var(--accent);font-weight:600}
+.mt-pills{display:flex;gap:10px;margin-top:12px}
+.mt-pill{display:inline-flex;align-items:center;gap:6px;padding:9px 15px;border-radius:999px;background:#f1f4f2;box-shadow:inset 0 0 0 1px var(--hair)}
+.mt-pill b{font-size:15px;font-weight:600;color:var(--ink)}
+.mt-pill em{font-size:14px;color:var(--ink2);font-weight:500;font-style:normal}
 /* recent-tests bottom sheet */
 .rtcard{background:var(--card);border-radius:16px;box-shadow:var(--sh);padding:15px 16px;margin-bottom:12px}
 .rtcard .h{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
@@ -925,19 +922,20 @@ const MT=[
    {name:'Culture & Sensitivity',ago:'30d ago',req:'LT-2011',by:'Dr. Rao',date:'23 May 2026',subs:1,vals:[],narr:'Aspergillus fumigatus isolated. Reported as observed.',prev:null}]}
 ];
 const MTKEYS={maya:1,papaya:1,kaa:1};
+const CN={maya:'African Elephant',papaya:'African Lion',ember:'Bengal Tiger',kaa:'Reticulated Python',rio:'Scarlet Macaw',tula:'Galápagos Tortoise',coral:'Greater Flamingo',bandit:'Red Panda',nova:'Asian Otter',pebble:'African Penguin'};
 function mtCard(a,i){
-  const r=a.recent[0];
-  const more=a.recent.length>1?`<span class="mt-more">+${a.recent.length-1}</span>`:'';
+  const more=a.recent.length>1?`, +${a.recent.length-1}`:'';
+  const rname=a.recent[0].name.split(' (')[0];
   const detailKey=MTKEYS[a.key]?a.key:'papaya';
   return `<div class="mt-card">
-    <div class="mt-top" onclick="openAnimal('${detailKey}')">
+    <div class="mt-hd" onclick="openAnimal('${detailKey}')">
       <div class="mt-pic"><div class="mt-photo" style="background:${a.bg}">${a.emoji}</div><div class="mt-sex">${a.sex}</div></div>
-      <div class="mt-idb"><div class="mt-idline">ID: ${a.id}</div><div class="mt-common">${a.common}</div><div class="mt-sci">${a.sci}</div><div class="mt-loc">${a.loc}</div></div>
+      <div class="mt-idb"><div class="mt-idline">ID: ${a.id}</div><div class="mt-common">${CN[a.key]||a.sci}</div></div>
+      <div class="mt-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
     </div>
-    <div class="mt-foot" onclick="openRecent('${a.key}')">
-      <div class="mt-metric"><span class="mv tnum">${a.tests}</span><span class="mk">Tests</span></div>
-      <div class="mt-metric"><span class="mv tnum">${a.reqs}</span><span class="mk">Requests</span></div>
-      <div class="mt-recent"><span class="mt-rchip">${r.name.split(' (')[0]} · ${r.ago}</span>${more}<span class="arr">›</span></div>
+    <div class="mt-body">
+      <div class="mt-recent" onclick="openRecent('${a.key}')">Recent Test : <b>${rname}${more}</b></div>
+      <div class="mt-pills"><span class="mt-pill"><b>${a.tests}</b><em>Tests</em></span><span class="mt-pill"><b>${a.reqs}</b><em>Requests</em></span></div>
     </div>
   </div>`;
 }
