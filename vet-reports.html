@@ -244,10 +244,20 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .chip.on{background:var(--ink);color:#fff}
 
 /* ===== animal detail header ===== */
-.ahero{padding:6px 18px 4px;text-align:center}
-.ahero .ph{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;font-size:48px;margin:6px auto 12px;box-shadow:var(--sh)}
-.ahero .nm{font-size:27px;font-weight:600;letter-spacing:-.5px}
-.ahero .sub{font-size:14px;color:var(--muted);font-weight:600;margin-top:3px}
+.ahero{position:relative;min-height:372px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}
+.ahero-photo{position:absolute;inset:0;display:grid;place-items:center;font-size:190px;background:linear-gradient(135deg,#ffe8c2,#ffd29e)}
+.ahero-photo::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 70% 30%,rgba(0,0,0,.05),rgba(0,0,0,.42) 100%)}
+.ahero-bar{position:absolute;top:0;left:0;right:0;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:12px 14px}
+.ahero-bar .hbar-r{display:flex;gap:8px}
+.hbtn{width:38px;height:38px;border:none;border-radius:50%;background:rgba(0,0,0,.22);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:#fff;display:grid;place-items:center;cursor:pointer}
+.hbtn svg{width:21px;height:21px}
+.ahero-card{position:relative;z-index:2;margin:0 16px 0;padding:18px 18px 18px;border-radius:18px;background:rgba(31,81,91,.52);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px);border:1px solid rgba(255,255,255,.18);color:#fff}
+.ahero-card .ah-name{font-size:29px;font-weight:600;letter-spacing:-.6px;line-height:1.05}
+.ahero-card .ah-sci{font-size:14.5px;font-style:italic;color:rgba(255,255,255,.82);margin:2px 0 9px}
+.ah-meta{display:flex;flex-direction:column;gap:5px}
+.ah-meta .r{font-size:15px;color:rgba(255,255,255,.78)}
+.ah-meta .r b{font-weight:600;color:#fff}
+.ahero-tag{position:relative;z-index:2;align-self:flex-start;margin:12px 0 16px 16px;padding:8px 18px;border-radius:11px;background:#fff;color:var(--error,#E93353);font-size:15px;font-weight:600;box-shadow:0 4px 14px rgba(0,0,0,.18)}
 .summary-metrics{display:flex;background:var(--card);border-radius:var(--r);box-shadow:var(--sh);margin:16px 0 4px;overflow:hidden}
 .summary-metrics .m{flex:1;text-align:center;padding:14px 4px;position:relative}
 .summary-metrics .m+.m:before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:1px;background:var(--hair)}
@@ -567,11 +577,22 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 
     <!-- ===================== ANIMAL DETAIL ===================== -->
     <section class="screen" data-s="animal">
-      <div class="bhead"><button class="back" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Back</button><div class="right"><button class="icobtn" onclick="toast('Share animal record')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3v13M12 3l-4 4M12 3l4 4" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" stroke-linecap="round"/></svg></button></div></div>
       <div class="ahero">
-        <div class="ph" id="a-photo" style="background:linear-gradient(135deg,#ffe8c2,#ffd29e)">🦁</div>
-        <div class="nm" id="a-name">Papaya</div>
-        <div class="sub" id="a-sub">Lion · ♂ · 6y · Gagna Site</div>
+        <div class="ahero-photo" id="a-photo">🦁</div>
+        <div class="ahero-bar">
+          <button class="hbtn" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="hbar-r">
+            <button class="hbtn" onclick="toast('Added to favourites')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 17.9 6.8 19.6l1-5.8L3.5 9.7l5.9-.9z" stroke-linejoin="round"/></svg></button>
+            <button class="hbtn" onclick="toast('Scan QR code')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="3" width="7" height="7" rx="1.4"/><rect x="14" y="3" width="7" height="7" rx="1.4"/><rect x="3" y="14" width="7" height="7" rx="1.4"/><path d="M14 14h3v3M21 14v7h-7" stroke-linecap="round"/></svg></button>
+            <button class="hbtn" onclick="toast('More options')"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg></button>
+          </div>
+        </div>
+        <div class="ahero-card">
+          <div class="ah-name" id="a-name">Papaya</div>
+          <div class="ah-sci" id="a-sci">Panthera leo</div>
+          <div class="ah-meta" id="a-meta"></div>
+        </div>
+        <div class="ahero-tag" id="a-tag">Individual</div>
       </div>
       <div class="pad">
         <div class="summary-metrics">
@@ -856,14 +877,21 @@ function render(){
 function nav(id){stack.push(id);render();}
 function back(){if(stack.length>1){stack.pop();render();}}
 function openAnimal(key){
-  const map={papaya:['🦁','Papaya','Lion · ♂ · 6y · Gagna Site','linear-gradient(135deg,#ffe8c2,#ffd29e)'],
-             maya:['🐘','Maya','Elephant · ♀ · 22y · Gagna Site','linear-gradient(135deg,#d9e6d2,#b9d6c0)'],
-             kaa:['🐍','Kaa','Reticulated Python · 9y · Gagna Site','linear-gradient(135deg,#d7e9e7,#aed9d2)']};
+  const map={
+    papaya:{emoji:'🦁',name:'Papaya',sci:'Panthera leo',grad:'linear-gradient(135deg,#ffe8c2,#ffd29e)',tag:'Individual',
+      meta:[['AID:','AID118/24'],['Common Name:','African Lion'],['Total Count:','1'],['Sex:','Male'],['Life Stage:','Adult'],['Encl:','Savannah Pride'],['Site:','Gagna']]},
+    maya:{emoji:'🐘',name:'Maya',sci:'Loxodonta africana',grad:'linear-gradient(135deg,#d9e6d2,#b9d6c0)',tag:'Individual',
+      meta:[['AID:','AID244/26'],['Common Name:','African Elephant'],['Total Count:','1'],['Sex:','Female'],['Life Stage:','Adult'],['Encl:','Elephant Range'],['Site:','Gagna']]},
+    kaa:{emoji:'🐍',name:'Kaa',sci:'Malayopython reticulatus',grad:'linear-gradient(135deg,#d7e9e7,#aed9d2)',tag:'Individual',
+      meta:[['AID:','AID087/23'],['Common Name:','Reticulated Python'],['Total Count:','1'],['Sex:','Undetermined'],['Life Stage:','Adult'],['Encl:','Reptile House'],['Site:','Gagna']]}
+  };
   const a=map[key]||map.papaya;
-  document.getElementById('a-photo').textContent=a[0];
-  document.getElementById('a-photo').style.background=a[3];
-  document.getElementById('a-name').textContent=a[1];
-  document.getElementById('a-sub').textContent=a[2];
+  document.getElementById('a-photo').textContent=a.emoji;
+  document.getElementById('a-photo').style.background=a.grad;
+  document.getElementById('a-name').textContent=a.name;
+  document.getElementById('a-sci').textContent=a.sci;
+  document.getElementById('a-tag').textContent=a.tag;
+  document.getElementById('a-meta').innerHTML=a.meta.map(r=>`<div class="r">${r[0]} <b>${r[1]}</b></div>`).join('');
   // reset to summary tab
   document.querySelectorAll('#a-seg button').forEach((b,i)=>b.classList.toggle('on',i===0));
   document.querySelectorAll('[data-atab]').forEach((d,i)=>d.style.display=i===0?'':'none');
