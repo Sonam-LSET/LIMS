@@ -516,12 +516,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
       <div class="bhead"><button class="back" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Reports</button><div class="htitle">Animals Tested</div></div>
       <div class="pad" style="padding-top:12px">
         <div style="font-size:14px;color:var(--muted);font-weight:600;margin:4px 4px 12px">48 animals with ≥1 completed test · Gagna · Last 6 Months</div>
-        <div class="card" style="overflow:hidden">
-          <div class="arow tap" onclick="openAnimal('maya')"><div class="ph" style="background:linear-gradient(135deg,#d9e6d2,#b9d6c0)">🐘</div><div class="mid"><div class="nm">Maya</div><div class="sp">Elephant</div><div class="stats"><span><b>84</b> Tests</span><span>Last 12 Jun</span></div></div><div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
-          <div class="arow tap" onclick="openAnimal('papaya')"><div class="ph" style="background:linear-gradient(135deg,#ffe8c2,#ffd29e)">🦁</div><div class="mid"><div class="nm">Papaya</div><div class="sp">Lion</div><div class="stats"><span><b>62</b> Tests</span><span>Last 19 Jun</span></div></div><div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
-          <div class="arow tap" onclick="openAnimal('kaa')"><div class="ph" style="background:linear-gradient(135deg,#d7e9e7,#aed9d2)">🐍</div><div class="mid"><div class="nm">Kaa</div><div class="sp">Python</div><div class="stats"><span><b>21</b> Tests</span><span>Last 13 Jun</span></div></div><div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
-          <div class="arow tap" onclick="openAnimal('papaya')"><div class="ph" style="background:linear-gradient(135deg,#ffdbe4,#ffc1d2)">🦩</div><div class="mid"><div class="nm">Coral</div><div class="sp">Flamingo</div><div class="stats"><span><b>12</b> Tests</span><span>Last 08 Jun</span></div></div><div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
-        </div>
+        <div id="la-list"></div>
         <div class="drill-space"></div>
       </div>
     </section>
@@ -968,7 +963,7 @@ function mtCard(a,i){
   </div>`;
 }
 function toggleMt(el){el.closest('.mt-card').classList.toggle('open');}
-function renderMT(){document.getElementById('mt-list').innerHTML=MT.map(mtCard).join('');}
+function renderMT(){const html=MT.map(mtCard).join('');['mt-list','la-list'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=html;});}
 function openRecent(key){
   const a=MT.find(x=>x.key===key); if(!a) return;
   document.getElementById('rec-title').textContent='Recent tests · '+a.common;
