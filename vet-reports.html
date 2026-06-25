@@ -72,16 +72,16 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .site-sel{display:inline-flex;align-items:center;gap:9px;font-size:23px;font-weight:600;color:var(--navy);letter-spacing:-.4px}
 .site-sel .pin{width:22px;height:22px;color:var(--navy)}
 .site-sel .cv{width:16px;height:16px;color:var(--muted)}
-.statcard{background:#1F515B;border-radius:var(--r);padding:18px 18px 20px;box-shadow:var(--sh);margin-top:4px}
-.sc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-.sc-title{color:#fff;font-size:17px;font-weight:600}
-.sc-range{display:inline-flex;align-items:center;gap:6px;color:#fff;font-size:13.5px;font-weight:600;background:rgba(255,255,255,.13);padding:7px 12px;border-radius:999px}
-.sc-range svg{width:12px;height:12px}
-.sc-stats{display:grid;grid-template-columns:1fr 1fr;gap:18px 14px}
-.sc-stat{text-align:left;transition:.12s var(--ease)}
+.statcard{background:#1F415B;border:.5px solid rgba(0,0,0,.05);border-radius:8px;padding:16px 12px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-top:4px;display:flex;flex-direction:column;gap:12px}
+.sc-head{display:flex;align-items:center;gap:8px;width:100%}
+.sc-title{flex:1;min-width:0;color:#fff;font-size:14px;font-weight:500;letter-spacing:.1px}
+.sc-range{display:inline-flex;align-items:center;gap:4px;color:#fff;font-size:14px;font-weight:500;letter-spacing:.1px;background:none;padding:0}
+.sc-range svg{width:17px;height:17px}
+.sc-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.sc-stat{text-align:left;display:flex;flex-direction:column;gap:4px;transition:.12s var(--ease)}
 .sc-stat:active{transform:scale(.96);opacity:.7}
-.sc-stat .v{font-size:30px;font-weight:600;letter-spacing:-.8px;line-height:1}
-.sc-stat .k{font-size:12.5px;color:rgba(255,255,255,.78);font-weight:500;margin-top:6px}
+.sc-stat .v{font-size:24px;font-weight:600;letter-spacing:0;line-height:normal}
+.sc-stat .k{font-size:12px;color:#EFF5F2;font-weight:400;line-height:normal}
 
 /* filter chips row (Site + Date) — persistent */
 .filters{display:flex;gap:10px;padding:8px 18px 4px;position:sticky;top:0;z-index:20;background:linear-gradient(var(--bg),var(--bg) 70%,rgba(238,241,240,0))}
@@ -482,12 +482,12 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 
       <div class="pad">
         <div class="statcard">
-          <div class="sc-head"><span class="sc-title">Overview</span><button class="sc-range" onclick="openRange(this)"><span class="rl">Last 6 Months</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+          <div class="sc-head"><span class="sc-title">Overview</span><button class="sc-range" onclick="openRange(this)"><span class="rl">Last 30 Days</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
           <div class="sc-stats">
-            <button class="sc-stat" onclick="nav('list-animals')"><div class="v tnum" style="color:#34d8c8">48</div><div class="k">Animals tested</div></button>
-            <button class="sc-stat" onclick="nav('list-tests')"><div class="v tnum" style="color:#52F990">612</div><div class="k">Tests performed</div></button>
-            <button class="sc-stat" onclick="nav('list-reports')"><div class="v tnum" style="color:#7fb8ff">188</div><div class="k">Reports generated</div></button>
-            <button class="sc-stat" onclick="nav('list-pending')"><div class="v tnum" style="color:#ff7a52">19</div><div class="k">Requests pending</div></button>
+            <button class="sc-stat" onclick="nav('list-animals')"><div class="v tnum" style="color:#00D6C9">48</div><div class="k">Animal tested</div></button>
+            <button class="sc-stat" onclick="nav('list-tests')"><div class="v tnum" style="color:#FFE86E">612</div><div class="k">Tests performed</div></button>
+            <button class="sc-stat" onclick="nav('list-reports')"><div class="v tnum" style="color:#52F990">78</div><div class="k">Reports generated</div></button>
+            <button class="sc-stat" onclick="nav('list-pending')"><div class="v tnum" style="color:#FA6140">25</div><div class="k">Requests pending</div></button>
           </div>
         </div>
 
