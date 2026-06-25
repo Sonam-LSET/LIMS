@@ -131,37 +131,35 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .acard .last{font-size:12px;color:var(--ink2);font-weight:600;margin-top:10px}
 /* most tested animals — Figma identity card + lab-insight footer */
 .mt-sub{font-size:13px;color:var(--muted);font-weight:500;margin:-4px 4px 14px}
-.mt-card{background:#fff;border-radius:20px;box-shadow:var(--sh);margin-bottom:13px;overflow:hidden}
-.mt-hd{display:flex;flex-direction:column;padding:14px 16px 12px}
-.mt-hrow{display:flex;align-items:center;gap:13px}
-.mt-pic{display:flex;flex-direction:column;align-items:center;gap:5px;flex:0 0 auto}
-.mt-photo{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;font-size:26px}
-.mt-sex{font-size:10px;font-weight:600;color:var(--navy);background:var(--accent-soft);min-width:25px;height:18px;padding:0 6px;border-radius:6px;display:grid;place-items:center}
-.mt-idb{flex:1;min-width:0}
-.mt-idline{font-size:16px;font-weight:600;color:var(--ink)}
-.mt-common{font-size:13.5px;color:var(--muted);font-weight:500;margin-top:2px}
-.mt-chev{color:var(--muted);flex:0 0 auto;display:grid;place-items:center;padding:4px}
-.mt-chev svg{width:19px;height:19px;transition:transform .22s var(--ease)}
+/* ===== animal card — Figma (summarised + detailed) ===== */
+.mt-card{background:#fff;border-radius:8px;box-shadow:0 1px .5px rgba(0,0,0,.1);margin-bottom:13px;overflow:hidden}
+.mt-top{display:flex;gap:12px;align-items:flex-start;padding:12px;border-bottom:.5px solid #C3CEC7}
+.mt-content{display:flex;gap:8px;align-items:flex-start;flex:1;min-width:0}
+.mt-content:active{opacity:.62}
+.mt-pic{display:flex;flex-direction:column;align-items:center;gap:3px;flex:0 0 auto;padding-top:1px}
+.mt-photo{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:16px;overflow:hidden}
+.mt-sex{font-size:10px;font-weight:500;color:#1F415B;background:#AFEFEB;min-width:20px;padding:2px 4px;border-radius:5px;display:grid;place-items:center;line-height:1}
+.mt-names{display:flex;flex-direction:column;gap:8px;flex:1;min-width:0}
+.mt-txt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.mt-idline{font-size:14px;font-weight:600;color:#44544A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mt-name{font-size:14px;font-weight:500;letter-spacing:.1px;color:#44544A}
+.mt-sci{font-size:12px;font-style:italic;font-weight:400;color:#44544A}
+.mt-loc{font-size:12px;font-weight:400;color:#44544A}
+.mt-detail-only{display:none}
+.mt-card.open .mt-detail-only{display:block}
+.mt-chips{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.mt-chip{display:inline-flex;align-items:center;gap:4px;background:#EFF5F2;border:.5px solid #C3CEC7;border-radius:8px;padding:4px 8px}
+.mt-chip svg{width:16px;height:16px;color:#44544A;flex:0 0 auto}
+.mt-chip b{font-size:14px;font-weight:600;color:#44544A;line-height:1}
+.mt-chip em{font-size:12px;font-weight:400;color:#44544A;font-style:normal;line-height:1}
+.mt-chev{width:20px;height:20px;color:#44544A;flex:0 0 auto;display:grid;place-items:center}
+.mt-chev svg{width:14px;height:14px;transition:transform .22s var(--ease)}
 .mt-card.open .mt-chev svg{transform:rotate(180deg)}
-.mt-extra{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--hair)}
-.mt-card.open .mt-extra{display:block}
-.mt-krow{display:flex;align-items:center;justify-content:space-between;padding:5px 0}
-.mt-krow span{font-size:13px;color:var(--muted);font-weight:500}
-.mt-krow b{font-size:13px;color:var(--ink);font-weight:600;text-align:right}
-.mt-metrics{display:flex;gap:24px;padding:13px 16px 14px;border-top:1px solid var(--hair)}
-.mt-metric{display:flex;align-items:center;gap:7px}
-.mt-metric svg{width:17px;height:17px;color:var(--accent)}
-.mt-metric b{font-size:15px;font-weight:600;color:var(--ink)}
-.mt-metric em{font-size:13.5px;color:var(--muted);font-weight:500;font-style:normal}
-.mt-recent{display:flex;align-items:center;gap:11px;margin:0 14px 14px;padding:11px 12px;border-radius:14px;background:var(--accent-soft)}
-.mt-recent:active{background:#dcefe4}
-.mt-rec-ic{width:36px;height:36px;border-radius:11px;background:#fff;display:grid;place-items:center;flex:0 0 auto;box-shadow:var(--sh)}
-.mt-rec-ic svg{width:18px;height:18px;color:var(--accent)}
-.mt-rec-tx{flex:1;min-width:0}
-.mt-rec-tx .l{font-size:10px;font-weight:600;color:var(--on-green);letter-spacing:.05em;text-transform:uppercase}
-.mt-rec-tx .v{font-size:14.5px;font-weight:600;color:var(--ink);margin-top:2px}
-.mt-rec-more{font-size:11.5px;font-weight:600;color:#fff;background:var(--accent);border-radius:999px;padding:3px 9px;flex:0 0 auto}
-.mt-recent .arr{color:var(--on-green);font-size:18px;font-weight:600;flex:0 0 auto}
+.mt-foot{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;background:#EFF5F2;padding:12px}
+.mt-foot:active{background:#e4ede8}
+.mt-foot .rt{font-size:12px;font-weight:400;color:#44544A}
+.mt-foot .rt b{font-size:14px;font-weight:600;color:#006D35}
+.mt-foot .dt{font-size:12px;font-weight:400;color:#44544A;text-align:right;flex:0 0 auto}
 /* recent-tests bottom sheet */
 .rtcard{background:var(--card);border-radius:16px;box-shadow:var(--sh);padding:15px 16px;margin-bottom:12px}
 .rtcard .h{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
@@ -1044,33 +1042,35 @@ const MT=[
 const MTKEYS={maya:1,papaya:1,kaa:1};
 const CN={maya:'African Elephant',papaya:'African Lion',ember:'Bengal Tiger',kaa:'Reticulated Python',rio:'Scarlet Macaw',tula:'Galápagos Tortoise',coral:'Greater Flamingo',bandit:'Red Panda',nova:'Asian Otter',pebble:'African Penguin'};
 function mtCard(a,i){
-  const more=a.recent.length>1?`, +${a.recent.length-1}`:'';
-  const rname=a.recent[0].name.split(' (')[0];
   const detailKey=MTKEYS[a.key]?a.key:'papaya';
   const p=(a.loc||'').split(' · ');const enc=p[0]||'—',sec=p[1]||'—',site=p[2]||'Gagna';
-  const moreN=a.recent.length-1;const moreChip=moreN>0?`<span class="mt-rec-more">+${moreN}</span>`:'';
+  const rname=a.recent[0].name.split(' (')[0];
+  const moreN=a.recent.length-1;const more=moreN>0?`, +${moreN}`:'';
+  const date=a.recent[0].date||'';
   return `<div class="mt-card">
-    <div class="mt-hd">
-      <div class="mt-hrow" onclick="openAnimal('${detailKey}')">
+    <div class="mt-top">
+      <div class="mt-content" onclick="openAnimal('${detailKey}')">
         <div class="mt-pic"><div class="mt-photo" style="background:${a.bg}">${a.emoji}</div><div class="mt-sex">${a.sex}</div></div>
-        <div class="mt-idb"><div class="mt-idline">ID: ${a.id}</div><div class="mt-common">${CN[a.key]||a.sci}</div></div>
-        <div class="mt-chev" onclick="event.stopPropagation();toggleMt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="mt-names">
+          <div class="mt-txt">
+            <div class="mt-idline">ID: ${a.id}</div>
+            <div class="mt-name">${CN[a.key]||a.sci}</div>
+            <div class="mt-sci mt-detail-only">${a.sci}</div>
+            <div class="mt-loc mt-detail-only">${enc}</div>
+            <div class="mt-loc mt-detail-only">${sec}</div>
+            <div class="mt-loc mt-detail-only">${site}</div>
+          </div>
+          <div class="mt-chips">
+            <div class="mt-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6L5.5 17A2.5 2.5 0 0 0 7.7 21h8.6a2.5 2.5 0 0 0 2.2-4L14 9V3"/></svg><b>${a.tests}</b><em>Tests</em></div>
+            <div class="mt-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8a2 2 0 0 1 2 2v13H6V6a2 2 0 0 1 2-2"/><path d="M9 9h6M9 13h5"/></svg><b>${a.reqs}</b><em>Requests</em></div>
+          </div>
+        </div>
       </div>
-      <div class="mt-extra">
-        <div class="mt-krow"><span>Enclosure</span><b>${enc}</b></div>
-        <div class="mt-krow"><span>Section</span><b>${sec}</b></div>
-        <div class="mt-krow"><span>Site</span><b>${site}</b></div>
-        <div class="mt-krow"><span>Sex</span><b>${a.sex==='F'?'Female':'Male'}</b></div>
-      </div>
+      <div class="mt-chev" onclick="event.stopPropagation();toggleMt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
     </div>
-    <div class="mt-metrics">
-      <div class="mt-metric"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6L5.5 17A2.5 2.5 0 0 0 7.7 21h8.6a2.5 2.5 0 0 0 2.2-4L14 9V3"/></svg><b>${a.tests}</b><em>Tests</em></div>
-      <div class="mt-metric"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8a2 2 0 0 1 2 2v13H6V6a2 2 0 0 1 2-2"/><path d="M9 9h6M9 13h5"/></svg><b>${a.reqs}</b><em>Requests</em></div>
-    </div>
-    <div class="mt-recent" onclick="openRecent('${a.key}')">
-      <div class="mt-rec-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6L5.5 17A2.5 2.5 0 0 0 7.7 21h8.6a2.5 2.5 0 0 0 2.2-4L14 9V3"/></svg></div>
-      <div class="mt-rec-tx"><div class="l">Recent test</div><div class="v">${rname} · ${a.recent[0].ago}</div></div>
-      ${moreChip}<span class="arr">›</span>
+    <div class="mt-foot" onclick="openRecent('${a.key}')">
+      <div class="rt">Recent Test : <b>${rname}${more}</b></div>
+      <div class="dt">${date}</div>
     </div>
   </div>`;
 }
