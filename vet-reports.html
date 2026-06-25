@@ -351,6 +351,44 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .bigchart .now{font-size:34px;font-weight:600;letter-spacing:-1px}
 .bigchart .now small{font-size:16px;color:var(--muted);font-weight:600;letter-spacing:0}
 .bigchart .when{font-size:13px;color:var(--muted);font-weight:600;margin-top:2px}
+/* ===== test → animals → result flow ===== */
+.tsubline{font-size:13.5px;color:var(--muted);font-weight:600;margin:2px 4px 14px}
+.tanimal{display:flex;gap:13px;align-items:center;padding:14px 16px}
+.tanimal+.tanimal{border-top:1px solid var(--hair)}
+.tanimal .ph{width:50px;height:50px;border-radius:15px;display:grid;place-items:center;font-size:26px;flex:0 0 auto}
+.tanimal .mid{flex:1;min-width:0}
+.tanimal .nm{font-size:16px;font-weight:600;letter-spacing:-.2px}
+.tanimal .sp{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:1px}
+.tanimal .rt{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex:0 0 auto}
+.tanimal .rt .ct{font-size:20px;font-weight:600;letter-spacing:-.4px}
+.tanimal .rt .ctk{font-size:10.5px;color:var(--muted);font-weight:600}
+.tanimal .rt .last{font-size:11px;color:var(--ink2);font-weight:600;margin-top:3px}
+.tanimal .chev{color:var(--faint);flex:0 0 auto}.tanimal .chev svg{width:18px;height:18px}
+/* result hero (animal + test context) */
+.rhero{display:flex;gap:13px;align-items:center;background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:15px 16px;margin-bottom:4px}
+.rhero .ph{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;font-size:27px;flex:0 0 auto}
+.rhero .mid{flex:1;min-width:0}
+.rhero .nm{font-size:18px;font-weight:600;letter-spacing:-.3px}
+.rhero .sp{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:1px}
+.rhero .rt{text-align:right;flex:0 0 auto}
+.rhero .rt .ct{font-size:24px;font-weight:600;letter-spacing:-.5px;color:var(--accent)}
+.rhero .rt .ctk{font-size:10.5px;color:var(--muted);font-weight:600}
+/* numeric sub-test card (Apple-Health style) */
+.subdelta{display:inline-flex;align-items:center;gap:3px;font-size:11.5px;font-weight:600;padding:3px 8px;border-radius:999px;background:#eef1f0;color:var(--ink2);margin-top:5px}
+.subdelta svg{width:11px;height:11px}
+.subcol{display:flex;flex-direction:column;align-items:flex-end;gap:0;flex:0 0 auto}
+.firstchip{font-size:11px;font-weight:600;color:var(--muted);background:#eef1f0;border-radius:999px;padding:3px 9px;margin-top:5px}
+/* qualitative / text result */
+.qcard{display:flex;align-items:center;gap:13px;padding:14px 16px}
+.qcard+.qcard{border-top:1px solid var(--hair)}
+.qcard .mid{flex:1;min-width:0}
+.qcard .nm{font-size:15.5px;font-weight:600}
+.qcard .qv{font-size:18px;font-weight:600;letter-spacing:-.3px;margin-top:2px}
+.qcard .last{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:2px}
+.txtbadge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--ink2);background:var(--surfvar,#DAE7DF);border-radius:999px;padding:4px 10px;flex:0 0 auto}
+.txtbadge svg{width:12px;height:12px}
+.nochart{display:flex;gap:9px;align-items:flex-start;background:#f4f8f6;border-radius:12px;padding:12px 13px;font-size:12.5px;color:var(--ink2);font-weight:500;line-height:1.5;margin:2px 0 14px}
+.nochart svg{width:16px;height:16px;color:var(--muted);flex:0 0 auto;margin-top:1px}
 .rangesel{display:flex;background:#e2e6e4;border-radius:10px;padding:3px;margin:16px 0 6px}
 .rangesel button{flex:1;font-size:13px;font-weight:600;padding:7px 0;border-radius:8px;color:var(--ink2)}
 .rangesel button.on{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08);font-weight:600}
@@ -483,13 +521,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 
           <div class="icard2">
             <div class="ic-hd"><div class="icn" style="background:#00AFD6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6M10 3v6L5.5 17A2.5 2.5 0 0 0 7.7 21h8.6a2.5 2.5 0 0 0 2.2-4L14 9V3" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 14h8" stroke-linecap="round"/></svg></div><div class="t">Most Performed Tests</div></div>
-            <div class="ic-list">
-              <div class="ic-row" onclick="nav('list-tests')"><div class="ic-mid"><div class="ic-nm">CBC</div></div><div class="ic-r"><div class="ic-val tnum">142</div><div class="ic-valk">times</div></div></div>
-              <div class="ic-row" onclick="nav('list-tests')"><div class="ic-mid"><div class="ic-nm">Liver Panel</div></div><div class="ic-r"><div class="ic-val tnum">96</div><div class="ic-valk">times</div></div></div>
-              <div class="ic-row" onclick="nav('list-tests')"><div class="ic-mid"><div class="ic-nm">Urine Analysis</div></div><div class="ic-r"><div class="ic-val tnum">74</div><div class="ic-valk">times</div></div></div>
-              <div class="ic-row" onclick="nav('list-tests')"><div class="ic-mid"><div class="ic-nm">Culture &amp; Sensitivity</div></div><div class="ic-r"><div class="ic-val tnum">58</div><div class="ic-valk">times</div></div></div>
-              <div class="ic-row" onclick="nav('list-tests')"><div class="ic-mid"><div class="ic-nm">Histopathology</div></div><div class="ic-r"><div class="ic-val tnum">31</div><div class="ic-valk">times</div></div></div>
-            </div>
+            <div class="ic-list" id="mpt-list"></div>
             <button class="ic-va" onclick="nav('list-tests')">View All Tests</button>
           </div>
 
@@ -537,11 +569,11 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
       <div class="pad" style="padding-top:12px">
         <div style="font-size:14px;color:var(--muted);font-weight:600;margin:4px 4px 12px">612 completed tests · grouped by test, not department</div>
         <div class="card" style="overflow:hidden">
-          <div class="freq tap" onclick="toast('CBC across animals')"><div class="ic" style="background:#e1f4fa">🩸</div><div class="mid"><div class="nm">CBC</div><div class="sub">142 performed · 38 animals</div></div><div><div class="ct tnum">142</div><div class="ctk">tests</div></div></div>
-          <div class="freq tap" onclick="toast('Liver Panel')"><div class="ic" style="background:#fcf4ae">🧪</div><div class="mid"><div class="nm">Liver Panel (LFT)</div><div class="sub">96 performed · 29 animals</div></div><div><div class="ct tnum">96</div><div class="ctk">tests</div></div></div>
-          <div class="freq tap" onclick="toast('Urine Analysis')"><div class="ic" style="background:#e8eafa">💧</div><div class="mid"><div class="nm">Urine Analysis</div><div class="sub">74 performed · 31 animals</div></div><div><div class="ct tnum">74</div><div class="ctk">tests</div></div></div>
-          <div class="freq tap" onclick="toast('Culture & Sensitivity')"><div class="ic" style="background:#e8f6f0">🧫</div><div class="mid"><div class="nm">Culture &amp; Sensitivity</div><div class="sub">58 performed · text reports</div></div><div><div class="ct tnum">58</div><div class="ctk">tests</div></div></div>
-          <div class="freq tap" onclick="toast('Histopathology')"><div class="ic" style="background:#fbeef4">🔬</div><div class="mid"><div class="nm">Histopathology</div><div class="sub">31 performed · text reports</div></div><div><div class="ct tnum">31</div><div class="ctk">tests</div></div></div>
+          <div class="freq tap" onclick="openTest('cbc')"><div class="ic" style="background:#e1f4fa">🩸</div><div class="mid"><div class="nm">CBC</div><div class="sub">142 performed · 38 animals</div></div><div><div class="ct tnum">142</div><div class="ctk">tests</div></div></div>
+          <div class="freq tap" onclick="openTest('lft')"><div class="ic" style="background:#fcf4ae">🧪</div><div class="mid"><div class="nm">Liver Panel (LFT)</div><div class="sub">96 performed · 29 animals</div></div><div><div class="ct tnum">96</div><div class="ctk">tests</div></div></div>
+          <div class="freq tap" onclick="openTest('urine')"><div class="ic" style="background:#e8eafa">💧</div><div class="mid"><div class="nm">Urine Analysis</div><div class="sub">74 performed · 31 animals</div></div><div><div class="ct tnum">74</div><div class="ctk">tests</div></div></div>
+          <div class="freq tap" onclick="openTest('culture')"><div class="ic" style="background:#e8f6f0">🧫</div><div class="mid"><div class="nm">Culture &amp; Sensitivity</div><div class="sub">58 performed · text reports</div></div><div><div class="ct tnum">58</div><div class="ctk">tests</div></div></div>
+          <div class="freq tap" onclick="openTest('histo')"><div class="ic" style="background:#fbeef4">🔬</div><div class="mid"><div class="nm">Histopathology</div><div class="sub">31 performed · text reports</div></div><div><div class="ct tnum">31</div><div class="ctk">tests</div></div></div>
         </div>
         <div class="drill-space"></div>
       </div>
@@ -701,6 +733,58 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
           </div>
           <div class="drill-space"></div>
         </div>
+      </div>
+    </section>
+
+    <!-- ===================== TEST → ANIMALS (who had this test) ===================== -->
+    <section class="screen" data-s="test-animals">
+      <div class="bhead"><button class="back" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Reports</button><div class="htitle" id="ta-title">Test</div></div>
+      <div class="pad" style="padding-top:12px">
+        <div class="lhead" style="padding:6px 0 2px"><div class="big" style="font-size:26px" id="ta-name">Test</div></div>
+        <div class="tsubline" id="ta-sub">Performed on — animals</div>
+        <div class="searchrow">
+          <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4" stroke-linecap="round"/></svg><input placeholder="Search animals, ID, species…" onfocus="this.blur();toast('Search is illustrative')"></div>
+          <button class="filtbtn" onclick="sheet('sheet-filter')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M7 12h10M10 18h4" stroke-linecap="round"/></svg></button>
+        </div>
+        <div class="chips">
+          <button class="fchip2" onclick="sheet('sheet-species')">Species <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="fchip2" onclick="openRange(this)">Date range · <span class="rl">Last 6 Months</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="fchip2" onclick="sheet('sheet-site')">Site <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+        <div class="card" style="overflow:hidden" id="ta-list"></div>
+        <div class="drill-space"></div>
+      </div>
+    </section>
+
+    <!-- ===================== TEST RESULT (per animal, per test) ===================== -->
+    <section class="screen" data-s="test-result">
+      <div class="bhead"><button class="back" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="tr-back">Test</span></button><div class="htitle" id="tr-title">Result</div></div>
+      <div class="pad" style="padding-top:12px">
+        <div class="rhero">
+          <div class="ph" id="tr-ph">🦁</div>
+          <div class="mid"><div class="nm" id="tr-name">Animal</div><div class="sp" id="tr-sp">—</div></div>
+          <div class="rt"><div class="ct tnum" id="tr-times">0</div><div class="ctk">times done</div></div>
+        </div>
+        <div class="tsubline" id="tr-last" style="margin:10px 4px 4px">Most recent · —</div>
+        <div id="tr-body"></div>
+        <div class="drill-space"></div>
+      </div>
+    </section>
+
+    <!-- ===================== SUB-TEST GRAPH (generic) ===================== -->
+    <section class="screen" data-s="sub-graph">
+      <div class="bhead"><button class="back" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="sg-back">Result</span></button><div class="htitle" id="sg-title">Parameter</div></div>
+      <div class="pad" style="padding-top:10px">
+        <div class="bigchart">
+          <div class="now tnum" id="sg-now">—</div>
+          <div class="when" id="sg-when">Latest</div>
+          <div class="chart" id="sg-chart" style="margin-top:14px"></div>
+          <div class="axis" id="sg-axis"></div>
+          <div class="range-foot" id="sg-foot"></div>
+        </div>
+        <div class="slabel"><div class="t" style="font-size:17px">All Records</div></div>
+        <div class="dtable" id="sg-table"></div>
+        <div class="drill-space"></div>
       </div>
     </section>
 
@@ -1004,7 +1088,173 @@ function openRecent(key){
   sheet('sheet-recent');
 }
 function pickChip(btn){btn.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));btn.classList.add('on');toast('Sorted by '+btn.textContent);}
+
+/* ================= TEST-CENTRIC FLOW (Most Performed Tests → animals → results) ================= */
+const AID={maya:'AID244/26',papaya:'AID118/24',ember:'AID203/25',kaa:'AID087/23',rio:'AID311/26',tula:'AID076/23',coral:'AID050/22',nova:'AID129/24',pebble:'AID061/23',bandit:'AID038/22'};
+const TESTS={
+  cbc:{name:'CBC',sub:'Complete Blood Count',icon:'🩸',bg:'#e1f4fa',times:142,animals:38,kind:'numeric',
+    subDefs:[{n:'Hemoglobin',u:'g/dL',c:'#00AFD6'},{n:'WBC',u:'×10³/µL',c:'#00ABAB'},{n:'RBC',u:'×10⁶/µL',c:'#8479F9'},{n:'Platelets',u:'×10³/µL',c:'#E4B819'}],
+    list:[
+      {key:'papaya',times:8,last:'19 Jun 2026',data:{
+        Hemoglobin:[['14 Jan','LT-1925',12.9],['12 Mar','LT-1971',13.4],['18 Apr','LT-1998',13.8],['15 May','LT-2019',14.0],['19 Jun','LT-2049',14.2]],
+        WBC:[['14 Jan','LT-1925',6.7],['12 Mar','LT-1971',7.1],['18 Apr','LT-1998',7.5],['15 May','LT-2019',8.0],['19 Jun','LT-2049',8.4]],
+        RBC:[['14 Jan','LT-1925',5.7],['12 Mar','LT-1971',5.8],['18 Apr','LT-1998',5.9],['15 May','LT-2019',6.0],['19 Jun','LT-2049',6.1]],
+        Platelets:[['14 Jan','LT-1925',260],['12 Mar','LT-1971',285],['18 Apr','LT-1998',300],['15 May','LT-2019',310],['19 Jun','LT-2049',320]]}},
+      {key:'maya',times:6,last:'13 Jun 2026',data:{
+        Hemoglobin:[['20 Feb','LT-1944',13.0],['22 Apr','LT-2002',13.3],['13 Jun','LT-2031',13.6]],
+        WBC:[['20 Feb','LT-1944',8.4],['22 Apr','LT-2002',8.8],['13 Jun','LT-2031',9.1]],
+        RBC:[['20 Feb','LT-1944',5.2],['22 Apr','LT-2002',5.3],['13 Jun','LT-2031',5.4]],
+        Platelets:[['20 Feb','LT-1944',280],['22 Apr','LT-2002',288],['13 Jun','LT-2031',295]]}},
+      {key:'ember',times:6,last:'17 Jun 2026',data:{
+        Hemoglobin:[['10 Apr','LT-1990',14.6],['16 May','LT-2021',14.9],['17 Jun','LT-2044',15.1]],
+        WBC:[['10 Apr','LT-1990',7.2],['16 May','LT-2021',7.5],['17 Jun','LT-2044',7.8]],
+        RBC:[['10 Apr','LT-1990',6.3],['16 May','LT-2021',6.5],['17 Jun','LT-2044',6.6]],
+        Platelets:[['10 Apr','LT-1990',330],['16 May','LT-2021',336],['17 Jun','LT-2044',340]]}},
+      {key:'rio',times:3,last:'18 Jun 2026',data:{
+        Hemoglobin:[['18 Jun','LT-2046',12.8]],WBC:[['18 Jun','LT-2046',11.2]],RBC:[['18 Jun','LT-2046',4.1]],Platelets:[['18 Jun','LT-2046',260]]}}
+    ]},
+  lft:{name:'Liver Panel (LFT)',sub:'Liver Function Test',icon:'🧪',bg:'#fcf4ae',times:96,animals:29,kind:'numeric',
+    subDefs:[{n:'ALT',u:'U/L',c:'#00AFD6'},{n:'AST',u:'U/L',c:'#00ABAB'},{n:'ALP',u:'U/L',c:'#E4B819'},{n:'GGT',u:'U/L',c:'#8479F9'}],
+    list:[
+      {key:'maya',times:5,last:'16 Jun 2026',data:{
+        ALT:[['18 Feb','LT-1940',38],['20 Apr','LT-1996',40],['16 Jun','LT-2038',41]],
+        AST:[['18 Feb','LT-1940',60],['20 Apr','LT-1996',64],['16 Jun','LT-2038',68]],
+        ALP:[['18 Feb','LT-1940',90],['20 Apr','LT-1996',93],['16 Jun','LT-2038',96]],
+        GGT:[['18 Feb','LT-1940',12],['20 Apr','LT-1996',13],['16 Jun','LT-2038',14]]}},
+      {key:'papaya',times:5,last:'07 Jun 2026',data:{
+        ALT:[['12 Mar','LT-1968',49],['10 May','LT-2014',51],['07 Jun','LT-2036',52]],
+        AST:[['12 Mar','LT-1968',58],['10 May','LT-2014',60],['07 Jun','LT-2036',61]],
+        ALP:[['12 Mar','LT-1968',84],['10 May','LT-2014',86],['07 Jun','LT-2036',88]],
+        GGT:[['12 Mar','LT-1968',11],['10 May','LT-2014',12],['07 Jun','LT-2036',12]]}},
+      {key:'tula',times:4,last:'14 Jun 2026',data:{
+        ALT:[['14 Jun','LT-2035',33]],AST:[['14 Jun','LT-2035',55]],ALP:[['14 Jun','LT-2035',102]],GGT:[['14 Jun','LT-2035',9]]}}
+    ]},
+  urine:{name:'Urine Analysis',sub:'Urinalysis',icon:'💧',bg:'#e8eafa',times:74,animals:31,kind:'numeric',
+    subDefs:[{n:'pH',u:'',c:'#00AFD6'},{n:'Specific Gravity',u:'',c:'#00ABAB'},{n:'Protein',u:'',qual:true},{n:'Glucose',u:'',qual:true}],
+    list:[
+      {key:'papaya',times:4,last:'12 Jun 2026',data:{
+        pH:[['14 Jan','LT-1925',6.2],['12 Mar','LT-1971',6.4],['12 Jun','LT-2041',6.5]],
+        'Specific Gravity':[['14 Jan','LT-1925',1.018],['12 Mar','LT-1971',1.019],['12 Jun','LT-2041',1.020]],
+        Protein:[['14 Jan','LT-1925','Negative'],['12 Mar','LT-1971','Trace'],['12 Jun','LT-2041','Negative']],
+        Glucose:[['14 Jan','LT-1925','Negative'],['12 Mar','LT-1971','Negative'],['12 Jun','LT-2041','Negative']]}},
+      {key:'nova',times:2,last:'01 Jun 2026',data:{
+        pH:[['10 Apr','LT-1989',6.6],['01 Jun','LT-2026',6.8]],
+        'Specific Gravity':[['10 Apr','LT-1989',1.016],['01 Jun','LT-2026',1.018]],
+        Protein:[['10 Apr','LT-1989','Trace'],['01 Jun','LT-2026','Trace']],
+        Glucose:[['10 Apr','LT-1989','Negative'],['01 Jun','LT-2026','Negative']]}}
+    ]},
+  culture:{name:'Culture & Sensitivity',sub:'Microbiology',icon:'🧫',bg:'#e8f6f0',times:58,animals:24,kind:'text',
+    list:[
+      {key:'maya',times:5,last:'01 Jun 2026',reports:[
+        {date:'01 Jun 2026',req:'LT-2028',text:'Pseudomonas aeruginosa — moderate growth. Susceptible: Gentamicin, Ciprofloxacin. Resistant: Amoxicillin.'},
+        {date:'04 Mar 2026',req:'LT-1962',text:'No significant growth after 48h aerobic incubation.'}]},
+      {key:'kaa',times:3,last:'13 Jun 2026',reports:[
+        {date:'13 Jun 2026',req:'LT-2033',text:'No significant growth after 48h aerobic incubation.'}]},
+      {key:'pebble',times:2,last:'23 May 2026',reports:[
+        {date:'23 May 2026',req:'LT-2011',text:'Aspergillus fumigatus isolated. Reported as observed.'}]}
+    ]},
+  histo:{name:'Histopathology',sub:'Tissue Pathology',icon:'🔬',bg:'#fbeef4',times:31,animals:18,kind:'text',
+    list:[
+      {key:'coral',times:2,last:'08 Jun 2026',reports:[
+        {date:'08 Jun 2026',req:'LT-2024',text:'Mild chronic inflammation of integumentary tissue. Reported as observed.'},
+        {date:'15 Feb 2026',req:'LT-1932',text:'Tissue architecture within normal limits. Reported as observed.'}]}
+    ]}
+};
+const TEST_ORDER=['cbc','lft','urine','culture','histo'];
+let curTest=null,curAnimal=null;
+
+function renderMPT(){
+  const el=document.getElementById('mpt-list'); if(!el) return;
+  el.innerHTML=TEST_ORDER.map(id=>{const t=TESTS[id];
+    const sub=t.kind==='text'?'Text report':`${t.subDefs.length} sub-tests · ${t.times}×`;
+    return `<div class="ic-row" onclick="openTest('${id}')"><div class="ic-mid"><div class="ic-nm">${t.name}</div><div class="ic-sb">${sub}</div></div><div class="ic-r"><div class="ic-val tnum">${t.animals}</div><div class="ic-valk">animals</div></div></div>`;
+  }).join('');
+}
+function openTest(id){
+  const t=TESTS[id]; if(!t) return; curTest=id;
+  document.getElementById('ta-title').textContent=t.name;
+  document.getElementById('ta-name').textContent=t.name;
+  const what=t.kind==='text'?'text reports':`${t.subDefs.length} sub-tests`;
+  document.getElementById('ta-sub').textContent=`Performed on ${t.animals} animals · ${t.times} tests · ${what}`;
+  document.getElementById('ta-list').innerHTML=t.list.map(a=>{const m=MT.find(x=>x.key===a.key)||{};
+    return `<div class="tanimal" onclick="openTestAnimal('${a.key}')">
+      <div class="ph" style="background:${m.bg||'#e7eee9'}">${m.emoji||'🐾'}</div>
+      <div class="mid"><div class="nm">${m.common||a.key}</div><div class="sp">${AID[a.key]||m.id||''} · ${CN[a.key]||m.sci||''}</div></div>
+      <div class="rt"><div class="ct tnum">${a.times}</div><div class="ctk">times</div><div class="last">Last ${a.last.replace(' 2026','')}</div></div>
+      <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>`;
+  }).join('');
+  nav('test-animals');
+}
+function deltaChip(nums){
+  const a=nums[nums.length-2], b=nums[nums.length-1];
+  const d=+(b-a).toFixed(3), abs=Math.abs(d);
+  let arrow;
+  if(d>0) arrow='M12 19V5M5 12l7-7 7 7';
+  else if(d<0) arrow='M12 5v14M5 12l7 7 7-7';
+  else arrow='M5 12h14';
+  const txt = d===0 ? 'No change vs last' : `${abs} vs last`;
+  return `<span class="subdelta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="${arrow}" stroke-linecap="round" stroke-linejoin="round"/></svg>${txt}</span>`;
+}
+function openTestAnimal(key){
+  const t=TESTS[curTest]; const a=t.list.find(x=>x.key===key); if(!a) return; curAnimal=key;
+  const m=MT.find(x=>x.key===key)||{};
+  document.getElementById('tr-title').textContent=t.name;
+  document.getElementById('tr-back').textContent=t.name;
+  document.getElementById('tr-ph').textContent=m.emoji||'🐾';
+  document.getElementById('tr-ph').style.background=m.bg||'#e7eee9';
+  document.getElementById('tr-name').textContent=m.common||key;
+  document.getElementById('tr-sp').textContent=`${AID[key]||m.id||''} · ${CN[key]||m.sci||''}`;
+  document.getElementById('tr-times').textContent=a.times;
+  document.getElementById('tr-last').textContent=`Most recent ${t.name} · ${a.last}`;
+  const body=document.getElementById('tr-body');
+  if(t.kind==='text'){
+    body.innerHTML=`<div class="nochart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1" stroke-linecap="round" stroke-linejoin="round"/></svg><div>This test reports findings as written observations, so results appear as text — no trend chart is shown.</div></div>`
+      + `<div class="slabel"><div class="t" style="font-size:17px">Result history</div></div>`
+      + a.reports.map(r=>`<div class="rtcard"><div class="h"><div><div class="tn">${t.name}</div><div class="meta">${r.req} · ${r.date}</div></div><span class="txtbadge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h11M8 12h11M8 18h7M4 6h.01M4 12h.01M4 18h.01" stroke-linecap="round"/></svg>Text</span></div><div class="narr">${r.text}</div><div class="prev"><span class="ptxt">Reported as observed</span><a onclick="nav('report')">Open full report ›</a></div></div>`).join('');
+    nav('test-result'); return;
+  }
+  let html=`<div class="slabel"><div class="t" style="font-size:17px">Sub-test results</div><a onclick="toast('Compare across dates')">Compare</a></div><div class="card" style="overflow:hidden">`;
+  const sparks=[];
+  t.subDefs.forEach((s,i)=>{
+    const series=a.data[s.n]||[];
+    const lastPt=series[series.length-1];
+    const lastVal=lastPt?lastPt[2]:'—', lastDate=lastPt?lastPt[0]:'';
+    if(s.qual){
+      html+=`<div class="qcard"><div class="mid"><div class="nm">${s.n}</div><div class="qv">${lastVal}</div><div class="last">Last ${lastDate}</div></div><span class="txtbadge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h11M8 12h11M8 18h7M4 6h.01M4 12h.01M4 18h.01" stroke-linecap="round"/></svg>Qualitative</span></div>`;
+    } else {
+      const nums=series.map(p=>p[2]);
+      if(nums.length>=2){
+        const sid=`sub-sp-${i}`; sparks.push([sid,nums,s.c]);
+        html+=`<div class="pcard tap" onclick="openSub(${i})"><div class="mid"><div class="nm">${s.n}</div><div class="now tnum">${lastVal} <small>${s.u}</small></div>${deltaChip(nums)}</div><svg class="spark" viewBox="0 0 80 38" id="${sid}"></svg><div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>`;
+      } else {
+        html+=`<div class="pcard"><div class="mid"><div class="nm">${s.n}</div><div class="now tnum">${lastVal} <small>${s.u}</small></div><span class="firstchip">First result · ${lastDate}</span></div></div>`;
+      }
+    }
+  });
+  html+=`</div>`;
+  body.innerHTML=html;
+  sparks.forEach(s=>drawSpark(s[0],s[1],s[2]));
+  nav('test-result');
+}
+function openSub(i){
+  const t=TESTS[curTest]; const a=t.list.find(x=>x.key===curAnimal); const s=t.subDefs[i];
+  const series=a.data[s.n]||[]; const nums=series.map(p=>p[2]); const m=MT.find(x=>x.key===curAnimal)||{};
+  const lastPt=series[series.length-1];
+  document.getElementById('sg-title').textContent=s.n;
+  document.getElementById('sg-back').textContent=t.name;
+  document.getElementById('sg-now').innerHTML=`${lastPt[2]} <small>${s.u}</small>`;
+  document.getElementById('sg-when').textContent=`Latest · ${lastPt[0]} · ${m.common||curAnimal}`;
+  drawTrend('sg-chart',nums,s.c||'#37BD69');
+  document.getElementById('sg-axis').innerHTML=series.map(p=>`<span>${(p[0].split(' ')[1])||p[0]}</span>`).join('');
+  const hi=Math.max(...nums), lo=Math.min(...nums);
+  document.getElementById('sg-foot').innerHTML=`<div class="rf"><div class="v tnum">${lastPt[2]}</div><div class="k">Latest</div></div><div class="rf"><div class="v tnum">${hi}</div><div class="k">Highest</div></div><div class="rf"><div class="v tnum">${lo}</div><div class="k">Lowest</div></div><div class="rf"><div class="v tnum">${series.length}</div><div class="k">Records</div></div>`;
+  document.getElementById('sg-table').innerHTML=`<div class="dthead"><span>Date</span><span>Value</span><span>Request</span><span></span></div>`+
+    series.slice().reverse().map(p=>`<div class="dtrow tap" onclick="nav('report')"><span class="d">${p[0]}</span><span class="v tnum">${p[2]}</span><span class="rq">${p[1]}</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>`).join('');
+  nav('sub-graph');
+}
 renderMT();
+renderMPT();
 
 render();
 </script>
