@@ -66,6 +66,23 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .aum-actions{display:flex;gap:8px;flex:0 0 auto}
 .iconsq{width:30px;height:30px;border-radius:4px;background:rgba(0,0,0,.05);display:grid;place-items:center;border:none}
 .iconsq svg{width:18px;height:18px;color:#44544A}
+/* Animals Tested screen — Figma 148:7523 */
+.tbar{display:flex;align-items:center;background:#fff;box-shadow:0 2px 1px rgba(0,0,0,.1);padding:16px 16px 4px 0;position:sticky;top:0;z-index:20}
+.tbar-back{width:48px;height:48px;display:grid;place-items:center;border:none;background:none;color:#1F415B;flex:0 0 auto}
+.tbar-back svg{width:24px;height:24px}
+.tbar-title{flex:1;min-width:0;font-size:20px;font-weight:500;color:#1F415B}
+.at-wrap{padding:12px 16px 0;display:flex;flex-direction:column;gap:16px}
+.at-datefilter{display:flex;align-items:center;gap:8px;height:24px}
+.at-datefilter .rl{font-size:14px;font-weight:500;letter-spacing:.1px;color:#44544A}
+.at-datefilter svg{width:24px;height:24px;color:#44544A}
+.at-sitecard{display:flex;flex-direction:column;gap:1px;border-radius:8px;overflow:hidden}
+.at-site{display:flex;align-items:center;gap:12px;background:#fff;padding:16px;border-top:1px solid rgba(0,0,0,.05)}
+.at-site .pin{width:20px;height:20px;color:#44544A;flex:0 0 auto}
+.at-site .nm{flex:1;min-width:0;font-size:14px;font-weight:500;letter-spacing:.1px;color:#44544A}
+.at-site .cv{width:24px;height:24px;color:#44544A;flex:0 0 auto}
+.at-tabs{display:flex;gap:12px;background:#fff;padding:12px}
+.at-listsec{display:flex;flex-direction:column;gap:12px}
+.at-listhead{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .drill-space{height:40px}
 
 /* large nav header (Apple Health "Summary") */
@@ -533,12 +550,31 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
       </div>
     </section>
 
-    <!-- ===================== LIST: ANIMALS TESTED ===================== -->
+    <!-- ===================== LIST: ANIMALS TESTED (Figma 148:7523) ===================== -->
     <section class="screen" data-s="list-animals">
-      <div class="bhead"><button class="back" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Reports</button><div class="htitle">Animals Tested</div></div>
-      <div class="pad" style="padding-top:12px">
-        <div style="font-size:14px;color:var(--muted);font-weight:600;margin:4px 4px 12px">48 animals with ≥1 completed test · Gagna · Last 6 Months</div>
-        <div id="la-list"></div>
+      <div class="tbar">
+        <button class="tbar-back" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M11 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="tbar-title">Animals Tested</div>
+      </div>
+      <div class="at-wrap">
+        <button class="at-datefilter" onclick="openRange(this)"><span class="rl">Today, 24 Jun 2026</span> <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></button>
+        <div class="at-sitecard">
+          <button class="at-site" onclick="sheet('sheet-site')"><svg class="pin" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span class="nm">Gagwa</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="at-tabs">
+            <button class="tab on" onclick="atGroup(this,'animals')">By Animals</button>
+            <button class="tab" onclick="atGroup(this,'species')">By Species</button>
+          </div>
+        </div>
+        <div class="at-listsec">
+          <div class="at-listhead">
+            <div class="aum-ttl">48 Animals</div>
+            <div class="aum-actions">
+              <button class="iconsq" onclick="toast('Search')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4" stroke-linecap="round"/></svg></button>
+              <button class="iconsq" onclick="sheet('sheet-filter')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 12h2M10 12h10M4 17h7M15 17h5"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="13" cy="17" r="2"/></svg></button>
+            </div>
+          </div>
+          <div id="la-list"></div>
+        </div>
         <div class="drill-space"></div>
       </div>
     </section>
@@ -1029,6 +1065,7 @@ function mtCard(a,i){
   const rname=a.recent[0].name.split(' (')[0];
   const moreN=a.recent.length-1;const more=moreN>0?`, +${moreN}`:'';
   const date=a.recent[0].date||'';const req=a.recent[0].req||'';const time=MT_TIME[i%MT_TIME.length];
+  const prio=(i%4===1)?'#FA6140':'#00D6C9';
   return `<div class="mt-card" onclick="openAnimal('${detailKey}')">
     <div class="mt-top">
       <div class="mt-content">
@@ -1048,7 +1085,7 @@ function mtCard(a,i){
     <div class="mt-foot">
       <div class="mt-rline">Recent Test : <b>${rname}${more}</b></div>
       <div class="mt-reqrow">
-        <div class="mt-reqL"><span class="mt-prio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg></span><span class="mt-reqid">${req}</span></div>
+        <div class="mt-reqL"><span class="mt-prio" style="background:${prio}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg></span><span class="mt-reqid">${req}</span></div>
         <span class="mt-dt">${date} • ${time}</span>
       </div>
     </div>
@@ -1067,6 +1104,7 @@ function openRecent(key){
   sheet('sheet-recent');
 }
 function pickChip(btn){btn.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));btn.classList.add('on');toast('Sorted by '+btn.textContent);}
+function atGroup(btn,mode){btn.parentElement.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');if(mode==='species')toast('Grouped by species');}
 
 /* ================= TEST-CENTRIC FLOW (Most Performed Tests → animals → results) ================= */
 const AID={maya:'AID244/26',papaya:'AID118/24',ember:'AID203/25',kaa:'AID087/23',rio:'AID311/26',tula:'AID076/23',coral:'AID050/22',nova:'AID129/24',pebble:'AID061/23',bandit:'AID038/22'};
