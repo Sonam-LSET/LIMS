@@ -107,6 +107,39 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .sptag.f{background:rgba(250,97,64,.3);color:#FA6140}
 .sptag.ud{background:#DAE7DF;color:#E93353}
 .sptag.id{background:#DAE7DF;color:#7A8684}
+/* test detail (animals who had a test) — Figma 153:8907 / last result 152:8872 */
+.tt{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.tt .t1{font-size:20px;font-weight:500;color:inherit}
+.tt .t2{font-size:12px;font-weight:400;color:inherit}
+.xbtn{width:24px;height:24px;display:grid;place-items:center;border:none;background:none;flex:0 0 auto;color:inherit}
+.xbtn svg{width:14px;height:14px}
+.tdtop{display:flex;align-items:center;gap:8px;background:#fff;box-shadow:0 2px 1px rgba(0,0,0,.1);padding:16px;position:sticky;top:0;z-index:20;color:#44544A}
+.td-filterrow{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:16px 0 12px}
+/* last result screen */
+.lr-top{display:flex;align-items:center;gap:12px;background:#fff;box-shadow:0 4px 7px rgba(0,0,0,.05);padding:24px 16px 18px;position:sticky;top:0;z-index:20;color:#000}
+.lr-entity{display:flex;align-items:center;gap:12px;background:#fff;padding:16px;width:100%}
+.lr-entity .nd{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.lr-entity .id{font-size:14px;font-weight:600;color:#44544A}
+.lr-entity .nm{font-size:14px;font-weight:500;letter-spacing:.1px;color:#44544A}
+.lr-entity .cv{width:20px;height:20px;color:#44544A;flex:0 0 auto}
+.lr-body{background:#EFF5F2;padding:16px;display:flex;flex-direction:column;gap:12px;min-height:50%}
+.lr-head{font-size:14px;font-weight:500;letter-spacing:.1px;color:#44544A}
+#lr-tests{display:flex;flex-direction:column;gap:12px;width:100%}
+.stcard{background:#fff;border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:4px}
+.stcard .status{font-size:12px;font-weight:600;color:#37BD69}
+.stcard .title{font-size:14px;font-weight:500;letter-spacing:.1px;color:#44544A;padding-bottom:4px}
+.trcard{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:66px;padding:12px;border-radius:8px;border:1px solid}
+.trcard.low{background:rgba(175,239,235,.2);border-color:#AFEFEB}
+.trcard.normal{background:#F2FFF8;border-color:rgba(55,189,105,.3)}
+.trcard.high{background:rgba(255,211,211,.2);border-color:#FFD3D3}
+.tr-l{display:flex;flex-direction:column;gap:4px}
+.tr-k{font-size:12px;font-weight:400;color:#7A8684}
+.tr-v{display:flex;gap:8px;align-items:center}
+.tr-val{font-size:14px;font-weight:600;color:#000}
+.tr-r{display:flex;flex-direction:column;gap:4px;align-items:flex-end;text-align:right}
+.tr-range{font-size:14px;font-weight:400;color:#44544A}
+.ind{background:#fff;box-shadow:0 2px 1px rgba(0,0,0,.1);border-radius:60px;padding:4px 12px;font-size:12px;font-weight:600;white-space:nowrap}
+.ind.low{color:#00AFD6}.ind.normal{color:#006D35}.ind.high{color:#E93353}
 .drill-space{height:40px}
 
 /* large nav header (Apple Health "Summary") */
@@ -624,17 +657,46 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
             </div>
           </div>
           <div>
-            <button class="ilist" onclick="openTest('cbc')"><div class="mid"><div class="nm">Complete Blood Count (CBC)</div><div class="sub">Whole Blood (EDTA) • 4 Subtests</div></div><div class="iltag"><div class="n">9</div><div class="k">Animals</div></div></button>
-            <button class="ilist" onclick="toast('Comprehensive Metabolic Panel (CMP)')"><div class="mid"><div class="nm">Comprehensive Metabolic Panel (CMP)</div><div class="sub">Serum (Clot) • 14 Subtests</div></div><div class="iltag"><div class="n">30</div><div class="k">Animals</div></div></button>
-            <button class="ilist" onclick="openTest('lft')"><div class="mid"><div class="nm">Liver Function Tests (LFT)</div><div class="sub">Serum (Clot) • 6 Subtests</div></div><div class="iltag"><div class="n">20</div><div class="k">Animals</div></div></button>
-            <button class="ilist" onclick="toast('Thyroid Function Tests (TFT)')"><div class="mid"><div class="nm">Thyroid Function Tests (TFT)</div><div class="sub">Serum (Clot) • 3 Subtests</div></div><div class="iltag"><div class="n">15</div><div class="k">Animals</div></div></button>
-            <button class="ilist" onclick="toast('Complete Blood Count')"><div class="mid"><div class="nm">Complete Blood Count</div><div class="sub">Blood Samples • 4 Subtests</div></div><div class="iltag"><div class="n">30</div><div class="k">Animals</div></div></button>
-            <button class="ilist" onclick="toast('Serum Biochemistry Profile')"><div class="mid"><div class="nm">Serum Biochemistry Profile</div><div class="sub">Serum Samples • 6 Subtests</div></div><div class="iltag"><div class="n">25</div><div class="k">Animals</div></div></button>
-            <button class="ilist" onclick="toast('Allergy Testing')"><div class="mid"><div class="nm">Allergy Testing</div><div class="sub">Skin Samples • 3 Subtests</div></div><div class="iltag"><div class="n">15</div><div class="k">Animals</div></div></button>
-            <button class="ilist" onclick="toast('Parasitology Examination')"><div class="mid"><div class="nm">Parasitology Examination</div><div class="sub">Fecal Samples • 5 Key Tests</div></div><div class="iltag"><div class="n">30</div><div class="k">Animals</div></div></button>
+            <button class="ilist" onclick="openTestDetail('Complete Blood Count (CBC)','4','9')"><div class="mid"><div class="nm">Complete Blood Count (CBC)</div><div class="sub">Whole Blood (EDTA) • 4 Subtests</div></div><div class="iltag"><div class="n">9</div><div class="k">Animals</div></div></button>
+            <button class="ilist" onclick="openTestDetail('Comprehensive Metabolic Panel (CMP)','14','30')"><div class="mid"><div class="nm">Comprehensive Metabolic Panel (CMP)</div><div class="sub">Serum (Clot) • 14 Subtests</div></div><div class="iltag"><div class="n">30</div><div class="k">Animals</div></div></button>
+            <button class="ilist" onclick="openTestDetail('Liver Function Tests (LFT)','6','20')"><div class="mid"><div class="nm">Liver Function Tests (LFT)</div><div class="sub">Serum (Clot) • 6 Subtests</div></div><div class="iltag"><div class="n">20</div><div class="k">Animals</div></div></button>
+            <button class="ilist" onclick="openTestDetail('Thyroid Function Tests (TFT)','3','15')"><div class="mid"><div class="nm">Thyroid Function Tests (TFT)</div><div class="sub">Serum (Clot) • 3 Subtests</div></div><div class="iltag"><div class="n">15</div><div class="k">Animals</div></div></button>
+            <button class="ilist" onclick="openTestDetail('Complete Blood Count','4','30')"><div class="mid"><div class="nm">Complete Blood Count</div><div class="sub">Blood Samples • 4 Subtests</div></div><div class="iltag"><div class="n">30</div><div class="k">Animals</div></div></button>
+            <button class="ilist" onclick="openTestDetail('Serum Biochemistry Profile','6','25')"><div class="mid"><div class="nm">Serum Biochemistry Profile</div><div class="sub">Serum Samples • 6 Subtests</div></div><div class="iltag"><div class="n">25</div><div class="k">Animals</div></div></button>
+            <button class="ilist" onclick="openTestDetail('Allergy Testing','3','15')"><div class="mid"><div class="nm">Allergy Testing</div><div class="sub">Skin Samples • 3 Subtests</div></div><div class="iltag"><div class="n">15</div><div class="k">Animals</div></div></button>
+            <button class="ilist" onclick="openTestDetail('Parasitology Examination','5','30')"><div class="mid"><div class="nm">Parasitology Examination</div><div class="sub">Fecal Samples • 5 Key Tests</div></div><div class="iltag"><div class="n">30</div><div class="k">Animals</div></div></button>
           </div>
         </div>
         <div class="drill-space"></div>
+      </div>
+    </section>
+
+    <!-- ===================== TEST DETAIL: animals who had this test (Figma 153:8907) ===================== -->
+    <section class="screen" data-s="test-detail">
+      <div class="tdtop">
+        <div class="tt"><div class="t1" id="td-name">Complete Blood Count (CBC)</div><div class="t2" id="td-subs">4 Subtests</div></div>
+        <button class="xbtn" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button>
+      </div>
+      <div class="at-wrap">
+        <div class="td-filterrow">
+          <div class="aum-ttl" id="td-count">9 Animals</div>
+          <button class="at-datefilter" onclick="openRange(this)"><span class="rl">Today, 24 Jun 2026</span> <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></button>
+        </div>
+        <div id="td-list"></div>
+        <div class="drill-space"></div>
+      </div>
+    </section>
+
+    <!-- ===================== LAST TEST RESULT for animal (Figma 152:8872) ===================== -->
+    <section class="screen" data-s="last-result">
+      <div class="lr-top">
+        <div class="tt"><div class="t1" id="lr-name">Complete Blood Count (CBC)</div><div class="t2" id="lr-subs">4 Subtests</div></div>
+        <button class="xbtn" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button>
+      </div>
+      <div class="lr-entity" id="lr-entity"></div>
+      <div class="lr-body">
+        <div class="lr-head" id="lr-req">Request : LT11-00023</div>
+        <div id="lr-tests"></div>
       </div>
     </section>
 
@@ -1103,13 +1165,14 @@ const MT=[
 const MTKEYS={maya:1,papaya:1,kaa:1};
 const CN={maya:'African Elephant',papaya:'African Lion',ember:'Bengal Tiger',kaa:'Reticulated Python',rio:'Scarlet Macaw',tula:'Galápagos Tortoise',coral:'Greater Flamingo',bandit:'Red Panda',nova:'Asian Otter',pebble:'African Penguin'};
 const MT_TIME=['12:24 PM','09:10 AM','04:45 PM','11:30 AM','02:15 PM','08:50 AM','03:05 PM','10:20 AM','01:40 PM','05:30 PM'];
-function mtCard(a,i){
+function mtCard(a,i,click){
   const detailKey=MTKEYS[a.key]?a.key:'papaya';
   const rname=a.recent[0].name.split(' (')[0];
   const moreN=a.recent.length-1;const more=moreN>0?`, +${moreN}`:'';
   const date=a.recent[0].date||'';const req=a.recent[0].req||'';const time=MT_TIME[i%MT_TIME.length];
   const prio=(i%4===1)?'#FA6140':'#00D6C9';
-  return `<div class="mt-card" onclick="openAnimal('${detailKey}')">
+  const onclick=click||`openAnimal('${detailKey}')`;
+  return `<div class="mt-card" onclick="${onclick}">
     <div class="mt-top">
       <div class="mt-content">
         <div class="mt-pic"><div class="mt-photo" style="background:${a.bg}">${a.emoji}</div><div class="mt-sex">${a.sex}</div></div>
@@ -1163,6 +1226,32 @@ function atSpecies(btn,mode){
   const list=document.getElementById('la-list'),sp=document.getElementById('la-species'),ct=document.getElementById('la-count');
   if(mode==='species'){list.style.display='none';sp.style.display='block';if(ct)ct.textContent=SPECIES.length+' Species';}
   else{list.style.display='block';sp.style.display='none';if(ct)ct.textContent='48 Animals';}
+}
+
+/* ===== Tests Performed → animals who had test → last result (Figma 153:8907 / 152:8872) ===== */
+function openTestDetail(name,subs,count){
+  document.getElementById('td-name').textContent=name;
+  document.getElementById('td-subs').textContent=subs+' Subtests';
+  document.getElementById('td-count').textContent=count+' Animals';
+  document.getElementById('td-list').innerHTML=MT.map((a,i)=>mtCard(a,i,`openLastResult('${a.key}','${name}','${subs}')`)).join('');
+  nav('test-detail');
+}
+const LR_SUBS=[
+  {name:'Haemoglobin Analysis',val:'10.8 mg/dL',ind:'low',range:'12.0-18.0'},
+  {name:'WBC Count',val:'8.2 mg/dL',ind:'normal',range:'6.0-11.0'},
+  {name:'RBC Count',val:'6.2 mg/dL',ind:'high',range:'4.5-6.0'},
+  {name:'Platelet Count',val:'455 mg/dL',ind:'high',range:'150-450'}
+];
+const INDLABEL={low:'Low',normal:'Normal',high:'High'};
+function openLastResult(key,name,subs){
+  const a=MT.find(x=>x.key===key)||{};
+  document.getElementById('lr-name').textContent=name||'Complete Blood Count (CBC)';
+  document.getElementById('lr-subs').textContent=(subs||'4')+' Subtests';
+  document.getElementById('lr-entity').innerHTML=`<div class="mt-pic"><div class="mt-photo" style="background:${a.bg}">${a.emoji}</div><div class="mt-sex">${a.sex}</div></div><div class="nd"><div class="id">ID: ${a.id}</div><div class="nm">${CN[a.key]||a.common}</div></div><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  document.getElementById('lr-req').textContent='Request : '+((a.recent&&a.recent[0]&&a.recent[0].req)||'LT11-00023');
+  const dk=MTKEYS[key]?key:'papaya';const ent=document.getElementById('lr-entity');ent.style.cursor='pointer';ent.onclick=function(){openAnimal(dk);};
+  document.getElementById('lr-tests').innerHTML=LR_SUBS.map(s=>`<div class="stcard"><div class="status">Completed</div><div class="title">${s.name}</div><div class="trcard ${s.ind}"><div class="tr-l"><div class="tr-k">Result</div><div class="tr-v"><span class="tr-val">${s.val}</span><span class="ind ${s.ind}">${INDLABEL[s.ind]}</span></div></div><div class="tr-r"><div class="tr-k">Reference Range</div><div class="tr-range">${s.range}</div></div></div></div>`).join('');
+  nav('last-result');
 }
 
 /* ================= TEST-CENTRIC FLOW (Most Performed Tests → animals → results) ================= */
