@@ -143,35 +143,32 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .acard .last{font-size:12px;color:var(--ink2);font-weight:600;margin-top:10px}
 /* most tested animals — Figma identity card + lab-insight footer */
 .mt-sub{font-size:13px;color:var(--muted);font-weight:500;margin:-4px 4px 14px}
-/* ===== animal card — Figma (summarised + detailed) ===== */
+/* ===== animal card — Figma 148:7340 ===== */
 .mt-card{background:#fff;border-radius:8px;box-shadow:0 1px .5px rgba(0,0,0,.1);margin-bottom:13px;overflow:hidden}
+.mt-card:active{opacity:.85}
 .mt-top{display:flex;gap:12px;align-items:flex-start;padding:12px;border-bottom:.5px solid #C3CEC7}
 .mt-content{display:flex;gap:8px;align-items:flex-start;flex:1;min-width:0}
-.mt-content:active{opacity:.62}
-.mt-pic{display:flex;flex-direction:column;align-items:center;gap:3px;flex:0 0 auto;padding-top:1px}
-.mt-photo{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:16px;overflow:hidden}
+.mt-pic{display:flex;flex-direction:column;align-items:center;gap:2px;flex:0 0 auto;padding-top:1px}
+.mt-photo{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:14px;overflow:hidden}
 .mt-sex{font-size:10px;font-weight:500;color:#1F415B;background:#AFEFEB;min-width:20px;padding:2px 4px;border-radius:5px;display:grid;place-items:center;line-height:1}
 .mt-names{display:flex;flex-direction:column;gap:8px;flex:1;min-width:0}
 .mt-txt{display:flex;flex-direction:column;gap:2px;min-width:0}
 .mt-idline{font-size:14px;font-weight:600;color:#44544A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mt-name{font-size:14px;font-weight:500;letter-spacing:.1px;color:#44544A}
-.mt-sci{font-size:12px;font-style:italic;font-weight:400;color:#44544A}
-.mt-loc{font-size:12px;font-weight:400;color:#44544A}
-.mt-detail-only{display:none}
-.mt-card.open .mt-detail-only{display:block}
 .mt-chips{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.mt-chip{display:inline-flex;align-items:center;gap:4px;background:#EFF5F2;border:.5px solid #C3CEC7;border-radius:8px;padding:4px 8px}
-.mt-chip svg{width:16px;height:16px;color:#44544A;flex:0 0 auto}
-.mt-chip b{font-size:14px;font-weight:600;color:#44544A;line-height:1}
-.mt-chip em{font-size:12px;font-weight:400;color:#44544A;font-style:normal;line-height:1}
-.mt-chev{width:20px;height:20px;color:#44544A;flex:0 0 auto;display:grid;place-items:center}
-.mt-chev svg{width:14px;height:14px;transition:transform .22s var(--ease)}
-.mt-card.open .mt-chev svg{transform:rotate(180deg)}
-.mt-foot{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;background:#EFF5F2;padding:12px}
-.mt-foot:active{background:#e4ede8}
-.mt-foot .rt{font-size:12px;font-weight:400;color:#44544A}
-.mt-foot .rt b{font-size:14px;font-weight:600;color:#006D35}
-.mt-foot .dt{font-size:12px;font-weight:400;color:#44544A;text-align:right;flex:0 0 auto}
+.mt-chip{display:inline-flex;align-items:center;gap:4px;background:#E8F4F2;border:.5px solid #DDEBE9;border-radius:8px;padding:4px 8px}
+.mt-chip svg{width:12px;height:12px;color:#1F415B;flex:0 0 auto}
+.mt-chip b{font-size:14px;font-weight:600;color:#1F415B;line-height:1}
+.mt-chip em{font-size:12px;font-weight:400;color:#1F415B;font-style:normal;line-height:1}
+.mt-foot{display:flex;flex-direction:column;gap:4px;background:#fff;opacity:.8;padding:12px;border-radius:0 0 8px 8px}
+.mt-rline{font-size:12px;font-weight:400;color:#44544A}
+.mt-rline b{font-size:14px;font-weight:600;color:#006D35}
+.mt-reqrow{display:flex;align-items:center;gap:2px;width:100%}
+.mt-reqL{flex:1;min-width:0;display:flex;align-items:center;gap:4px}
+.mt-prio{width:16px;height:16px;border-radius:50%;background:#00D6C9;display:grid;place-items:center;flex:0 0 auto}
+.mt-prio svg{width:11px;height:11px;color:#fff}
+.mt-reqid{font-size:12px;font-weight:600;color:#44544A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mt-dt{font-size:12px;font-weight:400;color:#44544A;white-space:nowrap;flex:0 0 auto}
 /* recent-tests bottom sheet */
 .rtcard{background:var(--card);border-radius:16px;box-shadow:var(--sh);padding:15px 16px;margin-bottom:12px}
 .rtcard .h{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
@@ -209,7 +206,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .ko-rt{flex:0 0 auto;display:flex;flex-direction:column;gap:2px;align-items:flex-end;text-align:right}
 .ko-v{font-size:14px;font-weight:500;letter-spacing:.1px;color:#44544A}
 .ko-k{font-size:12px;font-weight:400;color:#7A8684}
-.ko-foot{background:#fff;padding:12px;border-bottom:.5px solid #C3CEC7;border-radius:0 0 8px 8px}
+.ko-foot{background:#fff;padding:12px;border-radius:0 0 8px 8px}
 .ko-btn{width:100%;height:30px;background:#E1F9ED;border-radius:8px;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer}
 .ko-btn{font-size:13px;font-weight:500;letter-spacing:.46px;text-transform:uppercase;color:#006D35}
 .ko-btn:active{background:#d2f2e2}
@@ -501,7 +498,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
     <section class="screen on" data-s="home">
       <div class="topbar">
         <div class="topbar-row">
-          <button class="site-sel" onclick="sheet('sheet-site')"><svg class="pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.6"/></svg>Elephant Camp <svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="site-sel" onclick="sheet('sheet-site')"><svg class="pin" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Elephant Camp <svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           <button class="topx" onclick="toast('Close')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button>
         </div>
         <div class="tabs">
@@ -1026,24 +1023,20 @@ const MT=[
 ];
 const MTKEYS={maya:1,papaya:1,kaa:1};
 const CN={maya:'African Elephant',papaya:'African Lion',ember:'Bengal Tiger',kaa:'Reticulated Python',rio:'Scarlet Macaw',tula:'Galápagos Tortoise',coral:'Greater Flamingo',bandit:'Red Panda',nova:'Asian Otter',pebble:'African Penguin'};
+const MT_TIME=['12:24 PM','09:10 AM','04:45 PM','11:30 AM','02:15 PM','08:50 AM','03:05 PM','10:20 AM','01:40 PM','05:30 PM'];
 function mtCard(a,i){
   const detailKey=MTKEYS[a.key]?a.key:'papaya';
-  const p=(a.loc||'').split(' · ');const enc=p[0]||'—',sec=p[1]||'—',site=p[2]||'Gagna';
   const rname=a.recent[0].name.split(' (')[0];
   const moreN=a.recent.length-1;const more=moreN>0?`, +${moreN}`:'';
-  const date=a.recent[0].date||'';
-  return `<div class="mt-card">
+  const date=a.recent[0].date||'';const req=a.recent[0].req||'';const time=MT_TIME[i%MT_TIME.length];
+  return `<div class="mt-card" onclick="openAnimal('${detailKey}')">
     <div class="mt-top">
-      <div class="mt-content" onclick="openAnimal('${detailKey}')">
+      <div class="mt-content">
         <div class="mt-pic"><div class="mt-photo" style="background:${a.bg}">${a.emoji}</div><div class="mt-sex">${a.sex}</div></div>
         <div class="mt-names">
           <div class="mt-txt">
             <div class="mt-idline">ID: ${a.id}</div>
             <div class="mt-name">${CN[a.key]||a.sci}</div>
-            <div class="mt-sci mt-detail-only">${a.sci}</div>
-            <div class="mt-loc mt-detail-only">${enc}</div>
-            <div class="mt-loc mt-detail-only">${sec}</div>
-            <div class="mt-loc mt-detail-only">${site}</div>
           </div>
           <div class="mt-chips">
             <div class="mt-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6L5.5 17A2.5 2.5 0 0 0 7.7 21h8.6a2.5 2.5 0 0 0 2.2-4L14 9V3"/></svg><b>${a.tests}</b><em>Tests</em></div>
@@ -1051,15 +1044,16 @@ function mtCard(a,i){
           </div>
         </div>
       </div>
-      <div class="mt-chev" onclick="event.stopPropagation();toggleMt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
     </div>
-    <div class="mt-foot" onclick="openRecent('${a.key}')">
-      <div class="rt">Recent Test : <b>${rname}${more}</b></div>
-      <div class="dt">${date}</div>
+    <div class="mt-foot">
+      <div class="mt-rline">Recent Test : <b>${rname}${more}</b></div>
+      <div class="mt-reqrow">
+        <div class="mt-reqL"><span class="mt-prio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg></span><span class="mt-reqid">${req}</span></div>
+        <span class="mt-dt">${date} • ${time}</span>
+      </div>
     </div>
   </div>`;
 }
-function toggleMt(el){el.closest('.mt-card').classList.toggle('open');}
 function renderMT(){const html=MT.map(mtCard).join('');['mt-list','la-list'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=html;});}
 function openRecent(key){
   const a=MT.find(x=>x.key===key); if(!a) return;
