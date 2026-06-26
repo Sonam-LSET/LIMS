@@ -201,6 +201,14 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .ko-btn{width:100%;height:30px;background:#E1F9ED;border-radius:8px;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer}
 .ko-btn{font-size:13px;font-weight:500;letter-spacing:.46px;text-transform:uppercase;color:#006D35}
 .ko-btn:active{background:#d2f2e2}
+.ko-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:22px 0 16px}
+.ko-head .ttl{flex:1;min-width:0;font-size:16px;font-weight:500;color:#44544A}
+.ko-drop{display:inline-flex;align-items:center;gap:0;color:#006D35;background:none;padding:0;flex:0 0 auto}
+.ko-drop .rl{font-size:14px;font-weight:600;color:#006D35}
+.ko-drop svg{width:20px;height:20px}
+.icard2.ko-mpt{height:464px}
+.ko-mpt .ko-body{flex:1 0 0;min-height:0}
+.ko-mpt .ko-foot{flex:1 0 0;display:flex;align-items:flex-start}
 /* search + filters row */
 .searchrow{display:flex;gap:10px;align-items:center;margin:2px 0 11px}
 .searchrow .search{flex:1;margin:0}
@@ -495,7 +503,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
           </div>
         </div>
 
-        <div class="slabel"><div class="t" style="font-size:17px">Key Observations</div><button class="rangepill" onclick="openRange(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4" stroke-linecap="round"/></svg><span class="rl">Last 6 Months</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+        <div class="ko-head"><div class="ttl">Key Observations</div><button class="ko-drop" onclick="openRange(this)"><span class="rl">Last 3 months</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
         <div class="icar" id="ko-car"></div>
 
         <div class="slabel" style="margin-top:22px"><div class="t" style="font-size:17px">Animals Under Monitoring</div><a onclick="toast('48 animals')">48</a></div>
@@ -1128,13 +1136,13 @@ let curTest=null,curAnimal=null;
 /* ===== Key Observations carousel (Figma 127:6734) ===== */
 const PAW='<svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="5.4" cy="11" rx="1.8" ry="2.4"/><ellipse cx="9.4" cy="7.1" rx="1.9" ry="2.6"/><ellipse cx="14.6" cy="7.1" rx="1.9" ry="2.6"/><ellipse cx="18.6" cy="11" rx="1.8" ry="2.4"/><path d="M12 12c-2.8 0-5 2-5 4.4 0 1.8 1.5 2.8 3.2 2.8 1 0 1.3-.4 1.8-.4s.8.4 1.8.4c1.7 0 3.2-1 3.2-2.8 0-2.4-2.2-4.4-5-4.4z"/></svg>';
 function koEgg(emoji,bg,sex){const f=sex==='F';return `<div class="ko-egg"><div class="ko-pic" style="background:${bg}">${emoji}</div><div class="ko-gen ${f?'f':'m'}">${sex}</div></div>`;}
-function koRow(onclick,egg,l1,l2,v,k,vColor){
+function koRow(egg,l1,l2,v,k,vColor){
   const mid=`<div class="ko-mid"><div class="ko-l1">${l1}</div>${l2?`<div class="ko-l2">${l2}</div>`:''}</div>`;
   const rt=`<div class="ko-rt"><div class="ko-v"${vColor?` style="color:${vColor}"`:''}>${v}</div><div class="ko-k">${k}</div></div>`;
-  return `<div class="ko-row" onclick="${onclick}">${egg}${mid}${rt}</div>`;
+  return `<div class="ko-row">${egg}${mid}${rt}</div>`;
 }
 function koCard(o){
-  return `<div class="icard2">
+  return `<div class="icard2${o.fixed?' ko-mpt':''}">
     <div class="ko-hd" style="background:${o.tint}">
       <div class="ko-tx"><div class="ko-t" style="color:${o.tc};font-weight:${o.tw}">${o.title}</div><div class="ko-s">${o.sub}</div></div>
       <div class="ko-paw" style="color:${o.paw}">${PAW}</div>
@@ -1142,32 +1150,36 @@ function koCard(o){
     <div class="ko-body">${o.rows}<div class="ko-foot"><button class="ko-btn" onclick="${o.va}">View all</button></div></div>
   </div>`;
 }
-const RARELY=[
-  {emoji:'🐻',bg:'#efe2d3',id:'AID052/22',name:'Bruno',sex:'M',last:'Oct 25',never:false},
-  {emoji:'🦒',bg:'#f3eccf',id:'AID076/23',name:'Willow',sex:'F',last:'Jul 25',never:false},
-  {emoji:'🦎',bg:'#dceadf',id:'AID019/21',name:'Sage',sex:'M',last:'Apr 25',never:false},
-  {emoji:'🦫',bg:'#e7ddc8',id:'AID133/24',name:'Pip',sex:'F',last:'Never',never:true},
-  {emoji:'🦊',bg:'#f0ddd0',id:'AID090/23',name:'Dune',sex:'M',last:'Never',never:true}
+// 5 animals shared across the three animal cards (exact IDs/names/gender from Figma)
+const KO5=[
+  {emoji:'🐘',bg:'linear-gradient(135deg,#d9e6d2,#b9d6c0)',id:'BI23000123',name:'Maya',sex:'M'},
+  {emoji:'🦁',bg:'linear-gradient(135deg,#ffe8c2,#ffd29e)',id:'BI23001758',name:'Papaya',sex:'F'},
+  {emoji:'🐯',bg:'linear-gradient(135deg,#ffe0b8,#ffcf94)',id:'BI23000557',name:'Ember',sex:'M'},
+  {emoji:'🐍',bg:'linear-gradient(135deg,#d7e9e7,#aed9d2)',id:'BI23000345',name:'Kaaya',sex:'F'},
+  {emoji:'🦜',bg:'linear-gradient(135deg,#ffd9c2,#ff9e7a)',id:'BI23000758',name:'Rio',sex:'M'}
 ];
-const MPT_NAME={cbc:'Complete Blood Count (CBC)',lft:'Liver Function Test (LFT)',urine:'Urine Analysis',culture:'Culture & Sensitivity',histo:'Histopathology'};
+const KO_MOSTTESTED=['84','62','25','23','18'];
+const KO_RECENT=[['5 Tests','Today'],['12 Tests','2d ago'],['25 Tests','4d ago'],['32 Tests','9d ago'],['8 Test','12d ago']];
+const KO_RARELY=[['Dec 25',false],['Nov 25',false],['Oct 25',false],['Never',true],['Never',true]];
+const KO_MPT=[
+  ['Complete Blood Count (CBC)','4 Subtests','234'],
+  ['Liver Function Test (LFT)','','124'],
+  ['Kidney Function Test (KFT/RFT)','6 Subtests','98'],
+  ['Hormone Assay','5 Subtests','87'],
+  ['Serology Test','','73']
+];
 function renderKO(){
   const car=document.getElementById('ko-car'); if(!car) return;
-  const byKey=k=>MT.find(x=>x.key===k);
-  // Most Tested
-  const mtKeys=['maya','papaya','ember','kaa','rio'];
-  const mtRows=mtKeys.map(k=>{const a=byKey(k);return koRow(`openAnimal('${MTKEYS[k]?k:'papaya'}')`,koEgg(a.emoji,a.bg,a.sex),'ID: '+a.id,a.common,a.tests,'Tests');}).join('');
-  // Recently Tested
-  const rec=[['papaya','Today'],['rio','2d ago'],['ember','4d ago'],['maya','6d ago'],['kaa','9d ago']];
-  const recRows=rec.map(([k,when])=>{const a=byKey(k);return koRow(`openAnimal('${MTKEYS[k]?k:'papaya'}')`,koEgg(a.emoji,a.bg,a.sex),'ID: '+a.id,a.common,a.tests+' Tests',when);}).join('');
-  // Rarely Tested
-  const rareRows=RARELY.map(a=>koRow(`openAnimal('papaya')`,koEgg(a.emoji,a.bg,a.sex),'ID: '+a.id,a.name,a.last,'Last tested',a.never?'#FA6140':'')).join('');
-  // Most Performed Tests (no egg)
-  const mptRows=TEST_ORDER.map(id=>{const t=TESTS[id];const sub=t.kind==='text'?'Text report':`${t.subDefs.length} Subtests`;return koRow(`openTest('${id}')`,'',MPT_NAME[id]||t.name,sub,t.animals,'Animals');}).join('');
+  const egg=a=>koEgg(a.emoji,a.bg,a.sex);
+  const mtRows=KO5.map((a,i)=>koRow(egg(a),'ID: '+a.id,a.name,KO_MOSTTESTED[i],'Tests')).join('');
+  const rareRows=KO5.map((a,i)=>{const[d,nv]=KO_RARELY[i];return koRow(egg(a),'ID: '+a.id,a.name,d,'Last tested',nv?'#FA6140':'');}).join('');
+  const recRows=KO5.map((a,i)=>{const[v,w]=KO_RECENT[i];return koRow(egg(a),'ID: '+a.id,a.name,v,w);}).join('');
+  const mptRows=KO_MPT.map(([nm,sub,v])=>koRow('',nm,sub,v,'Animals')).join('');
   car.innerHTML=
     koCard({tint:'rgba(55,189,105,0.2)',tc:'#006D35',tw:600,paw:'#37BD69',title:'Most Tested Animals',sub:'Top 10 animals with the highest testing activity.',rows:mtRows,va:"nav('list-animals')"})
+   +koCard({tint:'rgba(255,189,168,0.2)',tc:'#FA6140',tw:500,paw:'#FA6140',title:'Rarely Tested Animals',sub:'10 animals with the longest gap since their last test.',rows:rareRows,va:"nav('list-animals')"})
    +koCard({tint:'rgba(175,239,235,0.4)',tc:'#1F415B',tw:600,paw:'#00ABAB',title:'Recently Tested Animals',sub:'Last 10 animals tested across the selected site.',rows:recRows,va:"nav('list-animals')"})
-   +koCard({tint:'rgba(252,244,174,0.5)',tc:'#E4B819',tw:500,paw:'#E4B819',title:'Most Performed Tests',sub:'Top 10 tests most frequently performed.',rows:mptRows,va:"nav('list-tests')"})
-   +koCard({tint:'rgba(255,189,168,0.2)',tc:'#FA6140',tw:500,paw:'#FA6140',title:'Rarely Tested Animals',sub:'10 animals with the longest gap since their last test.',rows:rareRows,va:"nav('list-animals')"});
+   +koCard({tint:'rgba(252,244,174,0.5)',tc:'#E4B819',tw:500,paw:'#E4B819',title:'Most Performed Tests',sub:'Top 10 tests most frequently performed.',rows:mptRows,va:"nav('list-tests')",fixed:true});
 }
 function openTest(id){
   const t=TESTS[id]; if(!t) return; curTest=id;
