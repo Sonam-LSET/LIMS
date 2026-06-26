@@ -78,11 +78,18 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .at-sitecard{display:flex;flex-direction:column;gap:1px;border-radius:8px;overflow:hidden}
 .at-site{display:flex;align-items:center;gap:12px;background:#fff;padding:16px;border-top:1px solid rgba(0,0,0,.05)}
 .at-site .pin{width:20px;height:20px;color:#44544A;flex:0 0 auto}
-.at-site .nm{flex:1;min-width:0;font-size:14px;font-weight:500;letter-spacing:.1px;color:#44544A}
+.at-site .nm{flex:1;min-width:0;font-size:14px;font-weight:500;letter-spacing:.1px;color:#44544A;text-align:left}
 .at-site .cv{width:24px;height:24px;color:#44544A;flex:0 0 auto}
 .at-tabs{display:flex;gap:12px;background:#fff;padding:12px}
 .at-listsec{display:flex;flex-direction:column;gap:12px}
 .at-listhead{display:flex;align-items:center;justify-content:space-between;gap:8px}
+/* individual listing row — Figma 148:8759 (tests / species) */
+.ilist{display:flex;align-items:center;gap:8px;background:#fff;min-height:64px;padding:12px;border-radius:8px;margin-bottom:12px;overflow:hidden;border:none;width:100%;text-align:left}
+.ilist .mid{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.ilist .nm{font-size:16px;font-weight:500;color:#44544A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ilist .sub{font-size:12px;font-weight:400;color:#7A8684;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ilist .tag{font-size:16px;font-weight:600;color:#006D35;flex:0 0 auto}
+.ilist:active{background:#f4f8f6}
 .drill-space{height:40px}
 
 /* large nav header (Apple Health "Summary") */
@@ -561,35 +568,58 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
         <div class="at-sitecard">
           <button class="at-site" onclick="sheet('sheet-site')"><svg class="pin" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span class="nm">Gagwa</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           <div class="at-tabs">
-            <button class="tab on" onclick="atGroup(this,'animals')">By Animals</button>
-            <button class="tab" onclick="atGroup(this,'species')">By Species</button>
+            <button class="tab on" onclick="atSpecies(this,'animals')">By Animals</button>
+            <button class="tab" onclick="atSpecies(this,'species')">By Species</button>
           </div>
         </div>
         <div class="at-listsec">
           <div class="at-listhead">
-            <div class="aum-ttl">48 Animals</div>
+            <div class="aum-ttl" id="la-count">48 Animals</div>
             <div class="aum-actions">
               <button class="iconsq" onclick="toast('Search')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4" stroke-linecap="round"/></svg></button>
               <button class="iconsq" onclick="sheet('sheet-filter')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 12h2M10 12h10M4 17h7M15 17h5"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="13" cy="17" r="2"/></svg></button>
             </div>
           </div>
           <div id="la-list"></div>
+          <div id="la-species" style="display:none"></div>
         </div>
         <div class="drill-space"></div>
       </div>
     </section>
 
-    <!-- ===================== LIST: TESTS PERFORMED (animal-centric, no departments) ===================== -->
+    <!-- ===================== LIST: TESTS PERFORMED (Figma 148:8643) ===================== -->
     <section class="screen" data-s="list-tests">
-      <div class="bhead"><button class="back" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Reports</button><div class="htitle">Tests Performed</div></div>
-      <div class="pad" style="padding-top:12px">
-        <div style="font-size:14px;color:var(--muted);font-weight:600;margin:4px 4px 12px">612 completed tests · grouped by test, not department</div>
-        <div class="card" style="overflow:hidden">
-          <div class="freq tap" onclick="openTest('cbc')"><div class="ic" style="background:#e1f4fa">🩸</div><div class="mid"><div class="nm">CBC</div><div class="sub">142 performed · 38 animals</div></div><div><div class="ct tnum">142</div><div class="ctk">tests</div></div></div>
-          <div class="freq tap" onclick="openTest('lft')"><div class="ic" style="background:#fcf4ae">🧪</div><div class="mid"><div class="nm">Liver Panel (LFT)</div><div class="sub">96 performed · 29 animals</div></div><div><div class="ct tnum">96</div><div class="ctk">tests</div></div></div>
-          <div class="freq tap" onclick="openTest('urine')"><div class="ic" style="background:#e8eafa">💧</div><div class="mid"><div class="nm">Urine Analysis</div><div class="sub">74 performed · 31 animals</div></div><div><div class="ct tnum">74</div><div class="ctk">tests</div></div></div>
-          <div class="freq tap" onclick="openTest('culture')"><div class="ic" style="background:#e8f6f0">🧫</div><div class="mid"><div class="nm">Culture &amp; Sensitivity</div><div class="sub">58 performed · text reports</div></div><div><div class="ct tnum">58</div><div class="ctk">tests</div></div></div>
-          <div class="freq tap" onclick="openTest('histo')"><div class="ic" style="background:#fbeef4">🔬</div><div class="mid"><div class="nm">Histopathology</div><div class="sub">31 performed · text reports</div></div><div><div class="ct tnum">31</div><div class="ctk">tests</div></div></div>
+      <div class="tbar">
+        <button class="tbar-back" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M11 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="tbar-title">Tests Performed</div>
+      </div>
+      <div class="at-wrap">
+        <button class="at-datefilter" onclick="openRange(this)"><span class="rl">Today, 24 Jun 2026</span> <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></button>
+        <div class="at-sitecard">
+          <button class="at-site" onclick="sheet('sheet-site')"><svg class="pin" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span class="nm">Gagwa</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="at-tabs">
+            <button class="tab" onclick="atTab(this)">By Animals</button>
+            <button class="tab on" onclick="atTab(this)">By Species</button>
+          </div>
+        </div>
+        <div class="at-listsec">
+          <div class="at-listhead">
+            <div class="aum-ttl">612 Tests</div>
+            <div class="aum-actions">
+              <button class="iconsq" onclick="toast('Search')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4" stroke-linecap="round"/></svg></button>
+              <button class="iconsq" onclick="sheet('sheet-filter')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 12h2M10 12h10M4 17h7M15 17h5"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="13" cy="17" r="2"/></svg></button>
+            </div>
+          </div>
+          <div>
+            <button class="ilist" onclick="openTest('cbc')"><div class="mid"><div class="nm">Complete Blood Count (CBC)</div><div class="sub">25 Animals • Whole Blood (EDTA) • 4 Subtests</div></div><div class="tag">9</div></button>
+            <button class="ilist" onclick="toast('Comprehensive Metabolic Panel (CMP)')"><div class="mid"><div class="nm">Comprehensive Metabolic Panel (CMP)</div><div class="sub">30 Animals • Serum (Clot) • 14 Subtests</div></div></button>
+            <button class="ilist" onclick="openTest('lft')"><div class="mid"><div class="nm">Liver Function Tests (LFT)</div><div class="sub">20 Animals • Serum (Clot) • 6 Subtests</div></div></button>
+            <button class="ilist" onclick="toast('Thyroid Function Tests (TFT)')"><div class="mid"><div class="nm">Thyroid Function Tests (TFT)</div><div class="sub">15 Animals • Serum (Clot) • 3 Subtests</div></div></button>
+            <button class="ilist" onclick="toast('Complete Blood Count')"><div class="mid"><div class="nm">Complete Blood Count</div><div class="sub">30 Animals Tested • Blood Samples • 4 Subtests</div></div></button>
+            <button class="ilist" onclick="toast('Serum Biochemistry Profile')"><div class="mid"><div class="nm">Serum Biochemistry Profile</div><div class="sub">25 Animals Tested • Serum Samples • 6 Subtests</div></div></button>
+            <button class="ilist" onclick="toast('Allergy Testing')"><div class="mid"><div class="nm">Allergy Testing</div><div class="sub">15 Animals Tested • Skin Samples • 3 Subtests</div></div></button>
+            <button class="ilist" onclick="toast('Parasitology Examination')"><div class="mid"><div class="nm">Parasitology Examination</div><div class="sub">20 Species Tested • Fecal Samples • 5 Key Tests</div></div></button>
+          </div>
         </div>
         <div class="drill-space"></div>
       </div>
@@ -1104,7 +1134,28 @@ function openRecent(key){
   sheet('sheet-recent');
 }
 function pickChip(btn){btn.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));btn.classList.add('on');toast('Sorted by '+btn.textContent);}
-function atGroup(btn,mode){btn.parentElement.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');if(mode==='species')toast('Grouped by species');}
+function atTab(btn){btn.parentElement.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');}
+/* Animals Tested: By Animals (cards) ⇄ By Species (grouped rows) */
+const SPECIES=[
+  {name:'African Lion',animals:5,tests:142},
+  {name:'African Elephant',animals:4,tests:120},
+  {name:'Bengal Tiger',animals:3,tests:86},
+  {name:'Scarlet Macaw',animals:6,tests:74},
+  {name:'Greater Flamingo',animals:8,tests:53},
+  {name:'Asian Otter',animals:3,tests:41},
+  {name:'Reticulated Python',animals:2,tests:38},
+  {name:'Red Panda',animals:2,tests:29}
+];
+function renderSpecies(){
+  const el=document.getElementById('la-species'); if(!el) return;
+  el.innerHTML=SPECIES.map(s=>`<button class="ilist" onclick="toast('${s.name}')"><div class="mid"><div class="nm">${s.name}</div><div class="sub">${s.animals} Animals • ${s.tests} Tests</div></div></button>`).join('');
+}
+function atSpecies(btn,mode){
+  btn.parentElement.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+  const list=document.getElementById('la-list'),sp=document.getElementById('la-species'),ct=document.getElementById('la-count');
+  if(mode==='species'){list.style.display='none';sp.style.display='block';if(ct)ct.textContent=SPECIES.length+' Species';}
+  else{list.style.display='block';sp.style.display='none';if(ct)ct.textContent='48 Animals';}
+}
 
 /* ================= TEST-CENTRIC FLOW (Most Performed Tests → animals → results) ================= */
 const AID={maya:'AID244/26',papaya:'AID118/24',ember:'AID203/25',kaa:'AID087/23',rio:'AID311/26',tula:'AID076/23',coral:'AID050/22',nova:'AID129/24',pebble:'AID061/23',bandit:'AID038/22'};
@@ -1313,6 +1364,7 @@ function openSub(i){
 }
 renderMT();
 renderKO();
+renderSpecies();
 
 render();
 </script>
