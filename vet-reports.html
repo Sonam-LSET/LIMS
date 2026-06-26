@@ -83,13 +83,30 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .at-tabs{display:flex;gap:12px;background:#fff;padding:12px}
 .at-listsec{display:flex;flex-direction:column;gap:12px}
 .at-listhead{display:flex;align-items:center;justify-content:space-between;gap:8px}
-/* individual listing row — Figma 148:8759 (tests / species) */
-.ilist{display:flex;align-items:center;gap:8px;background:#fff;min-height:64px;padding:12px;border-radius:8px;margin-bottom:12px;overflow:hidden;border:none;width:100%;text-align:left}
+/* individual listing row — Figma 148:8759 (tests performed) */
+.ilist{display:flex;align-items:center;gap:12px;background:#fff;min-height:64px;padding:12px;border-radius:8px;margin-bottom:12px;overflow:hidden;border:none;width:100%;text-align:left}
 .ilist .mid{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
 .ilist .nm{font-size:16px;font-weight:500;color:#44544A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ilist .sub{font-size:12px;font-weight:400;color:#7A8684;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ilist .tag{font-size:16px;font-weight:600;color:#006D35;flex:0 0 auto}
 .ilist:active{background:#f4f8f6}
+.iltag{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:#E1F9ED;border:.5px solid rgba(55,189,105,.3);border-radius:8px;padding:3px 8px;flex:0 0 auto;text-align:center}
+.iltag .n{font-size:16px;font-weight:600;color:#006D35;line-height:1.1}
+.iltag .k{font-size:12px;font-weight:400;color:#44544A;line-height:1.1}
+/* species card — Figma 148:8533 */
+.spcard{display:flex;align-items:center;background:#fff;border-radius:8px;overflow:hidden;margin-bottom:12px;box-shadow:0 1px .5px rgba(0,0,0,.1)}
+.sp-img{width:88px;height:88px;border-radius:8px;flex:0 0 auto;display:grid;place-items:center;font-size:40px;overflow:hidden}
+.sp-txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px;padding:12px}
+.sp-row{display:flex;gap:16px;align-items:flex-start;width:100%}
+.sp-title{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.sp-nm{font-size:16px;font-weight:500;color:#44544A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-sci{font-size:12px;font-style:italic;font-weight:400;color:#44544A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-num{font-size:16px;font-weight:600;color:#006D35;flex:0 0 auto}
+.sp-tags{display:flex;gap:8px;flex-wrap:wrap}
+.sptag{width:56px;padding:4px 8px;border-radius:2px;font-size:10px;font-weight:500;text-align:center;white-space:nowrap}
+.sptag.m{background:rgba(175,239,235,.5);color:#00AFD6}
+.sptag.f{background:rgba(250,97,64,.3);color:#FA6140}
+.sptag.ud{background:#DAE7DF;color:#E93353}
+.sptag.id{background:#DAE7DF;color:#7A8684}
 .drill-space{height:40px}
 
 /* large nav header (Apple Health "Summary") */
@@ -607,14 +624,14 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
             </div>
           </div>
           <div>
-            <button class="ilist" onclick="openTest('cbc')"><div class="mid"><div class="nm">Complete Blood Count (CBC)</div><div class="sub">25 Animals • Whole Blood (EDTA) • 4 Subtests</div></div><div class="tag">9</div></button>
-            <button class="ilist" onclick="toast('Comprehensive Metabolic Panel (CMP)')"><div class="mid"><div class="nm">Comprehensive Metabolic Panel (CMP)</div><div class="sub">30 Animals • Serum (Clot) • 14 Subtests</div></div></button>
-            <button class="ilist" onclick="openTest('lft')"><div class="mid"><div class="nm">Liver Function Tests (LFT)</div><div class="sub">20 Animals • Serum (Clot) • 6 Subtests</div></div></button>
-            <button class="ilist" onclick="toast('Thyroid Function Tests (TFT)')"><div class="mid"><div class="nm">Thyroid Function Tests (TFT)</div><div class="sub">15 Animals • Serum (Clot) • 3 Subtests</div></div></button>
-            <button class="ilist" onclick="toast('Complete Blood Count')"><div class="mid"><div class="nm">Complete Blood Count</div><div class="sub">30 Animals Tested • Blood Samples • 4 Subtests</div></div></button>
-            <button class="ilist" onclick="toast('Serum Biochemistry Profile')"><div class="mid"><div class="nm">Serum Biochemistry Profile</div><div class="sub">25 Animals Tested • Serum Samples • 6 Subtests</div></div></button>
-            <button class="ilist" onclick="toast('Allergy Testing')"><div class="mid"><div class="nm">Allergy Testing</div><div class="sub">15 Animals Tested • Skin Samples • 3 Subtests</div></div></button>
-            <button class="ilist" onclick="toast('Parasitology Examination')"><div class="mid"><div class="nm">Parasitology Examination</div><div class="sub">20 Species Tested • Fecal Samples • 5 Key Tests</div></div></button>
+            <button class="ilist" onclick="openTest('cbc')"><div class="mid"><div class="nm">Complete Blood Count (CBC)</div><div class="sub">Whole Blood (EDTA) • 4 Subtests</div></div><div class="iltag"><div class="n">9</div><div class="k">Animals</div></div></button>
+            <button class="ilist" onclick="toast('Comprehensive Metabolic Panel (CMP)')"><div class="mid"><div class="nm">Comprehensive Metabolic Panel (CMP)</div><div class="sub">Serum (Clot) • 14 Subtests</div></div><div class="iltag"><div class="n">30</div><div class="k">Animals</div></div></button>
+            <button class="ilist" onclick="openTest('lft')"><div class="mid"><div class="nm">Liver Function Tests (LFT)</div><div class="sub">Serum (Clot) • 6 Subtests</div></div><div class="iltag"><div class="n">20</div><div class="k">Animals</div></div></button>
+            <button class="ilist" onclick="toast('Thyroid Function Tests (TFT)')"><div class="mid"><div class="nm">Thyroid Function Tests (TFT)</div><div class="sub">Serum (Clot) • 3 Subtests</div></div><div class="iltag"><div class="n">15</div><div class="k">Animals</div></div></button>
+            <button class="ilist" onclick="toast('Complete Blood Count')"><div class="mid"><div class="nm">Complete Blood Count</div><div class="sub">Blood Samples • 4 Subtests</div></div><div class="iltag"><div class="n">30</div><div class="k">Animals</div></div></button>
+            <button class="ilist" onclick="toast('Serum Biochemistry Profile')"><div class="mid"><div class="nm">Serum Biochemistry Profile</div><div class="sub">Serum Samples • 6 Subtests</div></div><div class="iltag"><div class="n">25</div><div class="k">Animals</div></div></button>
+            <button class="ilist" onclick="toast('Allergy Testing')"><div class="mid"><div class="nm">Allergy Testing</div><div class="sub">Skin Samples • 3 Subtests</div></div><div class="iltag"><div class="n">15</div><div class="k">Animals</div></div></button>
+            <button class="ilist" onclick="toast('Parasitology Examination')"><div class="mid"><div class="nm">Parasitology Examination</div><div class="sub">Fecal Samples • 5 Key Tests</div></div><div class="iltag"><div class="n">30</div><div class="k">Animals</div></div></button>
           </div>
         </div>
         <div class="drill-space"></div>
@@ -1133,18 +1150,13 @@ function pickChip(btn){btn.parentElement.querySelectorAll('.chip').forEach(c=>c.
 function atTab(btn){btn.parentElement.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');}
 /* Animals Tested: By Animals (cards) ⇄ By Species (grouped rows) */
 const SPECIES=[
-  {name:'African Lion',animals:5,tests:142},
-  {name:'African Elephant',animals:4,tests:120},
-  {name:'Bengal Tiger',animals:3,tests:86},
-  {name:'Scarlet Macaw',animals:6,tests:74},
-  {name:'Greater Flamingo',animals:8,tests:53},
-  {name:'Asian Otter',animals:3,tests:41},
-  {name:'Reticulated Python',animals:2,tests:38},
-  {name:'Red Panda',animals:2,tests:29}
+  {nm:'Peach Fronted Concure',sci:'Peach Fronted Concure',num:9,emoji:'🦜',bg:'linear-gradient(135deg,#ffd9c2,#ff9e7a)',tags:[['m','M - 5'],['f','F - 3'],['ud','UD - 1']]},
+  {nm:'Green-cheeked Parakeet',sci:'Pyrrhura molinae',num:18,emoji:'🦜',bg:'linear-gradient(135deg,#d9e6d2,#9fc4a8)',tags:[['m','M - 6'],['f','F - 5'],['ud','UD - 4'],['id','ID - 3']]},
+  {nm:'Red-capped Parakeet',sci:'Pyrrhura rupicola',num:21,emoji:'🦜',bg:'linear-gradient(135deg,#ffe0b8,#e8a06a)',tags:[['m','M - 9'],['f','F - 8'],['ud','UD - 1'],['id','ID - 3']]}
 ];
 function renderSpecies(){
   const el=document.getElementById('la-species'); if(!el) return;
-  el.innerHTML=SPECIES.map(s=>`<button class="ilist" onclick="toast('${s.name}')"><div class="mid"><div class="nm">${s.name}</div><div class="sub">${s.animals} Animals • ${s.tests} Tests</div></div></button>`).join('');
+  el.innerHTML=SPECIES.map(s=>`<div class="spcard"><div class="sp-img" style="background:${s.bg}">${s.emoji}</div><div class="sp-txt"><div class="sp-row"><div class="sp-title"><div class="sp-nm">${s.nm}</div><div class="sp-sci">${s.sci}</div></div><div class="sp-num">${s.num}</div></div><div class="sp-tags">${s.tags.map(t=>`<span class="sptag ${t[0]}">${t[1]}</span>`).join('')}</div></div></div>`).join('');
 }
 function atSpecies(btn,mode){
   btn.parentElement.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
