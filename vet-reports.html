@@ -60,6 +60,12 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .screen::-webkit-scrollbar{width:0}
 .pad{padding:0 18px}
 .bottom-space{height:120px}
+/* Animals-under-monitoring header — Figma 141:8844 */
+.aum-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:22px 0 12px}
+.aum-ttl{flex:1;min-width:0;font-size:16px;font-weight:500;color:#44544A}
+.aum-actions{display:flex;gap:8px;flex:0 0 auto}
+.iconsq{width:30px;height:30px;border-radius:4px;background:rgba(0,0,0,.05);display:grid;place-items:center;border:none}
+.iconsq svg{width:18px;height:18px;color:#44544A}
 .drill-space{height:40px}
 
 /* large nav header (Apple Health "Summary") */
@@ -67,17 +73,23 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .lhead .big{font-size:34px;font-weight:600;letter-spacing:-.5px}
 .lhead .row{display:flex;align-items:center;justify-content:space-between}
 .avatar-btn{width:38px;height:38px;border-radius:50%;background:var(--accent-soft);display:grid;place-items:center;font-size:18px}
-/* landing top section — site selector + deep-teal stats card */
-.rhead{display:flex;align-items:center;justify-content:space-between;padding:12px 18px 8px}
-.site-sel{display:inline-flex;align-items:center;gap:9px;font-size:23px;font-weight:600;color:var(--navy);letter-spacing:-.4px}
-.site-sel .pin{width:22px;height:22px;color:var(--navy)}
-.site-sel .cv{width:16px;height:16px;color:var(--muted)}
-.statcard{background:#1F415B;border:.5px solid rgba(0,0,0,.05);border-radius:8px;padding:16px 12px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-top:4px;display:flex;flex-direction:column;gap:12px}
+/* landing top app bar — Figma 125:6840 */
+.topbar{background:#fff;border-bottom:1px solid rgba(0,0,0,.05);display:flex;flex-direction:column;gap:4px;padding:8px 0 12px;border-radius:0 0 8px 8px}
+.topbar-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 16px 12px}
+.site-sel{display:inline-flex;align-items:center;gap:4px;font-size:16px;font-weight:600;color:#1F515B;letter-spacing:0}
+.site-sel .pin{width:24px;height:24px;color:#1F515B}
+.site-sel .cv{width:20px;height:20px;color:#1F515B}
+.topx{width:20px;height:20px;display:grid;place-items:center;color:#839D8D;flex:0 0 auto}
+.topx svg{width:16px;height:16px}
+.tabs{display:flex;gap:12px;align-items:center;padding:12px 16px 0;border-top:.5px solid #C3CEC7}
+.tab{flex:1;display:flex;align-items:center;justify-content:center;padding:12px 9px;border-radius:5px;font-size:14px;font-weight:500;letter-spacing:.1px;color:#44544A;background:rgba(55,189,105,.1);border:none}
+.tab.on{background:#37BD69;color:#fff}
+.statcard{background:#1F415B;border:.5px solid rgba(0,0,0,.05);border-radius:8px;padding:16px 12px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-top:4px;display:flex;flex-direction:column;gap:16px}
 .sc-head{display:flex;align-items:center;gap:8px;width:100%}
-.sc-title{flex:1;min-width:0;color:#fff;font-size:14px;font-weight:500;letter-spacing:.1px}
-.sc-range{display:inline-flex;align-items:center;gap:4px;color:#fff;font-size:14px;font-weight:500;letter-spacing:.1px;background:none;padding:0}
-.sc-range svg{width:17px;height:17px}
-.sc-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.sc-title{flex:1;min-width:0;color:#fff;font-size:16px;font-weight:500}
+.sc-range{display:inline-flex;align-items:center;gap:3px;color:#1F415B;font-size:14px;font-weight:500;letter-spacing:.1px;background:rgba(175,239,235,.9);border:.5px solid rgba(0,214,201,.3);padding:2px 7px 2px 12px;border-radius:16px}
+.sc-range svg{width:20px;height:20px}
+.sc-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px 32px}
 .sc-stat{text-align:left;display:flex;flex-direction:column;gap:4px;transition:.12s var(--ease)}
 .sc-stat:active{transform:scale(.96);opacity:.7}
 .sc-stat .v{font-size:24px;font-weight:600;letter-spacing:0;line-height:normal}
@@ -449,12 +461,12 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 @keyframes sk{0%{background-position:100% 0}100%{background-position:-100% 0}}
 
 /* bottom nav */
-.nav{position:absolute;left:0;right:0;bottom:0;height:84px;background:linear-gradient(180deg,#43c97e,#2aa75f);display:flex;padding-bottom:14px;z-index:40}
-.nav .t{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font-size:10.5px;font-weight:600;color:rgba(255,255,255,.82)}
-.nav .ico{width:42px;height:30px;border-radius:11px;display:grid;place-items:center;transition:.18s var(--ease)}
-.nav .ico svg{width:23px;height:23px}
-.nav .t.on{color:#fff}
-.nav .t.on .ico{background:#fff;color:var(--accent)}
+.nav{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(151.99deg,rgba(0,109,53,.9) 24%,rgba(27,149,79,.81) 60%);backdrop-filter:blur(1.5px);-webkit-backdrop-filter:blur(1.5px);display:flex;gap:8px;padding:12px 12px 16px;z-index:40}
+.nav .t{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:12px;font-weight:500;color:#fff;background:none;border:none}
+.nav .ico{width:32px;height:32px;border-radius:8px;display:grid;place-items:center;transition:.18s var(--ease)}
+.nav .ico svg{width:24px;height:24px;color:#fff}
+.nav .t.on .ico{background:#fff;box-shadow:0 3px 2px rgba(252,244,174,.17)}
+.nav .t.on .ico svg{width:18px;height:18px;color:#006D35}
 
 /* sheet */
 .scrim{position:absolute;inset:0;background:rgba(8,20,15,.4);opacity:0;pointer-events:none;transition:.28s var(--ease);z-index:60;backdrop-filter:blur(2px)}
@@ -487,9 +499,15 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 
     <!-- ===================== HOME ===================== -->
     <section class="screen on" data-s="home">
-      <div class="rhead">
-        <button class="site-sel" onclick="sheet('sheet-site')"><svg class="pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.6"/></svg>Gagna <svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <button class="avatar-btn" onclick="toast('Dr. profile')">👩‍⚕️</button>
+      <div class="topbar">
+        <div class="topbar-row">
+          <button class="site-sel" onclick="sheet('sheet-site')"><svg class="pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.6"/></svg>Elephant Camp <svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="topx" onclick="toast('Close')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button>
+        </div>
+        <div class="tabs">
+          <button class="tab on">Animal</button>
+          <button class="tab" onclick="toast('Non Animal')">Non Animal</button>
+        </div>
       </div>
 
       <div class="pad">
@@ -506,17 +524,14 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
         <div class="ko-head"><div class="ttl">Key Observations</div><button class="ko-drop" onclick="openRange(this)"><span class="rl">Last 3 months</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
         <div class="icar" id="ko-car"></div>
 
-        <div class="slabel" style="margin-top:22px"><div class="t" style="font-size:17px">Animals Under Monitoring</div><a onclick="toast('48 animals')">48</a></div>
-        <div class="searchrow">
-          <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4" stroke-linecap="round"/></svg><input placeholder="Search animals, ID, species…" onfocus="this.blur();toast('Search is illustrative')"></div>
-          <button class="filtbtn" onclick="sheet('sheet-filter')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M7 12h10M10 18h4" stroke-linecap="round"/></svg><span class="badge">1</span></button>
+        <div class="aum-head">
+          <div class="aum-ttl">All Tested Animals (48)</div>
+          <div class="aum-actions">
+            <button class="iconsq" onclick="toast('Search')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4" stroke-linecap="round"/></svg></button>
+            <button class="iconsq" onclick="sheet('sheet-filter')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 12h2M10 12h10M4 17h7M15 17h5"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="13" cy="17" r="2"/></svg></button>
+          </div>
         </div>
-        <div class="chips">
-          <button class="fchip2 set" onclick="openRange(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4" stroke-linecap="round"/></svg><span class="rl">Last 6 Months</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-          <button class="fchip2" onclick="sheet('sheet-species')">Species <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-          <button class="fchip2" onclick="toast('Filter by test')">Tests <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        </div>
-        <div id="mt-list" style="margin-top:8px"></div>
+        <div id="mt-list"></div>
         <div class="bottom-space"></div>
       </div>
     </section>
