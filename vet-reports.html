@@ -239,18 +239,20 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 /* ===== lab report viewer (Figma Lab Module reports) ===== */
 .rv{position:absolute;inset:0;background:#E3E8E5;z-index:95;display:none;flex-direction:column}
 .rv.on{display:flex}
-.rv-top{display:flex;align-items:center;gap:4px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.08);padding:14px 10px;flex:0 0 auto}
-.rv-x{width:40px;height:40px;display:grid;place-items:center;border:none;background:none;color:#1F415B;flex:0 0 auto}
-.rv-x svg{width:22px;height:22px}
+.rv-top{display:flex;align-items:center;gap:10px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.08);padding:14px 14px;flex:0 0 auto}
 .rv-ti{flex:1;min-width:0}
 .rv-ti .t{font-size:16px;font-weight:600;color:#1F415B;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rv-ti .s{font-size:12px;color:#7A8684;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.rv-act{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;color:#1F515B;background:#EFF5F2;border:none;flex:0 0 auto}
-.rv-act svg{width:19px;height:19px}
-.rv-act.on{background:#FCF4AE;color:#8a6d00}
-.rv-body{flex:1;overflow-y:auto;padding:16px 12px 84px;display:flex;flex-direction:column;gap:16px;align-items:center;position:relative}
+.rv-close{width:36px;height:36px;border-radius:50%;background:#EFF5F2;display:grid;place-items:center;border:none;color:#1F415B;flex:0 0 auto}
+.rv-close svg{width:18px;height:18px}
+.rv-body{flex:1;overflow-y:auto;padding:16px 12px 92px;display:flex;flex-direction:column;gap:16px;align-items:center;position:relative}
 .rv-page{background:#fff;border-radius:4px;box-shadow:0 6px 22px rgba(0,0,0,.14);width:100%;max-width:600px;padding:18px 16px;color:#16231c}
-.rv-ind{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);background:rgba(31,65,91,.92);color:#fff;font-size:12px;font-weight:600;padding:7px 16px;border-radius:999px;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);z-index:2}
+/* floating action toolbar (iOS-PDF style) */
+.rv-fab{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:4px;background:#fff;border-radius:18px;box-shadow:0 12px 32px rgba(8,30,22,.24);padding:7px;z-index:4}
+.rv-fab .fb{width:48px;height:42px;border-radius:13px;display:grid;place-items:center;border:none;background:none;color:#1F415B}
+.rv-fab .fb svg{width:21px;height:21px}
+.rv-fab .fb:active{background:#EFF5F2}
+.rv-fab .fb.on{background:#FCF4AE;color:#8a6d00}
 /* report content */
 .rep-logo{display:flex;align-items:center;gap:10px;margin-bottom:14px}
 .rep-logo .v{width:34px;height:34px;border-radius:9px;background:#1F515B;color:#fff;display:grid;place-items:center;font-weight:700;font-size:17px;flex:0 0 auto}
@@ -1136,16 +1138,17 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   <!-- lab report viewer overlay -->
   <div class="rv" id="rv">
     <div class="rv-top">
-      <button class="rv-x" onclick="closeReport()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <div class="rv-ti"><div class="t">Lab Test Report</div><div class="s" id="rv-sub">LT11-00023</div></div>
-      <button class="rv-act" id="rv-hl" onclick="toggleHl()" aria-label="Highlight"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 20h4l10.5-10.5a2.8 2.8 0 0 0-4-4L4 16v4z" stroke-linejoin="round"/><path d="M13.5 6.5l4 4" stroke-linecap="round"/></svg></button>
-      <button class="rv-act" onclick="toast('Share report')" aria-label="Share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3v13M12 3l-4 4M12 3l4 4" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" stroke-linecap="round"/></svg></button>
-      <button class="rv-act" onclick="toast('Downloading PDF…')" aria-label="Download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 19h14" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="rv-close" onclick="closeReport()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button>
     </div>
     <div class="rv-body" id="rv-body">
       <div class="rv-page" id="rv-page"></div>
     </div>
-    <div class="rv-ind" id="rv-ind">Page 1 of 1</div>
+    <div class="rv-fab">
+      <button class="fb" id="rv-hl" onclick="toggleHl()" aria-label="Highlight"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 20h4l10.5-10.5a2.8 2.8 0 0 0-4-4L4 16v4z" stroke-linejoin="round"/><path d="M13.5 6.5l4 4" stroke-linecap="round"/></svg></button>
+      <button class="fb" onclick="toast('Share report')" aria-label="Share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3v13M12 3l-4 4M12 3l4 4" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" stroke-linecap="round"/></svg></button>
+      <button class="fb" onclick="toast('Downloading PDF…')" aria-label="Download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 19h14" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </div>
   </div>
 
   <!-- bottom nav (home + lists) -->
@@ -1640,7 +1643,6 @@ function openReport(di){
     ${rows}
     <div class="rep-foot">Downloaded by Dr. Nihal Mehata · ${date} • 12:24 PM · Page 1 of 1<br>System-generated veterinary laboratory report — Antz Systems, Green Valley Wildlife Sanctuary.</div>`;
   document.getElementById('rv-page').innerHTML=page;
-  document.getElementById('rv-ind').textContent=interim?'Interim Report':'Final Report';
   const rv=document.getElementById('rv'); rv.classList.remove('hl'); document.getElementById('rv-hl').classList.remove('on');
   rv.classList.add('on'); document.getElementById('rv-body').scrollTop=0;
 }
