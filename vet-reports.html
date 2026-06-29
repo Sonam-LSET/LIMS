@@ -163,13 +163,13 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 /* lab-value graph bottom sheet (Figma 152:8872 / 157:10688) */
 .sheet-graph{max-height:94%;background:#fff;border-radius:20px 20px 0 0;padding:0;overflow:hidden}
 .gs-top{display:flex;align-items:center;gap:12px;padding:18px 16px;background:#fff;box-shadow:0 4px 7px rgba(0,0,0,.05);color:#000;flex:0 0 auto}
-.gs-entity{display:flex;align-items:center;gap:12px;padding:16px;background:#fff;flex:0 0 auto}
+.gs-entity{display:flex;align-items:center;gap:12px;padding:16px;background:#EFF5F2;border-radius:8px;flex:0 0 auto;margin-bottom:4px}
 .gs-entity .nd{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
 .gs-entity .id{font-size:14px;font-weight:600;color:#44544A}
 .gs-entity .nm{font-size:14px;font-weight:500;letter-spacing:.1px;color:#44544A}
 .gs-entity .cv{width:20px;height:20px;color:#44544A;flex:0 0 auto}
 .gs-body{flex:1;min-height:0;overflow-y:auto;background:#EFF5F2;padding:16px;display:flex;flex-direction:column;gap:16px}
-.gs-tabs{display:flex;gap:4px;background:#e2e6e4;border-radius:11px;padding:4px;flex:0 0 auto}
+.gs-tabs{display:flex;gap:4px;background:rgba(0,0,0,.05);border-radius:11px;padding:4px;flex:0 0 auto;margin-bottom:4px}
 .gtab{flex:1;text-align:center;padding:8px 0;border-radius:9px;font-size:13px;font-weight:600;color:#44544A;border:none;background:none}
 .gtab.on{background:#fff;color:#0c1411;box-shadow:0 2px 10px rgba(15,41,28,.07)}
 .gs-card{background:#fff;border-radius:20px;box-shadow:0 2px 10px rgba(15,41,28,.07);padding:18px 16px 16px;display:flex;flex-direction:column;gap:4px;flex:0 0 auto}
@@ -188,11 +188,17 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .gs-stat .v{font-size:16px;font-weight:600;color:#1F515B}
 .gs-stat .k{font-size:12px;color:#44544A}
 .gs-viewall{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#fff;border:1px solid #44544A;border-radius:4px;padding:6px 16px;min-height:40px;font-size:14px;font-weight:500;color:#44544A;width:100%;flex:0 0 auto}
-.gs-viewall svg{width:20px;height:20px;transition:transform .2s var(--ease)}
-.gs-viewall.open svg{transform:scaleY(-1)}
-.gs-table{background:#fff;border:.5px solid #C3CEC7;border-radius:8px;overflow:hidden;flex:0 0 auto}
+.gs-viewall svg{width:20px;height:20px}
+.gs-recordcard{background:#fff;border-radius:8px;box-shadow:0 2px 10px rgba(15,41,28,.07);padding:12px;display:flex;flex-direction:column;gap:12px;flex:0 0 auto}
+.gs-rechd{display:flex;align-items:center;justify-content:space-between;gap:8px;background:none;border:none;padding:0;font-size:14px;font-weight:500;letter-spacing:.1px;color:#44544A;width:100%}
+.gs-rechd svg{width:20px;height:20px;color:#44544A}
+.gs-table{border:.5px solid #C3CEC7;border-radius:8px;overflow:hidden;flex:0 0 auto}
 .gst-head{display:flex;gap:12px;background:rgba(175,239,235,.7);padding:12px;font-size:12px;font-weight:600;color:#44544A}
-.gst-row{display:flex;gap:12px;align-items:center;padding:11px 12px;border-bottom:.5px solid #C3CEC7}
+#gs-rows{max-height:235px;overflow-y:auto}
+#gs-rows::-webkit-scrollbar{width:4px}
+#gs-rows::-webkit-scrollbar-thumb{background:#839D8D;border-radius:6px}
+.gst-row{display:flex;gap:12px;align-items:center;padding:11px 12px;border-bottom:.5px solid #C3CEC7;background:#fff}
+.gst-row:last-child{border-bottom:none}
 .gst-c1{width:88px;flex:0 0 auto;font-size:12px;color:#44544A}
 .gst-c2{width:88px;flex:0 0 auto;font-size:12px;font-weight:600;color:#44544A;display:flex;gap:4px;align-items:center}
 .gst-c2 .ar{font-size:12.5px}.gst-c2 .ar.up{color:#37BD69}.gst-c2 .ar.hi{color:#E93353}
@@ -1066,22 +1072,22 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   <!-- lab-value graph bottom sheet (Figma 152:8872 / 157:10688) -->
   <div class="sheet sheet-graph" id="sheet-graph">
     <div class="gs-top"><div class="tt"><div class="t1" id="gs-name">Complete Blood Count (CBC)</div><div class="t2" id="gs-subs">4 Subtests</div></div><button class="xbtn" onclick="closeSheet()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button></div>
-    <div class="gs-entity" id="gs-entity"></div>
     <div class="gs-body">
-      <div class="gs-tabs">
-        <button class="gtab" onclick="gPeriod(this)">1M</button>
-        <button class="gtab" onclick="gPeriod(this)">3M</button>
-        <button class="gtab on" onclick="gPeriod(this)">6M</button>
-        <button class="gtab" onclick="gPeriod(this)">12M</button>
-        <button class="gtab" onclick="gPeriod(this)">All</button>
-      </div>
       <div class="gs-card">
+        <div class="gs-entity" id="gs-entity"></div>
+        <div class="gs-tabs">
+          <button class="gtab" onclick="gPeriod(this)">1M</button>
+          <button class="gtab" onclick="gPeriod(this)">3M</button>
+          <button class="gtab on" onclick="gPeriod(this)">6M</button>
+          <button class="gtab" onclick="gPeriod(this)">12M</button>
+          <button class="gtab" onclick="gPeriod(this)">All</button>
+        </div>
         <button class="gs-sub" onclick="gNextSub()"><span id="gs-subname">Hemoglobin</span> <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></button>
         <div class="gs-valrow"><span class="gs-val" id="gs-val">14.2</span><span class="gs-unit" id="gs-unit">g/dL</span></div>
-        <div class="gs-meta"><span class="mt-prio" style="background:#00D6C9"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg></span><span class="gs-req">LT11-00023</span><span>•</span><span class="gs-dt">23 Jun 2026 • 12:24 PM</span></div>
+        <div class="gs-meta"><span class="mt-prio" style="background:#00D6C9"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg></span><span class="gs-req">LT11-00023</span><span>•</span><span class="gs-dt" id="gs-dt">23 Jun 2026 • 12:24 PM</span></div>
         <div id="gs-graph">
           <div class="chart gs-chart" id="gs-chart"></div>
-          <div class="gs-axis"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span></div>
+          <div class="gs-axis" id="gs-axis"></div>
           <div class="gs-stats">
             <div class="gs-stat"><div class="v" id="gs-latest">14.2</div><div class="k">Latest</div></div>
             <div class="gs-stat"><div class="v" id="gs-hi">14.2</div><div class="k">Highest</div></div>
@@ -1091,10 +1097,13 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
         </div>
         <div class="gs-noteline" id="gs-noteline" style="display:none">Qualitative result — shown as recorded findings, no numeric trend.</div>
       </div>
-      <button class="gs-viewall" id="gs-viewall" onclick="toggleGraphRecords(this)"><span>View All Records</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      <div class="gs-table" id="gs-table" style="display:none">
-        <div class="gst-head"><span class="gst-c1">DATE</span><span class="gst-c2" id="gst-vhdr">VALUE</span><span class="gst-c3">REQUEST</span></div>
-        <div id="gs-rows"></div>
+      <button class="gs-viewall" id="gs-viewall" onclick="toggleGraphRecords()"><span>View All Records</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="gs-recordcard" id="gs-recordcard" style="display:none">
+        <button class="gs-rechd" onclick="toggleGraphRecords()"><span>View All Records</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="gs-table">
+          <div class="gst-head"><span class="gst-c1">DATE</span><span class="gst-c2" id="gst-vhdr">VALUE</span><span class="gst-c3">REQUEST</span></div>
+          <div id="gs-rows"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -1326,8 +1335,11 @@ const TD_ANIMALS=[
   {id:'BI23000129',name:"Bourke's Parakeet",sex:'F',emoji:'🦜',bg:'#f0ddd0',date:'5 Mar 2026'},
   {id:'BI23066893',name:'Amazon Parrot',sex:'F',emoji:'🦜',bg:'#d9e6d2',date:'30 Sep 2026'}
 ];
-const TD_DATES=['23 JUN 2026','15 MAY 2026','18 APR 2026','14 MAR 2026','12 FEB 2026','14 JAN 2026'];
-const TD_REQS=['LT11-00023','LT11-00018','LT11-00011','LT11-00009','LT11-00001','LT11-00009'];
+/* 12-month history (oldest→newest months) so period tabs actually change the data */
+const G_MONTHS=['Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun'];
+const G_DATES=['23 Jun 2026','15 May 2026','18 Apr 2026','14 Mar 2026','12 Feb 2026','14 Jan 2026','20 Dec 2025','18 Nov 2025','22 Oct 2025','19 Sep 2025','21 Aug 2025','15 Jul 2025']; /* newest→oldest */
+const G_REQS=['LT11-00023','LT11-00018','LT11-00011','LT11-00009','LT11-00001','LT11-00097','LT11-00088','LT11-00074','LT11-00060','LT11-00051','LT11-00043','LT11-00031'];
+const G_PMAP={'1M':2,'3M':3,'6M':6,'12M':9,'All':12};
 /* per-test catalog: numeric tests carry sub-test value series; qualitative tests carry text findings (no graph) */
 const N=(n,u,vals)=>({n,u,vals});
 const TEST_CATALOG={
@@ -1352,7 +1364,17 @@ const TEST_CATALOG={
     {n:'Direct Smear',results:['No parasites','No parasites','Giardia cysts','No parasites','No parasites','No parasites']},
     {n:'Blood Smear',results:['Negative','Negative','Negative','Haemoproteus seen','Negative','Negative']}]}
 };
-let gTest='cbc',curSub=0;
+let gTest='cbc',curSub=0,gPer='6M';
+/* build a 12-pt monthly series from the 6 newest values (older history derived with a little wobble) */
+function full12(vals){
+  const d=vals.some(x=>!Number.isInteger(x))?(Math.abs(vals[0])<3?2:1):0;
+  const first=vals[0];
+  const span=Math.abs(vals[vals.length-1]-first)||Math.abs(first)*0.08||1;
+  const step=span/6;
+  const older=[];
+  for(let k=6;k>=1;k--){const zig=(k%2===0?step*0.6:-step*0.25);older.push(+(first-step*k+zig).toFixed(d));}
+  return older.concat(vals);
+}
 function openTestDetail(testId){
   const t=TEST_CATALOG[testId]||TEST_CATALOG.cbc; gTest=testId in TEST_CATALOG?testId:'cbc';
   document.getElementById('td-name').textContent=t.title;
@@ -1371,22 +1393,29 @@ function openTestDetail(testId){
   nav('test-detail');
 }
 /* ----- lab-value graph / records bottom sheet ----- */
+function gSlice(arr){const k=Math.min(G_PMAP[gPer]||arr.length,arr.length);return arr.slice(arr.length-k);} /* most-recent k (oldest→newest) */
 function renderGraphCard(){
   const t=TEST_CATALOG[gTest],s=t.list[curSub],numeric=t.kind==='numeric';
   document.getElementById('gs-subname').textContent=s.n;
+  document.getElementById('gs-req').textContent=G_REQS[0];
+  document.getElementById('gs-dt').textContent=G_DATES[0]+' • 12:24 PM';
   const graph=document.getElementById('gs-graph'),note=document.getElementById('gs-noteline'),unit=document.getElementById('gs-unit'),val=document.getElementById('gs-val');
   if(numeric){
-    const v=s.vals,last=v[v.length-1];
+    const full=full12(s.vals),slice=gSlice(full),last=full[full.length-1];
     val.textContent=last; val.classList.remove('txt');
     unit.style.display=''; unit.textContent=s.u;
     graph.style.display=''; note.style.display='none';
     document.getElementById('gs-latest').textContent=last;
-    document.getElementById('gs-hi').textContent=Math.max(...v);
-    document.getElementById('gs-lo').textContent=Math.min(...v);
-    document.getElementById('gs-rec').textContent=v.length;
-    drawTrend('gs-chart',v,'#37BD69');
+    document.getElementById('gs-hi').textContent=Math.max(...slice);
+    document.getElementById('gs-lo').textContent=Math.min(...slice);
+    document.getElementById('gs-rec').textContent=slice.length;
+    drawTrend('gs-chart',slice,'#37BD69');
+    let mon=G_MONTHS.slice(G_MONTHS.length-slice.length);
+    if(mon.length>7){const o=[],st=(mon.length-1)/5;for(let i=0;i<6;i++)o.push(mon[Math.round(i*st)]);mon=o;}
+    document.getElementById('gs-axis').innerHTML=mon.map(m=>`<span>${m}</span>`).join('');
   }else{
-    val.textContent=s.results[s.results.length-1]; val.classList.add('txt');
+    const slice=gSlice(s.results);
+    val.textContent=slice[slice.length-1]; val.classList.add('txt');
     unit.style.display='none';
     graph.style.display='none'; note.style.display='block';
   }
@@ -1395,34 +1424,40 @@ function renderGraphCard(){
 function renderGraphRows(){
   const t=TEST_CATALOG[gTest],s=t.list[curSub],numeric=t.kind==='numeric';
   document.getElementById('gst-vhdr').textContent=numeric?'VALUE':'RESULT';
+  const chev='<svg class="gst-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   let rows='';
   if(numeric){
-    const v=s.vals;
-    const su=s.u.length<=5?s.u:'';
-    for(let j=v.length-1;j>=0;j--){
-      const dir=j>0?(v[j]>=v[j-1]?'up':'down'):'up';const ar=dir==='up'?'↑':'↓';const cls=dir==='up'?'up':'hi';
-      const di=v.length-1-j;
-      rows+=`<div class="gst-row"><span class="gst-c1">${TD_DATES[di]||''}</span><span class="gst-c2">${v[j]}${su} <span class="ar ${cls}">${ar}</span></span><span class="gst-c3">${TD_REQS[di]||''}</span><svg class="gst-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`;
+    const slice=gSlice(full12(s.vals)),su=s.u.length<=5?s.u:'';
+    for(let j=slice.length-1;j>=0;j--){
+      const dir=j>0?(slice[j]>=slice[j-1]?'up':'down'):'up';const ar=dir==='up'?'↑':'↓';const cls=dir==='up'?'up':'hi';
+      const di=slice.length-1-j;
+      rows+=`<div class="gst-row"><span class="gst-c1">${(G_DATES[di]||'').toUpperCase()}</span><span class="gst-c2">${slice[j]}${su} <span class="ar ${cls}">${ar}</span></span><span class="gst-c3">${G_REQS[di]||''}</span>${chev}</div>`;
     }
   }else{
-    const r=s.results;
-    for(let j=r.length-1;j>=0;j--){const di=r.length-1-j;
-      rows+=`<div class="gst-row"><span class="gst-c1">${TD_DATES[di]||''}</span><span class="gst-rtext">${r[j]}</span><span class="gst-c3 req">${TD_REQS[di]||''}</span><svg class="gst-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`;
+    const slice=gSlice(s.results);
+    for(let j=slice.length-1;j>=0;j--){const di=slice.length-1-j;
+      rows+=`<div class="gst-row"><span class="gst-c1">${(G_DATES[di]||'').toUpperCase()}</span><span class="gst-rtext">${slice[j]}</span><span class="gst-c3 req">${G_REQS[di]||''}</span>${chev}</div>`;
     }
   }
   document.getElementById('gs-rows').innerHTML=rows;
 }
 function gNextSub(){const t=TEST_CATALOG[gTest];curSub=(curSub+1)%t.list.length;renderGraphCard();}
-function gPeriod(btn){btn.parentElement.querySelectorAll('.gtab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');}
-function toggleGraphRecords(btn){const t=document.getElementById('gs-table');const open=t.style.display==='none';t.style.display=open?'block':'none';btn.classList.toggle('open',open);}
+function gPeriod(btn){btn.parentElement.querySelectorAll('.gtab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');gPer=btn.textContent.trim();renderGraphCard();}
+function toggleGraphRecords(){
+  const card=document.getElementById('gs-recordcard'),btn=document.getElementById('gs-viewall');
+  const open=card.style.display==='none';
+  card.style.display=open?'flex':'none'; btn.style.display=open?'none':'flex';
+}
 function openGraph(i){
   const a=TD_ANIMALS[i],t=TEST_CATALOG[gTest];
   document.getElementById('gs-name').textContent=t.title;
   document.getElementById('gs-subs').textContent=t.subs+' Subtests';
   document.getElementById('gs-entity').innerHTML=`<div class="mt-pic"><div class="mt-photo" style="background:${a.bg}">${a.emoji}</div><div class="mt-sex">${a.sex}</div></div><div class="nd"><div class="id">ID: ${a.id}</div><div class="nm">${a.name}</div></div><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-  curSub=0;renderGraphCard();
-  const tb=document.getElementById('gs-table');if(tb)tb.style.display='none';
-  const va=document.getElementById('gs-viewall');if(va)va.classList.remove('open');
+  curSub=0;gPer='6M';
+  document.querySelectorAll('#sheet-graph .gtab').forEach(b=>b.classList.toggle('on',b.textContent.trim()==='6M'));
+  renderGraphCard();
+  document.getElementById('gs-recordcard').style.display='none';
+  document.getElementById('gs-viewall').style.display='flex';
   sheet('sheet-graph');
 }
 
