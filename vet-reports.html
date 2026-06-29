@@ -1621,7 +1621,7 @@ function openReport(di){
       </div>`;
     }
   });
-  const page=`<div class="rep-logo"><div class="v">V</div><div class="nm">Vantara</div><div class="bd"></div><div class="bd"></div></div>
+  const page=`<div class="rep-logo"><div class="v">A</div><div class="nm">Antz Systems</div><div class="bd"></div><div class="bd"></div></div>
     <div class="rep-h1">Lab Test Report</div>
     <div class="rep-titrow"><span class="rep-pill ${interim?'interim':'final'}">${interim?'Interim Report':'Final Report'}</span><div><div class="rep-lt">${req}</div><div class="rep-gen">Generated ${date}</div></div></div>
     <div class="rep-grid">
@@ -1638,7 +1638,7 @@ function openReport(di){
     <div class="rep-dept">DEPARTMENT — ${DEPT[gTest]||'PATHOLOGY'}</div>
     <div class="rep-sec">${t.title}</div>
     ${rows}
-    <div class="rep-foot">Downloaded by Dr. Nihal Mehata · ${date} • 12:24 PM · Page 1 of 1<br>System-generated veterinary laboratory report — Vantara, Green Valley Wildlife Sanctuary.</div>`;
+    <div class="rep-foot">Downloaded by Dr. Nihal Mehata · ${date} • 12:24 PM · Page 1 of 1<br>System-generated veterinary laboratory report — Antz Systems, Green Valley Wildlife Sanctuary.</div>`;
   document.getElementById('rv-page').innerHTML=page;
   document.getElementById('rv-ind').textContent=interim?'Interim Report':'Final Report';
   const rv=document.getElementById('rv'); rv.classList.remove('hl'); document.getElementById('rv-hl').classList.remove('on');
