@@ -319,23 +319,27 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .rgreq-tag.light{background:rgba(55,189,105,.15);color:#37BD69}
 .rgreq-tag.solid{background:#37BD69;color:#fff}
 /* Select Request sheet */
-.sheet-sr{max-height:86%;background:#fff;border-radius:20px 20px 0 0;padding:0;overflow:hidden}
-.sr-top{display:flex;align-items:center;gap:12px;padding:20px 16px 16px;background:#fff;flex:0 0 auto;color:#000}
-.sr-body{flex:1;min-height:0;overflow-y:auto;background:#EFF5F2;padding:16px;display:flex;flex-direction:column;gap:10px}
-.sr-lbl{font-size:13px;font-weight:500;color:#44544A}
-.sr-ani{display:flex;align-items:center;gap:12px;background:#EFF5F2;border:.5px solid #DAE7DF;border-radius:10px;padding:12px;margin-bottom:6px}
-.sr-ani .nd{flex:1;min-width:0}
+.sheet-sr{max-height:88%;background:#fff;border-radius:20px 20px 0 0;padding:0;overflow:hidden;display:flex;flex-direction:column}
+.sr-top{display:flex;align-items:center;gap:12px;padding:24px 16px 18px;background:#fff;flex:0 0 auto;color:#000;box-shadow:0 4px 7px rgba(0,0,0,.05);z-index:2}
+.sr-scroll{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column}
+.sr-anisec{background:#fff;padding:16px;display:flex;flex-direction:column;gap:12px;flex:0 0 auto}
+.sr-lbl{font-size:14px;font-weight:500;letter-spacing:.1px;color:#44544A}
+.sr-ani{display:flex;align-items:center;gap:12px;background:#EFF5F2;border-radius:8px;padding:16px}
+.sr-ani .nd{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
 .sr-ani .id{font-size:14px;font-weight:600;color:#44544A}
-.sr-ani .nm{font-size:14px;font-weight:500;color:#44544A;margin-top:2px}
-.sr-ani .cv{width:20px;height:20px;color:#44544A}
-.srrow{display:flex;align-items:center;gap:12px;background:#fff;border-radius:12px;padding:14px 12px;box-shadow:0 1px .5px rgba(0,0,0,.1);border:none;width:100%;text-align:left}
+.sr-ani .nm{font-size:14px;font-weight:500;letter-spacing:.1px;color:#44544A}
+.sr-ani .cv{width:20px;height:20px;color:#44544A;flex:0 0 auto}
+.sr-listsec{background:#EFF5F2;padding:16px 16px 24px;display:flex;flex-direction:column;gap:8px;flex:1 0 auto}
+.srrow{display:flex;align-items:flex-start;gap:8px;background:#fff;border-radius:8px;padding:12px;border:none;width:100%;text-align:left}
 .srrow:active{background:#f7faf8}
-.srrow .pri{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto}
-.srrow .pri svg{width:13px;height:13px;color:#fff}
-.srrow .mid{flex:1;min-width:0}
-.srrow .t{font-size:14px;font-weight:600;color:#16231c}
-.srrow .s{font-size:12px;color:#7A8684;margin-top:2px}
-.srrow .chev{width:18px;height:18px;color:#C3CEC7;flex:0 0 auto}
+.sr-title{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.sr-tline{display:flex;align-items:center;gap:8px;min-width:0}
+.sr-pri{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto}
+.sr-pri svg{width:12px;height:12px;color:#fff}
+.sr-pri b{font-size:13px;font-weight:600;color:#fff;line-height:1}
+.sr-t{font-size:14px;font-weight:600;color:#000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sr-s{font-size:12px;color:#7A8684}
+.sr-chev{width:22px;height:22px;color:#839D8D;flex:0 0 auto;margin-top:1px}
 .gst-row .gst-c3.req{flex:0 0 auto;width:96px;text-align:right;color:#7A8684}
 .drill-space{height:40px}
 
@@ -1234,10 +1238,12 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   <!-- Select Request bottom sheet (Figma 178:6142) -->
   <div class="sheet sheet-sr" id="sheet-sr">
     <div class="sr-top"><div class="tt"><div class="t1">Select Request</div><div class="t2">Select a request to view the report.</div></div><button class="xbtn" onclick="closeSheet()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button></div>
-    <div class="sr-body">
-      <div class="sr-lbl">Animal Selected</div>
-      <div class="sr-ani" id="sr-ani"></div>
-      <div id="sr-list"></div>
+    <div class="sr-scroll">
+      <div class="sr-anisec">
+        <div class="sr-lbl">Animal Selected</div>
+        <div class="sr-ani" id="sr-ani"></div>
+      </div>
+      <div class="sr-listsec" id="sr-list"></div>
     </div>
   </div>
 
@@ -1799,8 +1805,8 @@ function rgAnimalTap(i){const g=RG_GROUPS[i];if(g.reqs.length===1)openReportFor(
 function openSelectRequest(i){
   const g=RG_GROUPS[i],a=TD_ANIMALS[g.ani];
   document.getElementById('sr-ani').innerHTML=`<div class="mt-pic"><div class="mt-photo" style="background:${a.bg}">${a.emoji}</div><div class="mt-sex">${a.sex}</div></div><div class="nd"><div class="id">ID: ${a.id}</div><div class="nm">${a.name}</div></div><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-  document.getElementById('sr-list').innerHTML=g.reqs.map(r=>{const pc=r.pri==='high'?'#FA6140':'#00D6C9';const ri=REQS.indexOf(r);
-    return `<button class="srrow" onclick="openReportFor(REQS[${ri}])"><span class="pri" style="background:${pc}">${PULSE}</span><div class="mid"><div class="t">Lab Test - ${r.id}</div><div class="s">${r.by} • ${r.dt}</div></div><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
+  document.getElementById('sr-list').innerHTML=g.reqs.map(r=>{const high=r.pri==='high';const pc=high?'#FA6140':'#00D6C9';const ic=high?PULSE:'<b>!</b>';const ri=REQS.indexOf(r);
+    return `<button class="srrow" onclick="openReportFor(REQS[${ri}])"><div class="sr-title"><div class="sr-tline"><span class="sr-pri" style="background:${pc}">${ic}</span><span class="sr-t">Lab Test - ${r.id}</span></div><div class="sr-s">${r.by} • ${r.dt}</div></div><svg class="sr-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
   }).join('');
   sheet('sheet-sr');
 }
