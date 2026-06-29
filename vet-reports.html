@@ -285,6 +285,53 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .rep-foot{margin-top:16px;padding-top:10px;border-top:1px solid #edf1ef;font-size:10px;color:#9aa3a0;line-height:1.7}
 .rv.hl .rep-row{cursor:pointer}
 .rep-row.mark{background:#FFF3B0}
+/* ===== Reports Generated — By Animals footer + By Requests card (Figma 178:5159/178:5485) ===== */
+.rg-foot{background:#EFF5F2;padding:12px;font-size:12px;font-weight:400;color:#44544A}
+.rg-foot b{color:#006D35;font-weight:600}
+.rgreq{background:#fff;border-radius:8px;box-shadow:0 1px .5px rgba(0,0,0,.1);margin-bottom:13px;overflow:hidden}
+.rgreq:active{opacity:.9}
+.rgreq-top{display:flex;flex-direction:column;gap:12px;padding:12px;border-bottom:.5px solid #C3CEC7}
+.rgreq-hd{display:flex;gap:8px;align-items:flex-start}
+.rgreq-l{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.rgreq-idrow{display:flex;align-items:center;gap:8px}
+.rgreq-pri{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto}
+.rgreq-pri svg{width:12px;height:12px;color:#fff}
+.rgreq-id{font-size:14px;font-weight:600;color:#000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rgreq-by{font-size:12px;font-weight:400;color:#7A8684}
+.rgreq-loc{font-size:14px;font-weight:500;letter-spacing:.1px;color:#44544A}
+.rgreq-med{background:#E8F4F2;color:#1F515B;font-size:12px;font-weight:600;padding:4px 8px;border-radius:16px;flex:0 0 auto;white-space:nowrap}
+.rgreq-ent{display:flex;align-items:center;gap:12px;background:#EFF5F2;border-radius:8px;padding:8px}
+.rgreq-ent .nd{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.rgreq-ent .id{font-size:14px;font-weight:600;color:#44544A}
+.rgreq-ent .nm{font-size:14px;font-weight:500;letter-spacing:.1px;color:#44544A}
+.rgreq-ent .cv{width:20px;height:20px;color:#44544A;flex:0 0 auto}
+.rgreq-foot{display:flex;justify-content:space-between;align-items:flex-start;padding:12px;gap:8px}
+.rgreq-col{display:flex;flex-direction:column;gap:6px}
+.rgreq-col.r{align-items:flex-end}
+.rgreq-cnt{font-size:12px;color:#7A8684}
+.rgreq-cnt b{font-size:14px;font-weight:600;color:#44544A;margin-left:4px}
+.rgreq-note{font-size:12px;color:#FA6140}
+.rgreq-tag{min-width:44px;height:24px;padding:3px 8px;border-radius:4px;display:grid;place-items:center;font-size:14px;font-weight:600}
+.rgreq-tag.light{background:rgba(55,189,105,.15);color:#37BD69}
+.rgreq-tag.solid{background:#37BD69;color:#fff}
+/* Select Request sheet */
+.sheet-sr{max-height:86%;background:#fff;border-radius:20px 20px 0 0;padding:0;overflow:hidden}
+.sr-top{display:flex;align-items:center;gap:12px;padding:20px 16px 16px;background:#fff;flex:0 0 auto}
+.sr-body{flex:1;min-height:0;overflow-y:auto;background:#EFF5F2;padding:16px;display:flex;flex-direction:column;gap:10px}
+.sr-lbl{font-size:13px;font-weight:500;color:#44544A}
+.sr-ani{display:flex;align-items:center;gap:12px;background:#EFF5F2;border:.5px solid #DAE7DF;border-radius:10px;padding:12px;margin-bottom:6px}
+.sr-ani .nd{flex:1;min-width:0}
+.sr-ani .id{font-size:14px;font-weight:600;color:#44544A}
+.sr-ani .nm{font-size:14px;font-weight:500;color:#44544A;margin-top:2px}
+.sr-ani .cv{width:20px;height:20px;color:#44544A}
+.srrow{display:flex;align-items:center;gap:12px;background:#fff;border-radius:12px;padding:14px 12px;box-shadow:0 1px .5px rgba(0,0,0,.1)}
+.srrow:active{background:#f7faf8}
+.srrow .pri{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto}
+.srrow .pri svg{width:13px;height:13px;color:#fff}
+.srrow .mid{flex:1;min-width:0}
+.srrow .t{font-size:14px;font-weight:600;color:#16231c}
+.srrow .s{font-size:12px;color:#7A8684;margin-top:2px}
+.srrow .chev{width:18px;height:18px;color:#C3CEC7;flex:0 0 auto}
 .gst-row .gst-c3.req{flex:0 0 auto;width:96px;text-align:right;color:#7A8684}
 .drill-space{height:40px}
 
@@ -834,15 +881,31 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
     </section>
 
     <!-- ===================== LAST TEST RESULT for animal (Figma 152:8872) ===================== -->
-    <!-- ===================== LIST: REPORTS GENERATED ===================== -->
+    <!-- ===================== LIST: REPORTS GENERATED (Figma 178:5159 / 178:5485) ===================== -->
     <section class="screen" data-s="list-reports">
-      <div class="bhead"><button class="back" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Reports</button><div class="htitle">Reports Generated</div></div>
-      <div class="pad" style="padding-top:12px">
-        <div style="font-size:14px;color:var(--muted);font-weight:600;margin:4px 4px 12px">188 reports · newest first</div>
-        <div class="card" style="overflow:hidden">
-          <div class="rcard tap" onclick="nav('report')"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h7l5 5v13H7z" stroke-linejoin="round"/><path d="M14 3v5h5"/></svg></div><div class="mid"><div class="nm">CBC Report · Papaya</div><div class="dt">19 Jun 2026 · Completed</div></div><div class="acts"><button class="miniact" onclick="event.stopPropagation();nav('report')">View</button></div></div>
-          <div class="rcard tap" onclick="nav('report')"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h7l5 5v13H7z" stroke-linejoin="round"/><path d="M14 3v5h5"/></svg></div><div class="mid"><div class="nm">Culture &amp; Sensitivity · Maya</div><div class="dt">12 Jun 2026 · Final Report</div></div><div class="acts"><button class="miniact" onclick="event.stopPropagation();nav('report')">View</button></div></div>
-          <div class="rcard tap" onclick="nav('report')"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h7l5 5v13H7z" stroke-linejoin="round"/><path d="M14 3v5h5"/></svg></div><div class="mid"><div class="nm">Histopathology · Coral</div><div class="dt">28 May 2026 · Final Report</div></div><div class="acts"><button class="miniact" onclick="event.stopPropagation();toast('Download')">Get</button></div></div>
+      <div class="tbar">
+        <button class="tbar-back" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M11 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="tbar-title">Reports Generated</div>
+      </div>
+      <div class="at-wrap">
+        <button class="at-datefilter" onclick="openRange(this)"><span class="rl">Today, 24 Jun 2026</span> <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></button>
+        <div class="at-sitecard">
+          <button class="at-site" onclick="sheet('sheet-site')"><svg class="pin" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span class="nm">Gagwa</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="at-tabs">
+            <button class="tab on" onclick="rgTab(this,'animals')">By Animals</button>
+            <button class="tab" onclick="rgTab(this,'requests')">By Requests</button>
+          </div>
+        </div>
+        <div class="at-listsec">
+          <div class="at-listhead">
+            <div class="aum-ttl" id="rg-count">Animals</div>
+            <div class="aum-actions">
+              <button class="iconsq" onclick="toast('Search')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4" stroke-linecap="round"/></svg></button>
+              <button class="iconsq" onclick="sheet('sheet-filter')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 12h2M10 12h10M4 17h7M15 17h5"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="13" cy="17" r="2"/></svg></button>
+            </div>
+          </div>
+          <div id="rg-animals"></div>
+          <div id="rg-requests" style="display:none"></div>
         </div>
         <div class="drill-space"></div>
       </div>
@@ -1164,6 +1227,16 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   <div class="scrim" id="scrim" onclick="closeSheet()"></div>
 
   <!-- lab-value graph bottom sheet (Figma 152:8872 / 157:10688) -->
+  <!-- Select Request bottom sheet (Figma 178:6142) -->
+  <div class="sheet sheet-sr" id="sheet-sr">
+    <div class="sr-top"><div class="tt"><div class="t1">Select Request</div><div class="t2">Select a request to view the report.</div></div><button class="xbtn" onclick="closeSheet()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button></div>
+    <div class="sr-body">
+      <div class="sr-lbl">Animal Selected</div>
+      <div class="sr-ani" id="sr-ani"></div>
+      <div id="sr-list"></div>
+    </div>
+  </div>
+
   <div class="sheet sheet-graph" id="sheet-graph">
     <div class="gs-top"><div class="tt"><div class="t1" id="gs-name">Complete Blood Count (CBC)</div><div class="t2" id="gs-subs">4 Subtests</div></div><button class="xbtn" onclick="closeSheet()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button></div>
     <div class="gs-body" id="gs-body">
@@ -1598,9 +1671,10 @@ function openGraph(i){
 /* ===== lab report viewer (opens from a record) ===== */
 const REF={Hemoglobin:[12,18],WBC:[4,11],RBC:[4.5,6.5],Platelets:[150,400],Glucose:[70,110],Urea:[15,40],Creatinine:[0.6,1.4],Sodium:[135,145],Potassium:[3.5,5],Calcium:[8.5,10.5],ALT:[10,50],AST:[10,55],ALP:[40,130],Bilirubin:[0.1,1.2],Albumin:[3.2,5],GGT:[8,40],T3:[80,200],T4:[5,12],TSH:[0.4,4],'Total Protein':[6,8],Globulin:[2,3.5],Cholesterol:[120,200],Amylase:[300,1100],Lipase:[100,300],Phosphorus:[2.5,5]};
 const DEPT={cbc:'HAEMATOLOGY',cbc2:'HAEMATOLOGY',cmp:'BIOCHEMISTRY',lft:'BIOCHEMISTRY',tft:'ENDOCRINOLOGY',serumbio:'BIOCHEMISTRY',allergy:'IMMUNOLOGY',parasitology:'MICROBIOLOGY'};
-function openReport(di){
-  const t=TEST_CATALOG[gTest],a=TD_ANIMALS[gAni];
-  const date=(G_DATES[di]||G_DATES[0]),req=(G_REQS[di]||G_REQS[0]),interim=di===0;
+function openReport(di){ renderReport(TEST_CATALOG[gTest],TD_ANIMALS[gAni],(G_REQS[di]||G_REQS[0]),(G_DATES[di]||G_DATES[0]),di===0,di,gTest); }
+function openReportFor(r){ closeSheet(); renderReport(TEST_CATALOG[r.test],TD_ANIMALS[r.ani],r.id,(r.dt||'').split(' • ')[0],!!r.interim,0,r.test); }
+function renderReport(t,a,req,date,interim,di,deptId){
+  di=di||0;
   document.getElementById('rv-sub').textContent=req+' · '+a.name;
   let abn=0,rows='';
   t.list.forEach(s=>{
@@ -1638,7 +1712,7 @@ function openReport(di){
       <div class="rep-gi"><span>Requested by</span><b>Dr. Nihal Mehata</b></div>
     </div>
     <div class="rep-banner">Test Reports${abn?` · ${abn} flagged`:''}</div>
-    <div class="rep-dept">DEPARTMENT — ${DEPT[gTest]||'PATHOLOGY'}</div>
+    <div class="rep-dept">DEPARTMENT — ${DEPT[deptId]||'PATHOLOGY'}</div>
     <div class="rep-sec">${t.title}</div>
     ${rows}
     <div class="rep-foot">Downloaded by Dr. Nihal Mehata · ${date} • 12:24 PM · Page 1 of 1<br>System-generated veterinary laboratory report — Antz Systems, Green Valley Wildlife Sanctuary.</div>`;
@@ -1649,6 +1723,81 @@ function openReport(di){
 function closeReport(){document.getElementById('rv').classList.remove('on');}
 function toggleHl(){const rv=document.getElementById('rv');const on=rv.classList.toggle('hl');document.getElementById('rv-hl').classList.toggle('on',on);toast(on?'Highlight on — tap a result to mark':'Highlight off');}
 function repRowClick(el){if(document.getElementById('rv').classList.contains('hl'))el.classList.toggle('mark');}
+
+/* ===== Reports Generated (Figma 178:5159 By Animals / 178:5485 By Requests / 178:6142 Select Request) ===== */
+const PULSE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg>';
+/* ani = index into TD_ANIMALS · test = TEST_CATALOG key (drives the report) */
+const REQS=[
+  {pri:'high',id:'LT11-00023',by:'Deelipkumar',dt:'6 Oct 2025 • 12:24 PM',loc:'Central Lab - Sector 54',med:'MED-00023',ani:0,test:'cbc',tests:12,samples:3,retest:1,interim:true},
+  {pri:'med', id:'LT11-00234',by:'A. Sharma',  dt:'2 Oct 2025 • 09:10 AM', loc:'Central Lab - Sector 54',med:'MED-00041',ani:1,test:'lft',tests:5, samples:2,retest:0,interim:false},
+  {pri:'high',id:'LT12-07129',by:'Deelipkumar',dt:'20 Sep 2025 • 03:05 PM',loc:'Field Lab - North',     med:'MED-00052',ani:1,test:'cmp',tests:8, samples:2,retest:0,interim:false},
+  {pri:'med', id:'LT11-12344',by:'R. Iyer',    dt:'18 Sep 2025 • 11:30 AM',loc:'Central Lab - Sector 54',med:'MED-00063',ani:2,test:'tft',tests:6, samples:2,retest:0,interim:false},
+  {pri:'high',id:'LT12-07668',by:'Deelipkumar',dt:'10 Sep 2025 • 02:15 PM',loc:'Field Lab - North',     med:'MED-00071',ani:2,test:'serumbio',tests:9,samples:3,retest:2,interim:false},
+  {pri:'med', id:'LT11-08810',by:'A. Sharma',  dt:'28 Aug 2025 • 04:45 PM',loc:'Central Lab - Sector 54',med:'MED-00088',ani:3,test:'allergy',tests:3,samples:1,retest:0,interim:false},
+  {pri:'high',id:'LT11-05567',by:'Deelipkumar',dt:'12 Aug 2025 • 01:40 PM',loc:'Central Lab - Sector 54',med:'MED-00094',ani:4,test:'cbc',tests:4,samples:1,retest:0,interim:false},
+  {pri:'med', id:'LT11-03390',by:'R. Iyer',    dt:'5 Aug 2025 • 05:30 PM', loc:'Field Lab - North',     med:'MED-00101',ani:5,test:'parasitology',tests:5,samples:2,retest:0,interim:false}
+];
+const FLASK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6L5.5 17A2.5 2.5 0 0 0 7.7 21h8.6a2.5 2.5 0 0 0 2.2-4L14 9V3"/></svg>';
+const CLIP='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8a2 2 0 0 1 2 2v13H6V6a2 2 0 0 1 2-2"/><path d="M9 9h6M9 13h5"/></svg>';
+let RG_GROUPS=[];
+function rgAniCard(g,i){
+  const a=TD_ANIMALS[g.ani];const ids=g.reqs.map(r=>r.id).join(', ');
+  return `<div class="mt-card" onclick="rgAnimalTap(${i})">
+    <div class="mt-top"><div class="mt-content">
+      <div class="mt-pic"><div class="mt-photo" style="background:${a.bg}">${a.emoji}</div><div class="mt-sex">${a.sex}</div></div>
+      <div class="mt-names">
+        <div class="mt-txt"><div class="mt-idline">ID: ${a.id}</div><div class="mt-name">${a.name}</div></div>
+        <div class="mt-chips"><div class="mt-chip">${FLASK}<b>${g.tests}</b><em>Tests</em></div><div class="mt-chip">${CLIP}<b>${g.reqs.length}</b><em>Request${g.reqs.length>1?'s':''}</em></div></div>
+      </div>
+    </div></div>
+    <div class="rg-foot">Completed Reports : <b>${ids}</b></div>
+  </div>`;
+}
+function rgReqCard(r,i){
+  const a=TD_ANIMALS[r.ani];const pc=r.pri==='high'?'#FA6140':'#00D6C9';
+  return `<div class="rgreq" onclick="openReportFor(REQS[${i}])">
+    <div class="rgreq-top">
+      <div class="rgreq-hd">
+        <div class="rgreq-l">
+          <div class="rgreq-idrow"><span class="rgreq-pri" style="background:${pc}">${PULSE}</span><span class="rgreq-id">${r.id}</span></div>
+          <div class="rgreq-by">${r.by} • ${r.dt}</div>
+          <div class="rgreq-loc">${r.loc}</div>
+        </div>
+        <span class="rgreq-med">${r.med}</span>
+      </div>
+      <div class="rgreq-ent"><div class="mt-pic"><div class="mt-photo" style="background:${a.bg}">${a.emoji}</div><div class="mt-sex">${a.sex}</div></div><div class="nd"><div class="id">ID: ${a.id}</div><div class="nm">${a.name}</div></div><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+    <div class="rgreq-foot">
+      <div class="rgreq-col"><div class="rgreq-cnt">Tests <b>${r.tests}</b></div>${r.retest?`<div class="rgreq-note">${r.retest} Retest</div>`:''}<span class="rgreq-tag light">${r.tests}</span></div>
+      <div class="rgreq-col r"><div class="rgreq-cnt">Samples <b>${r.samples}</b></div><span class="rgreq-tag solid">${r.samples}</span></div>
+    </div>
+  </div>`;
+}
+function setRgCount(mode){document.getElementById('rg-count').textContent=mode==='requests'?(REQS.length+' Requests'):(RG_GROUPS.length+' Animals');}
+function renderRG(){
+  document.getElementById('rg-requests').innerHTML=REQS.map((r,i)=>rgReqCard(r,i)).join('');
+  const map={},order=[];
+  REQS.forEach(r=>{if(!(r.ani in map)){map[r.ani]={ani:r.ani,reqs:[],tests:0};order.push(r.ani);}map[r.ani].reqs.push(r);map[r.ani].tests+=r.tests;});
+  RG_GROUPS=order.map(k=>map[k]);
+  document.getElementById('rg-animals').innerHTML=RG_GROUPS.map((g,i)=>rgAniCard(g,i)).join('');
+  setRgCount('animals');
+}
+function rgTab(btn,mode){
+  btn.parentElement.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+  document.getElementById('rg-animals').style.display=mode==='animals'?'block':'none';
+  document.getElementById('rg-requests').style.display=mode==='requests'?'block':'none';
+  setRgCount(mode);
+}
+function rgAnimalTap(i){const g=RG_GROUPS[i];if(g.reqs.length===1)openReportFor(g.reqs[0]);else openSelectRequest(i);}
+function openSelectRequest(i){
+  const g=RG_GROUPS[i],a=TD_ANIMALS[g.ani];
+  document.getElementById('sr-ani').innerHTML=`<div class="mt-pic"><div class="mt-photo" style="background:${a.bg}">${a.emoji}</div><div class="mt-sex">${a.sex}</div></div><div class="nd"><div class="id">ID: ${a.id}</div><div class="nm">${a.name}</div></div><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  document.getElementById('sr-list').innerHTML=g.reqs.map(r=>{const pc=r.pri==='high'?'#FA6140':'#00D6C9';const ri=REQS.indexOf(r);
+    return `<button class="srrow" onclick="openReportFor(REQS[${ri}])"><span class="pri" style="background:${pc}">${PULSE}</span><div class="mid"><div class="t">Lab Test - ${r.id}</div><div class="s">${r.by} • ${r.dt}</div></div><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
+  }).join('');
+  sheet('sheet-sr');
+}
+renderRG();
 
 /* ================= TEST-CENTRIC FLOW (Most Performed Tests → animals → results) ================= */
 const AID={maya:'AID244/26',papaya:'AID118/24',ember:'AID203/25',kaa:'AID087/23',rio:'AID311/26',tula:'AID076/23',coral:'AID050/22',nova:'AID129/24',pebble:'AID061/23',bandit:'AID038/22'};
