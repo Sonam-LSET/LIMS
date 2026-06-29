@@ -1352,9 +1352,9 @@ const TEST_CATALOG={
     {n:'Direct Smear',results:['No parasites','No parasites','Giardia cysts','No parasites','No parasites','No parasites']},
     {n:'Blood Smear',results:['Negative','Negative','Negative','Haemoproteus seen','Negative','Negative']}]}
 };
-let curTest='cbc',curSub=0;
+let gTest='cbc',curSub=0;
 function openTestDetail(testId){
-  const t=TEST_CATALOG[testId]||TEST_CATALOG.cbc; curTest=testId in TEST_CATALOG?testId:'cbc';
+  const t=TEST_CATALOG[testId]||TEST_CATALOG.cbc; gTest=testId in TEST_CATALOG?testId:'cbc';
   document.getElementById('td-name').textContent=t.title;
   document.getElementById('td-subs').textContent=t.subs+' Subtests';
   document.getElementById('td-count').textContent=t.count+' Animals';
@@ -1372,7 +1372,7 @@ function openTestDetail(testId){
 }
 /* ----- lab-value graph / records bottom sheet ----- */
 function renderGraphCard(){
-  const t=TEST_CATALOG[curTest],s=t.list[curSub],numeric=t.kind==='numeric';
+  const t=TEST_CATALOG[gTest],s=t.list[curSub],numeric=t.kind==='numeric';
   document.getElementById('gs-subname').textContent=s.n;
   const graph=document.getElementById('gs-graph'),note=document.getElementById('gs-noteline'),unit=document.getElementById('gs-unit'),val=document.getElementById('gs-val');
   if(numeric){
@@ -1393,7 +1393,7 @@ function renderGraphCard(){
   renderGraphRows();
 }
 function renderGraphRows(){
-  const t=TEST_CATALOG[curTest],s=t.list[curSub],numeric=t.kind==='numeric';
+  const t=TEST_CATALOG[gTest],s=t.list[curSub],numeric=t.kind==='numeric';
   document.getElementById('gst-vhdr').textContent=numeric?'VALUE':'RESULT';
   let rows='';
   if(numeric){
@@ -1412,11 +1412,11 @@ function renderGraphRows(){
   }
   document.getElementById('gs-rows').innerHTML=rows;
 }
-function gNextSub(){const t=TEST_CATALOG[curTest];curSub=(curSub+1)%t.list.length;renderGraphCard();}
+function gNextSub(){const t=TEST_CATALOG[gTest];curSub=(curSub+1)%t.list.length;renderGraphCard();}
 function gPeriod(btn){btn.parentElement.querySelectorAll('.gtab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');}
 function toggleGraphRecords(btn){const t=document.getElementById('gs-table');const open=t.style.display==='none';t.style.display=open?'block':'none';btn.classList.toggle('open',open);}
 function openGraph(i){
-  const a=TD_ANIMALS[i],t=TEST_CATALOG[curTest];
+  const a=TD_ANIMALS[i],t=TEST_CATALOG[gTest];
   document.getElementById('gs-name').textContent=t.title;
   document.getElementById('gs-subs').textContent=t.subs+' Subtests';
   document.getElementById('gs-entity').innerHTML=`<div class="mt-pic"><div class="mt-photo" style="background:${a.bg}">${a.emoji}</div><div class="mt-sex">${a.sex}</div></div><div class="nd"><div class="id">ID: ${a.id}</div><div class="nm">${a.name}</div></div><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
