@@ -1115,7 +1115,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
         <div class="gs-valrow"><span class="gs-val" id="gs-val">14.2</span><span class="gs-unit" id="gs-unit">g/dL</span></div>
         <div class="gs-meta"><span class="mt-prio" style="background:#00D6C9"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg></span><span class="gs-req" id="gs-req">LT11-00023</span><span>•</span><span class="gs-dt" id="gs-dt">23 Jun 2026 • 12:24 PM</span></div>
         <div id="gs-graph">
-          <div class="gs-scroll"><div class="gs-plot" id="gs-plot"><div class="gs-chart" id="gs-chart"></div><div class="gs-axis" id="gs-axis"></div></div></div>
+          <div class="gs-scroll" id="gs-scroll"><div class="gs-plot" id="gs-plot"><div class="gs-chart" id="gs-chart"></div><div class="gs-axis" id="gs-axis"></div></div></div>
           <div class="gs-stats">
             <div class="gs-stat"><div class="v" id="gs-latest">14.2</div><div class="k">Latest</div></div>
             <div class="gs-stat"><div class="v" id="gs-hi">14.2</div><div class="k">Highest</div></div>
@@ -1426,14 +1426,18 @@ function openTestDetail(testId){
 function gSlice(arr){const k=Math.min(G_PMAP[gPer]||arr.length,arr.length);return arr.slice(arr.length-k);} /* most-recent k (oldest→newest) */
 /* dashboard-style trend that widens (and horizontally scrolls) when there are many points */
 function drawSheetGraph(vals,months){
-  const W=Math.max(322,vals.length*54),H=120,pad=14,n=vals.length;
+  const H=120,pad=14,n=vals.length;
+  /* fill the available width when the points fit; only widen (→ horizontal scroll) when crowded */
+  const avail=Math.max(280,(document.getElementById('gs-scroll').clientWidth)||326);
+  const W=(n*52<=avail)?avail:n*52;
+  const plot=document.getElementById('gs-plot');
+  plot.style.width=(W<=avail?'':W+'px'); /* '' → fills container (no gap); px → scroll */
   const mn=Math.min(...vals),mx=Math.max(...vals),rg=(mx-mn)||1;
   const pts=vals.map((v,i)=>[pad+(W-2*pad)*(n>1?i/(n-1):0.5), H-pad-(H-2*pad)*((v-mn)/rg)]);
   const d=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
   const area=d+` L${(W-pad).toFixed(1)} ${H-pad} L${pad} ${H-pad} Z`;
   const lp=pts[pts.length-1];
-  document.getElementById('gs-plot').style.width=W+'px';
-  document.getElementById('gs-chart').innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}"><defs><linearGradient id="ggrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#37BD69" stop-opacity=".22"/><stop offset="1" stop-color="#37BD69" stop-opacity="0"/></linearGradient></defs><path d="${area}" fill="url(#ggrad)"/><path d="${d}" fill="none" stroke="#37BD69" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="${lp[0].toFixed(1)}" cy="${lp[1].toFixed(1)}" r="5" fill="#fff" stroke="#37BD69" stroke-width="3"/></svg>`;
+  document.getElementById('gs-chart').innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}" preserveAspectRatio="none"><defs><linearGradient id="ggrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#37BD69" stop-opacity=".22"/><stop offset="1" stop-color="#37BD69" stop-opacity="0"/></linearGradient></defs><path d="${area}" fill="url(#ggrad)"/><path d="${d}" fill="none" stroke="#37BD69" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><circle cx="${lp[0].toFixed(1)}" cy="${lp[1].toFixed(1)}" r="5" fill="#fff" stroke="#37BD69" stroke-width="2.5" vector-effect="non-scaling-stroke"/></svg>`;
   document.getElementById('gs-axis').innerHTML=months.map(m=>`<span>${m}</span>`).join('');
 }
 function renderGraphCard(){
