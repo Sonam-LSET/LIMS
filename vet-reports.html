@@ -220,6 +220,22 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .gs-val.txt{font-size:22px;letter-spacing:-.3px;white-space:normal}
 .gs-noteline{font-size:12px;font-weight:400;color:#7A8684;line-height:1.5;padding-top:8px}
 .gst-rtext{flex:1;min-width:0;font-size:12px;font-weight:600;color:#44544A}
+/* qualitative result cards (non-numeric tests) */
+.gs-table.cards{border:none;border-radius:0;overflow:visible}
+.gs-table.cards .gst-head{display:none}
+.qrec{display:flex;align-items:center;gap:12px;background:#fff;border:.5px solid #C3CEC7;border-radius:12px;padding:12px;margin-bottom:10px}
+.qrec:last-child{margin-bottom:0}
+.qrec:active{background:#f7faf8}
+.qrec-ic{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;flex:0 0 auto}
+.qrec-ic svg{width:20px;height:20px}
+.qrec.clear .qrec-ic{background:#E1F9ED;color:#006D35}
+.qrec.clear .qrec-res{color:#006D35}
+.qrec.detect .qrec-ic{background:rgba(250,97,64,.14);color:#FA6140}
+.qrec.detect .qrec-res{color:#FA6140}
+.qrec-mid{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.qrec-res{font-size:15px;font-weight:600;letter-spacing:-.1px}
+.qrec-sub{font-size:12px;font-weight:400;color:#7A8684}
+.qrec-chev{width:18px;height:18px;color:#C3CEC7;flex:0 0 auto}
 .gst-row .gst-c3.req{flex:0 0 auto;width:96px;text-align:right;color:#7A8684}
 .drill-space{height:40px}
 
@@ -1112,7 +1128,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
       <button class="gs-viewall" id="gs-viewall" onclick="toggleGraphRecords()"><span>View All Records</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <div class="gs-recordcard" id="gs-recordcard" style="display:none">
         <button class="gs-rechd" onclick="toggleGraphRecords()"><span>View All Records</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <div class="gs-table">
+        <div class="gs-table" id="gs-table">
           <div class="gst-head"><span class="gst-c1">DATE</span><span class="gst-c2" id="gst-vhdr">VALUE</span><span class="gst-c3">REQUEST</span></div>
           <div id="gs-rows"></div>
         </div>
@@ -1444,25 +1460,34 @@ function renderGraphCard(){
   renderGraphRows();
 }
 /* records = ALL history (not period-filtered) */
+const Q_CLEAR=/negative|no ova|no parasites|no growth|^nil|normal|clear|absent/i;
+const ICON_CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const ICON_ALERT='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.3 3.9 2.6 17.5A2 2 0 0 0 4.3 20.5h15.4a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" stroke-linejoin="round"/><path d="M12 9v4" stroke-linecap="round"/><circle cx="12" cy="16.4" r="1.05" fill="currentColor" stroke="none"/></svg>';
 function renderGraphRows(){
   const t=TEST_CATALOG[gTest],s=t.list[curSub],numeric=t.kind==='numeric';
-  document.getElementById('gst-vhdr').textContent=numeric?'VALUE':'RESULT';
-  const chev='<svg class="gst-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  let rows='';
+  const table=document.getElementById('gs-table'),rowsEl=document.getElementById('gs-rows');
   if(numeric){
-    const full=full12(s.vals),su=s.u.length<=5?s.u:'';
+    table.classList.remove('cards');
+    document.getElementById('gst-vhdr').textContent='VALUE';
+    const chev='<svg class="gst-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    const full=full12(s.vals),su=s.u.length<=5?s.u:'';let rows='';
     for(let j=full.length-1;j>=0;j--){
       const dir=j>0?(full[j]>=full[j-1]?'up':'down'):'up';const ar=dir==='up'?'↑':'↓';const cls=dir==='up'?'up':'hi';
       const di=full.length-1-j;
       rows+=`<div class="gst-row"><span class="gst-c1">${(G_DATES[di]||'').toUpperCase()}</span><span class="gst-c2">${full[j]}${su} <span class="ar ${cls}">${ar}</span></span><span class="gst-c3">${G_REQS[di]||''}</span>${chev}</div>`;
     }
+    rowsEl.innerHTML=rows;
   }else{
-    const r=s.results;
+    /* non-numeric → individual result cards instead of a table */
+    table.classList.add('cards');
+    const r=s.results;let cards='';
+    const chev='<svg class="qrec-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     for(let j=r.length-1;j>=0;j--){const di=r.length-1-j;
-      rows+=`<div class="gst-row"><span class="gst-c1">${(G_DATES[di]||'').toUpperCase()}</span><span class="gst-rtext">${r[j]}</span><span class="gst-c3 req">${G_REQS[di]||''}</span>${chev}</div>`;
+      const clear=Q_CLEAR.test(r[j]);const cls=clear?'clear':'detect';const ic=clear?ICON_CHECK:ICON_ALERT;
+      cards+=`<div class="qrec ${cls}"><div class="qrec-ic">${ic}</div><div class="qrec-mid"><div class="qrec-res">${r[j]}</div><div class="qrec-sub">${G_DATES[di]||''} · ${G_REQS[di]||''}</div></div>${chev}</div>`;
     }
+    rowsEl.innerHTML=cards;
   }
-  document.getElementById('gs-rows').innerHTML=rows;
 }
 function gNextSub(){const t=TEST_CATALOG[gTest];curSub=(curSub+1)%t.list.length;renderGraphCard();}
 function gPeriod(btn){btn.parentElement.querySelectorAll('.gtab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');gPer=btn.textContent.trim();renderGraphCard();}
