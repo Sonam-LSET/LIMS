@@ -1760,7 +1760,7 @@ function mtCard(a,i,click){
   const moreN=a.recent.length-1;const more=moreN>0?`, +${moreN}`:'';
   const date=a.recent[0].date||'';const req=a.recent[0].req||'';const time=MT_TIME[i%MT_TIME.length];
   const prio=(i%4===1)?'#FA6140':'#00D6C9';
-  const onclick=click||`openAnimal('${detailKey}')`;
+  const onclick=click||`openAnimalFromMT(${i})`;
   return `<div class="mt-card" onclick="${onclick}">
     <div class="mt-top">
       <div class="mt-content">
@@ -1876,7 +1876,7 @@ function openTestDetail(testId){
   document.getElementById('td-count').textContent=t.count+' Animals';
   document.getElementById('td-list').innerHTML=TD_ANIMALS.map((a,i)=>{
     const g=a.sex==='F'?'f':'m';const times=((i*3+t.subs+5)%9)+2;
-    return `<button class="tdcard" onclick="openGraph(${i})">
+    return `<button class="tdcard" onclick="openAnimalDetail(${i})">
       <div class="tdc-content">
         <div class="tdc-egg"><div class="tdc-photo" style="background:${a.bg}">${a.emoji}</div><div class="tdc-gen ${g}">${a.sex}</div></div>
         <div class="tdc-txt"><div class="tdc-id">ID: ${a.id}</div><div class="tdc-nm">${a.name}</div><div class="tdc-sub">Performed ${times} Times</div></div>
@@ -2207,10 +2207,10 @@ let curTest=null,curAnimal=null;
 /* ===== Key Observations carousel (Figma 127:6734) ===== */
 const PAW='<svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="5.4" cy="11" rx="1.8" ry="2.4"/><ellipse cx="9.4" cy="7.1" rx="1.9" ry="2.6"/><ellipse cx="14.6" cy="7.1" rx="1.9" ry="2.6"/><ellipse cx="18.6" cy="11" rx="1.8" ry="2.4"/><path d="M12 12c-2.8 0-5 2-5 4.4 0 1.8 1.5 2.8 3.2 2.8 1 0 1.3-.4 1.8-.4s.8.4 1.8.4c1.7 0 3.2-1 3.2-2.8 0-2.4-2.2-4.4-5-4.4z"/></svg>';
 function koEgg(emoji,bg,sex){const f=sex==='F';return `<div class="ko-egg"><div class="ko-pic" style="background:${bg}">${emoji}</div><div class="ko-gen ${f?'f':'m'}">${sex}</div></div>`;}
-function koRow(egg,l1,l2,v,k,vColor){
+function koRow(egg,l1,l2,v,k,vColor,click){
   const mid=`<div class="ko-mid"><div class="ko-l1">${l1}</div>${l2?`<div class="ko-l2">${l2}</div>`:''}</div>`;
   const rt=`<div class="ko-rt"><div class="ko-v"${vColor?` style="color:${vColor}"`:''}>${v}</div><div class="ko-k">${k}</div></div>`;
-  return `<div class="ko-row">${egg}${mid}${rt}</div>`;
+  return `<div class="ko-row"${click?` onclick="${click}" style="cursor:pointer"`:''}>${egg}${mid}${rt}</div>`;
 }
 function koCard(o){
   return `<div class="icard2${o.fixed?' ko-mpt':''}">
@@ -2242,9 +2242,9 @@ const KO_MPT=[
 function renderKO(){
   const car=document.getElementById('ko-car'); if(!car) return;
   const egg=a=>koEgg(a.emoji,a.bg,a.sex);
-  const mtRows=KO5.map((a,i)=>koRow(egg(a),'ID: '+a.id,a.name,KO_MOSTTESTED[i],'Tests')).join('');
-  const rareRows=KO5.map((a,i)=>{const[d,nv]=KO_RARELY[i];return koRow(egg(a),'ID: '+a.id,a.name,d,'Last tested',nv?'#FA6140':'');}).join('');
-  const recRows=KO5.map((a,i)=>{const[v,w]=KO_RECENT[i];return koRow(egg(a),'ID: '+a.id,a.name,v,w);}).join('');
+  const mtRows=KO5.map((a,i)=>koRow(egg(a),'ID: '+a.id,a.name,KO_MOSTTESTED[i],'Tests','',`openAnimalFromKO(${i})`)).join('');
+  const rareRows=KO5.map((a,i)=>{const[d,nv]=KO_RARELY[i];return koRow(egg(a),'ID: '+a.id,a.name,d,'Last tested',nv?'#FA6140':'',`openAnimalFromKO(${i})`);}).join('');
+  const recRows=KO5.map((a,i)=>{const[v,w]=KO_RECENT[i];return koRow(egg(a),'ID: '+a.id,a.name,v,w,'',`openAnimalFromKO(${i})`);}).join('');
   const mptRows=KO_MPT.map(([nm,sub,v])=>koRow('',nm,sub,v,'Animals')).join('');
   car.innerHTML=
     koCard({tint:'rgba(55,189,105,0.2)',tc:'#006D35',tw:600,paw:'#37BD69',title:'Most Tested Animals',sub:'Top 10 animals with the highest testing activity.',rows:mtRows,va:"nav('list-animals')"})
@@ -2358,7 +2358,7 @@ const CHEVR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-w
 /* timeline Jan 2022 -> Jun 2026 */
 const TL=(function(){const a=[];for(let y=2022;y<=2026;y++){for(let m=0;m<12;m++){if(y===2026&&m>5)break;a.push({y,m});}}return a;})();
 function tlDate(idx,ai){const t=TL[idx];const day=((idx*7+ai*3)%26)+1;return day+' '+MON3[t.m]+' '+t.y;}
-let adAni=0, AD_REC=null, rqIdx=0, tdKey='cbc';
+let adAni=0, AD_REC=null, ADA=null, rqIdx=0, tdKey='cbc';
 
 function testValueAt(k,j,J,ai){
   const s=TEST_CATALOG[k].list[0];
@@ -2532,20 +2532,33 @@ function setADSub(which){
   document.querySelectorAll('#ad-screen [data-adsub]').forEach(d=>d.style.display=d.dataset.adsub===which?'':'none');
 }
 function adSub(btn,which){setADSub(which);}
-function openAnimalDetail(ai){
-  adAni=ai;AD_REC=buildLabRecord(ai);
-  const a=TD_ANIMALS[ai];
-  document.getElementById('ad-photo').textContent=a.emoji;
-  document.getElementById('ad-photo').style.background=a.bg;
-  document.getElementById('ad-name').textContent=a.name;
-  document.getElementById('ad-sci').textContent=a.sci;
-  const sex=a.sex==='F'?'Female':(a.sex==='M'?'Male':'Undetermined');
+/* normalise any animal-like record into the shape the detail screen needs */
+function normAnimal(a){
+  return {id:a.id||'—',name:a.name||a.common||'Animal',sci:a.sci||'',
+    emoji:a.emoji||'🐾',bg:a.bg||'#dfe6e2',sex:a.sex||'UD',
+    enc:a.enc||'—',sec:a.sec||'—',site:a.site||'Gagwa'};
+}
+function mtToAnimal(a){const p=(a.loc||'').split('·').map(s=>s.trim());return normAnimal({id:a.id,name:a.common,sci:a.sci,emoji:a.emoji,bg:a.bg,sex:a.sex,enc:p[0],sec:p[1],site:p[2]});}
+/* dataset-agnostic core: a = normalised animal object, seed = deterministic history seed */
+function showAnimalDetail(a,seed){
+  ADA=normAnimal(a);adAni=seed;AD_REC=buildLabRecord(seed);
+  document.getElementById('ad-photo').textContent=ADA.emoji;
+  document.getElementById('ad-photo').style.background=ADA.bg;
+  document.getElementById('ad-name').textContent=ADA.name;
+  document.getElementById('ad-sci').textContent=ADA.sci;
+  const sex=ADA.sex==='F'?'Female':(ADA.sex==='M'?'Male':'Undetermined');
   document.getElementById('ad-herometa').innerHTML=
-    `<div class="r">ID: <b>${a.id}</b></div><div class="r">Sex: <b>${sex}</b> · Life Stage: <b>Adult</b></div><div class="r">Enclosure: <b>${a.enc}</b> · ${a.site}</div>`;
-  document.getElementById('ad-about').innerHTML=adAboutHTML(a);
+    `<div class="r">ID: <b>${ADA.id}</b></div><div class="r">Sex: <b>${sex}</b> · Life Stage: <b>Adult</b></div><div class="r">Enclosure: <b>${ADA.enc}</b> · ${ADA.site}</div>`;
+  document.getElementById('ad-about').innerHTML=adAboutHTML(ADA);
   setADTab('medical');setADSub('lab');
   renderLabRecords();renderRecent();renderLabInsights();
   nav('animal-detail');
+}
+/* entry points from every animal-card surface */
+function openAnimalDetail(ai){showAnimalDetail(TD_ANIMALS[ai],ai);}              /* TD_ANIMALS index (Reports By Animals, Tests Performed) */
+function openAnimalFromMT(i){showAnimalDetail(mtToAnimal(MT[i]),10+i);}          /* MT list (Monitoring, Animals Tested) */
+function openAnimalFromKO(i){showAnimalDetail(KO5[i],20+i);}                     /* Key Observations rows */
+function _adNoop(){
 }
 
 /* ---------- drill-downs ---------- */
@@ -2579,14 +2592,14 @@ function openJourney(){
   document.getElementById('journey-sub').textContent=reqs.length+' investigations · since '+reqs[reqs.length-1].date;
   sheet('sheet-journey');
 }
-function openReportFromReq(i){const rq=AD_REC.reqs[i];closeSheet();openReportFor({panel:rq.panel,ani:adAni,id:rq.id,dt:rq.date,interim:false});}
+function openReportFromReq(i){const rq=AD_REC.reqs[i];closeSheet();renderReport(rq.panel,ADA,rq.id,rq.date,false,0);}
 function openExploreTests(){
   const agg=recTestAgg(),keys=Object.keys(agg).sort((a,b)=>agg[b].count-agg[a].count);
   document.getElementById('et-list').innerHTML=keys.map(k=>{const a=agg[k];
     const lv=a.latest&&a.latest.value!==null?(a.num?`${a.latest.value}<small> ${a.unit}</small>`:a.latest.value):'—';
     return `<div class="et-card" onclick="openTestSheet('${k}')"><div class="et-ic">${(TEST_SHORT[k]||k).slice(0,3).toUpperCase()}</div><div class="et-mid"><div class="et-n">${a.full}</div><div class="et-s">Performed ${a.count}&times; · last ${a.latest?a.latest.date:'—'}<br>${a.latest?a.latest.reqId:''}</div></div><div class="et-r"><div class="et-v tnum">${lv}</div><div class="et-d">latest</div></div></div>`;
   }).join('');
-  document.getElementById('et-sub').textContent=keys.length+' tests performed for '+TD_ANIMALS[adAni].name;
+  document.getElementById('et-sub').textContent=keys.length+' tests performed for '+ADA.name;
   nav('explore-tests');
 }
 function openTestSheet(k){
@@ -2621,7 +2634,7 @@ function openRelatedReports(k){
 
 /* ---------- investigation (request) detail ---------- */
 function openRequestDetail(i){
-  const rq=AD_REC.reqs[i];if(!rq)return;rqIdx=i;const a=TD_ANIMALS[adAni];
+  const rq=AD_REC.reqs[i];if(!rq)return;rqIdx=i;const a=ADA;
   closeSheet();
   document.getElementById('rqd-title').textContent=rq.title;
   document.getElementById('rqd-id').textContent=rq.id+' · '+a.name;
