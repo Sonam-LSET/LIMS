@@ -757,6 +757,101 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .toast{position:absolute;left:50%;bottom:100px;transform:translate(-50%,18px);background:#0f1714;color:#fff;font-size:13.5px;font-weight:600;padding:12px 18px;border-radius:13px;z-index:95;opacity:0;pointer-events:none;transition:.3s var(--ease);box-shadow:0 12px 30px rgba(0,0,0,.3);max-width:84%;text-align:center}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 .fade{animation:fade .4s var(--ease) both}@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ===== Animal Detail · tabs ===== */
+.ad-tabs{display:flex;background:var(--card);position:sticky;top:0;z-index:12;box-shadow:inset 0 -1px 0 var(--hair)}
+.ad-tabs button{flex:1;padding:15px 4px 12px;font-size:14.5px;font-weight:600;color:var(--muted);position:relative}
+.ad-tabs button.on{color:var(--ink)}
+.ad-tabs button.on:after{content:"";position:absolute;left:20%;right:20%;bottom:0;height:3px;border-radius:3px 3px 0 0;background:var(--accent)}
+.ad-subtabs{display:flex;gap:8px;padding:14px 18px 2px}
+.ad-subtabs button{padding:8px 15px;border-radius:20px;font-size:13px;font-weight:600;color:var(--ink2);background:var(--card);border:1px solid var(--hair)}
+.ad-subtabs button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.ad-statrow{display:flex;gap:10px;padding:14px 18px 2px}
+.ad-stat{flex:1;background:var(--card);border-radius:var(--r-sm);box-shadow:var(--sh);padding:13px 14px}
+.ad-stat .v{font-size:23px;font-weight:600;letter-spacing:-.5px}
+.ad-stat .k{font-size:11px;color:var(--muted);font-weight:600;margin-top:2px;text-transform:uppercase;letter-spacing:.02em}
+.ad-stat.done .v{color:var(--on-green)} .ad-stat.pend .v{color:var(--tertiary)}
+
+/* ===== Animal Detail · insights ===== */
+.ins-h{font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin:20px 0 9px;padding:0 2px}
+.ins-watch{background:var(--card);border-radius:var(--r-sm);box-shadow:var(--sh);padding:15px 15px 14px}
+.ins-watch .wsub{font-size:12.5px;color:var(--muted);font-weight:600;margin:0 0 13px;line-height:1.4}
+.wchips{display:flex;flex-wrap:wrap;gap:8px}
+.wchip{display:flex;align-items:center;gap:6px;padding:9px 12px;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer}
+.wchip.high{background:var(--error-bg);color:var(--error)} .wchip.low{background:#FFF1E2;color:#B85708}
+.wchip .ar{font-size:13px;font-weight:700}
+.wchip .cnt{font-weight:700;opacity:.8;font-variant-numeric:tabular-nums}
+.ins-ok{display:flex;align-items:center;gap:9px;background:var(--accent-soft);color:var(--on-green);border-radius:var(--r-sm);padding:14px 15px;font-size:13.5px;font-weight:600;line-height:1.4}
+.ins-ok svg{width:20px;height:20px;flex:0 0 20px}
+.ins-2{display:flex;gap:10px;margin-top:10px}
+.ins-card{flex:1;min-width:0;background:var(--card);border-radius:var(--r-sm);box-shadow:var(--sh);padding:14px}
+.ins-card .ic-k{font-size:11.5px;font-weight:600;color:var(--muted)}
+.ins-card .ic-v{font-size:22px;font-weight:600;letter-spacing:-.5px;margin-top:3px;white-space:nowrap}
+.ins-card .ic-v small{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:0}
+.ins-trend{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:700;margin-top:7px;padding:3px 8px;border-radius:8px}
+.ins-trend.up{background:var(--error-bg);color:var(--error)} .ins-trend.down{background:var(--accent-soft);color:var(--on-green)} .ins-trend.flat{background:var(--hair);color:var(--ink2)}
+.minibars{display:flex;align-items:flex-end;gap:3px;height:36px;margin-top:11px}
+.minibars i{flex:1;background:var(--accent-soft);border-radius:3px;min-height:3px}
+.minibars i.hot{background:var(--accent)}
+svg.spark{display:block;width:100%;height:40px;margin-top:9px}
+
+/* ===== Animal Detail · request list ===== */
+.lr-case{font-size:12px;font-weight:700;letter-spacing:.03em;color:var(--ink2);margin:18px 2px 10px;text-transform:uppercase}
+.lr-card{background:var(--card);border-radius:var(--r-sm);box-shadow:var(--sh);padding:14px;margin-bottom:11px;cursor:pointer}
+.lr-card:active{transform:scale(.992)}
+.lr-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.lr-id{font-size:15px;font-weight:600}
+.lr-when{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:3px}
+.lr-st{font-size:11px;font-weight:700;padding:5px 10px;border-radius:8px;white-space:nowrap}
+.lr-st.done{background:var(--accent-soft);color:var(--on-green)} .lr-st.prog{background:#E6F6FA;color:#0E7C93} .lr-st.pend{background:var(--gold-bg);color:#8A6D00}
+.lr-foot{display:flex;align-items:center;gap:14px;margin-top:12px;padding-top:11px;border-top:1px solid var(--hair);font-size:12.5px;color:var(--ink2);font-weight:600}
+.lr-foot .fi b{color:var(--ink)}
+.lr-foot .lr-flag{color:var(--error)}
+.lr-foot .chev{margin-left:auto;color:var(--faint);display:flex}
+.lr-foot .chev svg{width:18px;height:18px}
+
+/* ===== Request Detail ===== */
+.rqd-head{position:relative;background:var(--navy);color:#fff;padding:54px 18px 18px}
+.rqd-back{position:absolute;top:14px;left:12px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;display:grid;place-items:center}
+.rqd-back svg{width:21px;height:21px}
+.rqd-id{display:flex;align-items:center;gap:9px;font-size:19px;font-weight:600}
+.rqd-id .st{margin-left:auto;font-size:11px;font-weight:700;background:rgba(255,255,255,.18);padding:5px 11px;border-radius:8px}
+.rqd-sub{font-size:13.5px;color:rgba(255,255,255,.85);margin-top:8px}
+.rqd-line{display:flex;align-items:center;gap:7px;font-size:12.5px;color:rgba(255,255,255,.72);margin-top:6px}
+.rqd-line svg{width:15px;height:15px;flex:0 0 15px;opacity:.9}
+.rqd-tabs{display:flex;gap:7px;padding:12px 14px;background:var(--card);position:sticky;top:0;z-index:11;box-shadow:inset 0 -1px 0 var(--hair);overflow-x:auto}
+.rqd-tabs::-webkit-scrollbar{height:0}
+.rqd-tabs button{flex:0 0 auto;padding:8px 15px;border-radius:20px;font-size:13px;font-weight:600;color:var(--ink2);background:var(--bg)}
+.rqd-tabs button.on{background:var(--navy);color:#fff}
+.rqd-cnt{display:flex;gap:10px;padding:14px 18px 2px}
+.rqd-cnt .c{flex:1;background:var(--card);border-radius:var(--r-sm);box-shadow:var(--sh);padding:13px;text-align:center}
+.rqd-cnt .c .v{font-size:20px;font-weight:600;letter-spacing:-.5px}
+.rqd-cnt .c .l{font-size:11px;color:var(--muted);font-weight:600;margin-top:3px}
+.rqd-grp{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--ink2);margin:14px 2px 11px}
+.rqd-grp .pic{font-size:20px}
+.trow{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--card);border-radius:var(--r-sm);box-shadow:var(--sh);padding:13px 14px;margin-bottom:10px}
+.trow .nm{font-size:15px;font-weight:600;margin-top:2px}
+.trow .st{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.trow .st.pend{color:#8A6D00} .trow .st.prog{color:#0E7C93} .trow .st.done{color:var(--on-green)}
+.trow .rt{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;font-weight:600;flex:0 0 auto;text-align:right}
+.trow .rt svg{width:18px;height:18px;color:var(--faint)}
+.scard2{background:var(--card);border-radius:var(--r-sm);box-shadow:var(--sh);padding:14px;margin-bottom:10px}
+.scard2 .sh{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.scard2 .nm{font-size:15px;font-weight:600}
+.scard2 .mt{font-size:12px;color:var(--muted);font-weight:600;margin-top:3px}
+.schip{font-size:11px;font-weight:700;padding:5px 10px;border-radius:8px;white-space:nowrap}
+.schip.ok{background:var(--accent-soft);color:var(--on-green)} .schip.prog{background:#E6F6FA;color:#0E7C93} .schip.rej{background:var(--error-bg);color:var(--error)} .schip.rep{background:var(--purple-bg);color:#5B4DE0}
+.rqd-note{font-size:12.5px;color:var(--ink2);background:var(--bg);border-radius:10px;padding:10px 12px;margin-top:11px;line-height:1.45}
+.rqd-report{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:var(--r-sm);box-shadow:var(--sh);padding:14px;cursor:pointer}
+.rqd-report .di{width:42px;height:42px;border-radius:12px;background:var(--accent-soft);display:grid;place-items:center;color:var(--on-green)}
+.rqd-report .di svg{width:21px;height:21px}
+.rqd-report .chev{margin-left:auto;color:var(--faint);display:flex}
+.rqd-report .chev svg{width:18px;height:18px}
+.rqd-cta{padding:18px 0 28px}
+.rqd-cta button{width:100%;padding:15px;border-radius:14px;background:var(--navy);color:#fff;font-size:15px;font-weight:600}
+.rqd-note-card{background:var(--card);border-radius:var(--r-sm);box-shadow:var(--sh);padding:14px;font-size:13px;line-height:1.5}
+.rqd-note-card .who{font-weight:600} .rqd-note-card .who span{color:var(--muted);font-weight:600}
+.rqd-note-card .hr{height:1px;background:var(--hair);margin:12px 0}
 </style>
 </head>
 <body>
@@ -1060,6 +1155,62 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
           <div class="drill-space"></div>
         </div>
       </div>
+    </section>
+
+    <!-- ===================== ANIMAL DETAIL (About / Medical / Enclosures) ===================== -->
+    <section class="screen" data-s="animal-detail" id="ad-screen">
+      <div class="ahero" style="min-height:296px">
+        <div class="ahero-photo" id="ad-photo">🦜</div>
+        <div class="ahero-bar">
+          <button class="hbtn" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="hbar-r">
+            <button class="hbtn" onclick="toast('Added to favourites')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 17.9 6.8 19.6l1-5.8L3.5 9.7l5.9-.9z" stroke-linejoin="round"/></svg></button>
+            <button class="hbtn" onclick="toast('More options')"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg></button>
+          </div>
+        </div>
+        <div class="ahero-card">
+          <div class="ah-name" id="ad-name">Animal</div>
+          <div class="ah-sci" id="ad-sci"></div>
+          <div class="ah-meta" id="ad-herometa"></div>
+        </div>
+      </div>
+      <div class="ad-tabs">
+        <button data-adk="about" onclick="adTab(this,'about')">About</button>
+        <button data-adk="medical" class="on" onclick="adTab(this,'medical')">Medical</button>
+        <button data-adk="encl" onclick="adTab(this,'encl')">Enclosures</button>
+      </div>
+      <div class="pad" data-adtab="about" style="display:none;padding-top:16px" id="ad-about"></div>
+      <div class="pad" data-adtab="encl" style="display:none;padding-top:16px"><div class="ins-ok" style="background:var(--bg);color:var(--muted)">Enclosure &amp; housing details live here.</div></div>
+      <div data-adtab="medical">
+        <div class="ad-subtabs">
+          <button data-adsk="basic" onclick="adSub(this,'basic')">Basic</button>
+          <button data-adsk="lab" class="on" onclick="adSub(this,'lab')">Lab Requests</button>
+          <button data-adsk="rx" onclick="adSub(this,'rx')">Prescriptions</button>
+        </div>
+        <div class="pad" data-adsub="basic" style="display:none;padding-top:14px"><div class="ins-ok" style="background:var(--bg);color:var(--muted)">Vitals, weight &amp; clinical assessment live here.</div></div>
+        <div class="pad" data-adsub="rx" style="display:none;padding-top:14px"><div class="ins-ok" style="background:var(--bg);color:var(--muted)">Prescriptions &amp; treatment plans live here.</div></div>
+        <div data-adsub="lab">
+          <div class="ad-statrow" id="ad-statrow"></div>
+          <div class="pad" id="ad-insights"></div>
+          <div class="pad" id="ad-reqlist" style="padding-bottom:28px"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== REQUEST DETAIL (Tests / Samples / Lab Reports / Notes) ===================== -->
+    <section class="screen" data-s="request-detail" id="rqd-screen">
+      <div class="rqd-head" id="rqd-head"></div>
+      <div class="rqd-tabs">
+        <button data-rk="tests" class="on" onclick="rqTab(this,'tests')">Tests</button>
+        <button data-rk="samples" onclick="rqTab(this,'samples')">Samples</button>
+        <button data-rk="reports" onclick="rqTab(this,'reports')">Lab Reports</button>
+        <button data-rk="notes" onclick="rqTab(this,'notes')">Notes</button>
+      </div>
+      <div class="rqd-cnt" id="rqd-cnt"></div>
+      <div class="pad" data-rqtab="tests" style="padding-top:4px" id="rqd-tests"></div>
+      <div class="pad" data-rqtab="samples" style="display:none;padding-top:4px" id="rqd-samples"></div>
+      <div class="pad" data-rqtab="reports" style="display:none;padding-top:14px" id="rqd-reports"></div>
+      <div class="pad" data-rqtab="notes" style="display:none;padding-top:14px" id="rqd-notes"></div>
     </section>
 
     <!-- ===================== TEST → ANIMALS (who had this test) ===================== -->
@@ -1801,7 +1952,7 @@ function rgTab(btn,mode){
   document.getElementById('rg-requests').style.display=mode==='requests'?'block':'none';
   setRgCount(mode);
 }
-function rgAnimalTap(i){const g=RG_GROUPS[i];if(g.reqs.length===1)openReportFor(g.reqs[0]);else openSelectRequest(i);}
+function rgAnimalTap(i){const g=RG_GROUPS[i];openAnimalDetail(g.ani);}
 function openSelectRequest(i){
   const g=RG_GROUPS[i],a=TD_ANIMALS[g.ani];
   document.getElementById('sr-ani').innerHTML=`<div class="mt-pic"><div class="mt-photo" style="background:${a.bg}">${a.emoji}</div><div class="mt-sex">${a.sex}</div></div><div class="nd"><div class="id">ID: ${a.id}</div><div class="nm">${a.name}</div></div><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
@@ -2020,6 +2171,218 @@ function openSub(i){
 renderMT();
 renderKO();
 renderSpecies();
+
+/* ===================== ANIMAL DETAIL · Lab Requests (insights + list) ===================== */
+const AD_NAMES=['Dr. Nihal Mehata','Dr. Swathi Rao','Deelipkumar','A. Sharma','R. Iyer'];
+const AD_LOC=['Central Lab - Sector 54','Field Lab - North','Gagwa On-site Lab'];
+const AD_PANELS=[['cbc','lft'],['cmp','tft'],['lft','serumbio'],['cbc','parasitology'],['serumbio','cbc'],['cmp','lft','cbc'],['tft','serumbio'],['allergy','cbc']];
+const ICON_DOC='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h7l5 5v13H7z" stroke-linejoin="round"/><path d="M14 3v5h5"/></svg>';
+const ICON_CHK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const ICON_LOC='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>';
+const ICON_INFO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01" stroke-linecap="round"/></svg>';
+const CHEVR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const SAMP_TUBES=['Lavender Top · EDTA','Red Top · Serum','Green Top · Heparin','Sterile container · Swab'];
+let adAni=0, AD_HIST=[], rqCur=null;
+
+/* value of a numeric sub-test at a given history index (di: 0=newest .. 11=oldest) */
+function adValAt(s,di){const f=full12(s.vals);return f[f.length-1-di]!==undefined?f[f.length-1-di]:f[f.length-1];}
+/* flagged params for a panel at a point in time */
+function adFlags(panel,di){
+  let flagged=0,total=0;const det=[];
+  panel.forEach(k=>{const t=TEST_CATALOG[k];if(!t||t.kind!=='numeric')return;
+    t.list.forEach((s,si)=>{const rng=REF[s.n];if(!rng)return;total++;const v=adValAt(s,di);
+      if(v<rng[0]){flagged++;det.push({n:s.n,dir:'low',k,si});}
+      else if(v>rng[1]){flagged++;det.push({n:s.n,dir:'high',k,si});}});
+  });
+  return {flagged,total,det};
+}
+/* deterministic per-animal lab history (newest → oldest) */
+function buildLabHistory(ai){
+  const n=5+(ai%4);const list=[];
+  for(let r=0;r<n;r++){
+    const di=Math.min(11,Math.round(r*11/(n-1)));
+    const panel=AD_PANELS[(ai+r)%AD_PANELS.length];
+    let status='Completed';
+    if(r===0) status=(ai%3===0)?'In Progress':((ai%3===1)?'Pending':'Completed');
+    const fl=(status==='Completed')?adFlags(panel,di):{flagged:0,total:0,det:[]};
+    const tests=panel.reduce((s,k)=>s+((TEST_CATALOG[k]&&TEST_CATALOG[k].list.length)||0),0);
+    const reject=(r===2 && ai%2===0)?1:0;
+    list.push({i:r,di,id:G_REQS[di],date:G_DATES[di],case:'MED-00'+(120+ai*3+Math.floor(r/2)),
+      panel,status,tests,samples:panel.length+reject,reject,
+      by:AD_NAMES[(ai+r)%AD_NAMES.length],loc:AD_LOC[(ai+r)%AD_LOC.length],
+      flagged:fl.flagged,paramTotal:fl.total,det:fl.det});
+  }
+  return list;
+}
+function sparkSVG(series,color){
+  if(series.length<2) return '';
+  const W=120,H=40,p=5,mn=Math.min(...series),mx=Math.max(...series),rg=(mx-mn)||1;
+  const pts=series.map((v,i)=>[p+(W-2*p)*i/(series.length-1),H-p-(H-2*p)*((v-mn)/rg)]);
+  const d=pts.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' ');
+  const lp=pts[pts.length-1];
+  return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><path d="${d}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><circle cx="${lp[0].toFixed(1)}" cy="${lp[1].toFixed(1)}" r="3.5" fill="#fff" stroke="${color}" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>`;
+}
+function adInsights(){
+  const hist=AD_HIST,completed=hist.filter(r=>r.status==='Completed');
+  const totalReq=hist.length,totalTests=hist.reduce((s,r)=>s+r.tests,0);
+  const recent=hist.filter(r=>r.di<6).length,older=hist.filter(r=>r.di>=6).length;
+  const buckets=Array(12).fill(0);hist.forEach(r=>buckets[11-r.di]++);
+  const maxB=Math.max(1,...buckets);
+  /* flagged trend, oldest → newest */
+  const byTime=[...completed].sort((a,b)=>b.di-a.di);
+  const flagSeries=byTime.map(r=>r.flagged);
+  const latest=byTime[byTime.length-1]||{flagged:0,paramTotal:0},prev=byTime[byTime.length-2];
+  let flagDir='flat',flagTxt='No prior report';
+  if(prev){const d=latest.flagged-prev.flagged;flagDir=d<0?'down':(d>0?'up':'flat');flagTxt=d<0?('▼ '+Math.abs(d)+' fewer'):(d>0?('▲ '+d+' more'):'No change');}
+  /* watchlist: recurring out-of-range params */
+  const tally={};
+  completed.forEach(r=>r.det.forEach(d=>{if(!tally[d.n])tally[d.n]={n:d.n,dir:d.dir,cnt:0,k:d.k,si:d.si};tally[d.n].cnt++;}));
+  let watch=Object.values(tally);
+  watch.forEach(w=>{w.appear=completed.filter(r=>r.panel.includes(w.k)).length||1;});
+  const recurring=watch.filter(w=>w.cnt>=2).sort((a,b)=>b.cnt-a.cnt);
+  watch=(recurring.length?recurring:watch.sort((a,b)=>b.cnt-a.cnt)).slice(0,4);
+  /* activity direction */
+  let dir='flat',dirIcon='→',dirText='steady';
+  if(recent>older){dir='up';dirIcon='▲';dirText='up vs prior 6 mo';}
+  else if(recent<older){dir='down';dirIcon='▼';dirText='down vs prior 6 mo';}
+  return {totalReq,totalTests,bars:buckets.map(b=>Math.round(b/maxB*100)),
+    dir,dirIcon,dirText,watch,
+    latestFlag:latest.flagged,latestTotal:latest.paramTotal||0,flagDir,flagTxt,
+    spark:sparkSVG(flagSeries,'#FA6140')};
+}
+function renderStatRow(){
+  const hist=AD_HIST;
+  const done=hist.filter(r=>r.status==='Completed').length;
+  const pend=hist.length-done;
+  const samples=hist.reduce((s,r)=>s+r.samples,0);
+  document.getElementById('ad-statrow').innerHTML=
+    `<div class="ad-stat done"><div class="v tnum">${done}</div><div class="k">Completed</div></div>
+     <div class="ad-stat pend"><div class="v tnum">${pend}</div><div class="k">Open</div></div>
+     <div class="ad-stat"><div class="v tnum">${samples}</div><div class="k">Samples</div></div>`;
+}
+function renderInsights(){
+  const ins=adInsights();let h='';
+  h+='<div class="ins-h">Watchlist · Out-of-range parameters</div>';
+  if(ins.watch.length){
+    h+='<div class="ins-watch"><div class="wsub">Lab values that came back outside their reference range — and how often across reports. Tap to view the trend.</div><div class="wchips">'+
+      ins.watch.map(w=>`<button class="wchip ${w.dir}" onclick="openParamTrend(${adAni},'${w.k}',${w.si})">${w.n} <span class="ar">${w.dir==='high'?'↑':'↓'}</span> <span class="cnt">${w.cnt}/${w.appear}</span></button>`).join('')+
+      '</div></div>';
+  }else{
+    h+='<div class="ins-ok">'+ICON_CHK+'All tracked values stayed within range across recent reports.</div>';
+  }
+  h+='<div class="ins-2">';
+  h+=`<div class="ins-card"><div class="ic-k">Lab activity · 12 mo</div><div class="ic-v tnum">${ins.totalReq} <small>req · ${ins.totalTests} tests</small></div><span class="ins-trend ${ins.dir}">${ins.dirIcon} ${ins.dirText}</span><div class="minibars">${ins.bars.map(b=>`<i class="${b>=66?'hot':''}" style="height:${Math.max(8,b)}%"></i>`).join('')}</div></div>`;
+  h+=`<div class="ins-card"><div class="ic-k">Flagged per report</div><div class="ic-v tnum">${ins.latestFlag}<small> of ${ins.latestTotal}</small></div><span class="ins-trend ${ins.flagDir}">${ins.flagTxt}</span>${ins.spark||'<div class="minibars"></div>'}</div>`;
+  h+='</div>';
+  document.getElementById('ad-insights').innerHTML=h;
+}
+function renderReqList(){
+  const groups=[],gmap={};
+  AD_HIST.forEach(r=>{if(!gmap[r.case]){gmap[r.case]={case:r.case,items:[]};groups.push(gmap[r.case]);}gmap[r.case].items.push(r);});
+  let h='<div class="ins-h">Requests</div>';
+  groups.forEach(g=>{
+    h+=`<div class="lr-case">Case ID · ${g.case}</div>`;
+    g.items.forEach(r=>{
+      const st=r.status==='Completed'?'done':(r.status==='In Progress'?'prog':'pend');
+      h+=`<div class="lr-card" onclick="openRequestDetail(${r.i})">
+        <div class="lr-top"><div><div class="lr-id">Lab Test · ${r.id}</div><div class="lr-when">Requested on ${r.date}</div></div><span class="lr-st ${st}">${r.status}</span></div>
+        <div class="lr-foot"><span class="fi">Tests <b>${r.tests}</b></span><span class="fi">Samples <b>${r.samples}</b></span>${(r.status==='Completed'&&r.flagged)?`<span class="fi lr-flag">${r.flagged} flagged</span>`:''}<span class="chev">${CHEVR}</span></div>
+      </div>`;
+    });
+  });
+  document.getElementById('ad-reqlist').innerHTML=h;
+}
+function adAboutHTML(a){
+  return `<div class="card" style="padding:16px"><div class="ah-meta" style="color:var(--ink2)">
+    <div class="r" style="display:flex;justify-content:space-between;color:var(--muted)">Scientific name <b style="color:var(--ink)">${a.sci}</b></div>
+    <div class="r" style="display:flex;justify-content:space-between;color:var(--muted);margin-top:8px">Animal ID <b style="color:var(--ink)">${a.id}</b></div>
+    <div class="r" style="display:flex;justify-content:space-between;color:var(--muted);margin-top:8px">Enclosure <b style="color:var(--ink)">${a.enc}</b></div>
+    <div class="r" style="display:flex;justify-content:space-between;color:var(--muted);margin-top:8px">Section <b style="color:var(--ink)">${a.sec}</b></div>
+    <div class="r" style="display:flex;justify-content:space-between;color:var(--muted);margin-top:8px">Site <b style="color:var(--ink)">${a.site}</b></div>
+  </div></div>`;
+}
+function setADTab(which){
+  document.querySelectorAll('#ad-screen .ad-tabs button').forEach(b=>b.classList.toggle('on',b.dataset.adk===which));
+  document.querySelectorAll('#ad-screen [data-adtab]').forEach(d=>d.style.display=d.dataset.adtab===which?'':'none');
+}
+function adTab(btn,which){setADTab(which);}
+function setADSub(which){
+  document.querySelectorAll('#ad-screen .ad-subtabs button').forEach(b=>b.classList.toggle('on',b.dataset.adsk===which));
+  document.querySelectorAll('#ad-screen [data-adsub]').forEach(d=>d.style.display=d.dataset.adsub===which?'':'none');
+}
+function adSub(btn,which){setADSub(which);}
+function openParamTrend(ai,k,si){gTest=(k in TEST_CATALOG)?k:'cbc';openGraph(ai);curSub=si||0;renderGraphCard();}
+function openAnimalDetail(ai){
+  adAni=ai;AD_HIST=buildLabHistory(ai);
+  const a=TD_ANIMALS[ai];
+  document.getElementById('ad-photo').textContent=a.emoji;
+  document.getElementById('ad-photo').style.background=a.bg;
+  document.getElementById('ad-name').textContent=a.name;
+  document.getElementById('ad-sci').textContent=a.sci;
+  const sex=a.sex==='F'?'Female':(a.sex==='M'?'Male':'Undetermined');
+  document.getElementById('ad-herometa').innerHTML=
+    `<div class="r">ID: <b>${a.id}</b></div><div class="r">Sex: <b>${sex}</b> · Life Stage: <b>Adult</b></div><div class="r">Enclosure: <b>${a.enc}</b> · ${a.site}</div>`;
+  document.getElementById('ad-about').innerHTML=adAboutHTML(a);
+  setADTab('medical');setADSub('lab');
+  renderStatRow();renderInsights();renderReqList();
+  nav('animal-detail');
+}
+
+/* ===================== REQUEST DETAIL ===================== */
+function openRequestDetail(i){
+  const r=AD_HIST[i];if(!r)return;rqCur=r;const a=TD_ANIMALS[adAni];
+  document.getElementById('rqd-head').innerHTML=
+    `<button class="rqd-back" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+     <div class="rqd-id">${ICON_INFO} Lab Test · ${r.id} <span class="st">${r.status}</span></div>
+     <div class="rqd-sub">${a.name} · ID ${a.id} · Case ${r.case}</div>
+     <div class="rqd-line">${ICON_LOC}${r.loc}</div>
+     <div class="rqd-line">${ICON_INFO}Requested by ${r.by} · ${r.date}</div>`;
+  const compTests=r.status==='Completed'?r.tests:(r.status==='In Progress'?Math.round(r.tests/2):0);
+  const recvSamples=r.status==='Pending'?Math.max(0,r.samples-1):r.samples-r.reject;
+  document.getElementById('rqd-cnt').innerHTML=
+    `<div class="c"><div class="v tnum">${compTests}/${r.tests}</div><div class="l">Tests completed</div></div>
+     <div class="c"><div class="v tnum">${recvSamples}/${r.samples}</div><div class="l">Samples received</div></div>`;
+  renderRQTests(r,a);renderRQSamples(r,a);renderRQReports(r,a);renderRQNotes(r,a);
+  rqSwitch('tests');
+  nav('request-detail');
+}
+function renderRQTests(r,a){
+  const rows=r.panel.map((k,ki)=>{
+    const t=TEST_CATALOG[k],dept=deptTitle(DEPT[k]||'PATHOLOGY');
+    const stt=r.status==='Completed'?'done':(r.status==='In Progress'?(ki===0?'prog':'pend'):'pend');
+    const lbl=stt==='done'?'Completed':(stt==='prog'?'In Progress':'Pending');
+    const tap=r.status==='Completed'?` onclick="openParamTrend(${adAni},'${k}',0)"`:'';
+    return `<div class="trow"${tap}><div><div class="st ${stt}">${lbl}</div><div class="nm">${t.title}</div></div><div class="rt"><span>${dept} · ${t.list.length} sub</span>${CHEVR}</div></div>`;
+  }).join('');
+  document.getElementById('rqd-tests').innerHTML=`<div class="rqd-grp"><span class="pic">${a.emoji}</span>${a.name}</div>`+rows;
+}
+function renderRQSamples(r,a){
+  const cards=r.panel.map((k,ki)=>{
+    const t=TEST_CATALOG[k];let stt,cls;
+    if(r.status==='Completed'){stt='Reported';cls='rep';}
+    else if(r.status==='In Progress'){stt=ki===0?'In Progress':'Received';cls=ki===0?'prog':'ok';}
+    else{stt='Received';cls='ok';}
+    return `<div class="scard2"><div class="sh"><div><div class="nm">${t.title}</div><div class="mt">${SAMP_TUBES[ki%4]} · ${deptTitle(DEPT[k]||'Lab')}</div></div><span class="schip ${cls}">${stt}</span></div></div>`;
+  });
+  if(r.reject) cards.push(`<div class="scard2"><div class="sh"><div><div class="nm">Repeat sample</div><div class="mt">Lavender Top · 10 ml</div></div><span class="schip rej">Rejected</span></div><div class="rqd-note"><b>Insufficient sample.</b> A fresh aliquot has been requested from the field team.</div></div>`);
+  document.getElementById('rqd-samples').innerHTML=`<div class="rqd-grp"><span class="pic">${a.emoji}</span>${a.name}</div>`+cards.join('')+`<div class="rqd-cta"><button onclick="toast('Sample management — coming next')">Manage Samples</button></div>`;
+}
+function renderRQReports(r,a){
+  if(r.status==='Completed'){
+    const robj={panel:r.panel,ani:adAni,id:r.id,dt:r.date,interim:false};
+    document.getElementById('rqd-reports').innerHTML=`<div class="rqd-report" onclick='openReportFor(${JSON.stringify(robj)})'><div class="di">${ICON_DOC}</div><div style="flex:1"><div style="font-size:15px;font-weight:600">Final Report · ${a.name}</div><div style="font-size:12px;color:var(--muted);font-weight:600;margin-top:3px">Issued ${r.date} · ${r.tests} tests</div></div><span class="chev">${CHEVR}</span></div>`;
+  }else{
+    document.getElementById('rqd-reports').innerHTML=`<div class="ins-ok" style="background:var(--bg);color:var(--muted)">${ICON_DOC}Final lab report appears here once all tests are approved by the lab.</div>`;
+  }
+}
+function renderRQNotes(r,a){
+  document.getElementById('rqd-notes').innerHTML=`<div class="rqd-note-card"><div class="who">${r.by} <span>· requested ${r.date}</span></div><div style="margin-top:4px">Routine ${r.panel.length>1?'multi-panel':''} screen for ${a.name}. Samples dispatched to ${r.loc}.</div><div class="hr"></div><div class="who">Lab · Gagwa <span>· in review</span></div><div style="margin-top:4px">${r.reject?'One sample flagged insufficient — repeat requested.':'All samples logged and assigned to departments.'}</div></div>`;
+}
+function rqSwitch(which){
+  document.querySelectorAll('#rqd-screen .rqd-tabs button').forEach(b=>b.classList.toggle('on',b.dataset.rk===which));
+  document.querySelectorAll('#rqd-screen [data-rqtab]').forEach(d=>d.style.display=d.dataset.rqtab===which?'':'none');
+}
+function rqTab(btn,which){rqSwitch(which);}
 
 render();
 </script>
