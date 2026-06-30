@@ -852,6 +852,131 @@ svg.spark{display:block;width:100%;height:40px;margin-top:9px}
 .rqd-note-card{background:var(--card);border-radius:var(--r-sm);box-shadow:var(--sh);padding:14px;font-size:13px;line-height:1.5}
 .rqd-note-card .who{font-weight:600} .rqd-note-card .who span{color:var(--muted);font-weight:600}
 .rqd-note-card .hr{height:1px;background:var(--hair);margin:12px 0}
+
+/* ===== Laboratory Records · hero scroller ===== */
+.lab-hero{display:flex;gap:12px;overflow-x:auto;padding:2px 18px 4px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.lab-hero::-webkit-scrollbar{height:0}
+.hcard{flex:0 0 85%;scroll-snap-align:start;background:var(--card);border-radius:var(--r-sm);box-shadow:var(--sh);padding:16px 16px 14px;display:flex;flex-direction:column}
+.hcard .hc-k{font-size:12px;font-weight:600;color:var(--muted)}
+.hcard .hc-v{font-size:30px;font-weight:600;letter-spacing:-1px;margin-top:2px}
+.hcard .hc-v small{font-size:13px;color:var(--muted);font-weight:600;letter-spacing:0}
+.hc-spark{margin:12px 0 13px}
+.hcard .hc-rows{display:flex;flex-direction:column;gap:7px;margin-top:2px}
+.hc-row{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);font-weight:600}
+.hc-row b{color:var(--ink);font-weight:600}
+.hc-cta{margin-top:13px;display:flex;align-items:center;justify-content:center;gap:6px;background:var(--accent-soft);color:var(--on-green);border-radius:11px;padding:11px;font-size:14px;font-weight:600}
+.hc-cta svg{width:17px;height:17px}
+
+/* ===== Recent Activity ===== */
+.rec-card{display:flex;gap:13px;align-items:center;background:var(--card);border-radius:var(--r-sm);box-shadow:var(--sh);padding:14px;margin-bottom:11px;cursor:pointer}
+.rec-card:active{transform:scale(.992)}
+.rec-ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;flex:0 0 44px}
+.rec-ic.req{background:var(--accent-soft);color:var(--on-green)} .rec-ic.tst{background:#E6F6FA;color:#0E7C93}
+.rec-ic svg{width:22px;height:22px}
+.rec-mid{flex:1;min-width:0}
+.rec-t{font-size:15px;font-weight:600}
+.rec-s{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:3px;line-height:1.4}
+.rec-val{font-size:18px;font-weight:600;text-align:right;white-space:nowrap}
+.rec-val small{font-size:11px;color:var(--muted);font-weight:600}
+.rec-chev{color:var(--faint);display:flex} .rec-chev svg{width:18px;height:18px}
+
+/* ===== Laboratory Insights ===== */
+.card2{background:var(--card);border-radius:var(--r-sm);box-shadow:var(--sh);padding:15px;margin-bottom:11px}
+.c2-h{font-size:14px;font-weight:600;margin-bottom:10px}
+.lab-insrow{display:flex;flex-direction:column;gap:9px}
+.li-line{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13px;color:var(--muted);font-weight:600}
+.li-line b{color:var(--ink);font-weight:600;text-align:right}
+.mp-row{display:flex;align-items:center;gap:10px;margin-top:10px}
+.mp-row .mp-n{font-size:13.5px;font-weight:600;flex:0 0 110px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mp-bar{flex:1;height:8px;border-radius:5px;background:var(--accent-soft);overflow:hidden}
+.mp-bar i{display:block;height:100%;background:var(--accent);border-radius:5px}
+.mp-row .mp-c{font-size:12.5px;font-weight:700;color:var(--ink2);flex:0 0 auto}
+.freq-big{font-size:26px;font-weight:600;letter-spacing:-.5px}
+.freq-sub{font-size:13px;color:var(--muted);font-weight:600;margin-top:4px;line-height:1.55}
+.yearbars{display:flex;align-items:flex-end;gap:6px;height:54px;margin-top:6px}
+.yearbars .yb{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;justify-content:flex-end;height:100%}
+.yearbars .yb i{width:100%;max-width:34px;background:var(--accent);border-radius:4px;min-height:4px;opacity:.85}
+.yearbars .yb span{font-size:10.5px;color:var(--muted);font-weight:600}
+
+/* ===== full bottom sheets (journey / test detail / records / reports) ===== */
+.sheet-full{max-height:90%;background:var(--bg);border-radius:20px 20px 0 0;padding:0;overflow:hidden;display:flex;flex-direction:column}
+.sf-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 18px 16px;background:var(--card);box-shadow:0 2px 8px rgba(0,0,0,.05);flex:0 0 auto}
+.sf-t1{font-size:18px;font-weight:600;letter-spacing:-.2px}
+.sf-t2{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:3px}
+.sf-body{flex:1;min-height:0;overflow-y:auto;padding:10px 18px 28px}
+.sf-body::-webkit-scrollbar{width:0}
+.jr-month{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:14px 2px 9px}
+.jr-card{background:var(--card);border-radius:var(--r-sm);box-shadow:var(--sh);padding:14px;margin-bottom:10px;cursor:pointer}
+.jr-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.jr-title{font-size:15px;font-weight:600}
+.jr-meta{font-size:12px;color:var(--muted);font-weight:600;margin-top:3px}
+.jr-chips{display:flex;gap:16px;margin-top:11px;font-size:12.5px;color:var(--ink2);font-weight:600}
+.jr-chips b{color:var(--ink)}
+.jr-act{margin-top:12px;width:100%;padding:11px;border-radius:11px;font-size:13.5px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px}
+.jr-act svg{width:17px;height:17px}
+.jr-act.report{background:var(--accent-soft);color:var(--on-green)}
+.jr-act.progress{background:#E6F6FA;color:#0E7C93}
+.st-chip{font-size:11px;font-weight:700;padding:5px 10px;border-radius:8px;white-space:nowrap}
+.st-chip.Completed{background:var(--accent-soft);color:var(--on-green)}
+.st-chip.Pending{background:var(--gold-bg);color:#8A6D00}
+.st-chip.Cancelled{background:var(--hair);color:var(--muted)}
+.td-stats{display:flex;gap:8px;margin-top:14px}
+.td-st{flex:1;background:var(--accent-soft);border-radius:10px;padding:11px;text-align:center}
+.td-st .k{font-size:11px;color:var(--muted);font-weight:600}
+.td-st .v{font-size:14px;font-weight:600;color:var(--navy);margin-top:4px}
+.td-acts{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.td-act{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border-radius:12px;font-size:14px;font-weight:600;background:var(--navy);color:#fff}
+.td-act svg{width:18px;height:18px}
+.td-act.ghost{background:var(--card);color:var(--navy);border:1px solid var(--hair);box-shadow:var(--sh)}
+.rec-table{width:100%;border-collapse:collapse;font-size:13px}
+.rec-table th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);font-weight:700;padding:11px 6px}
+.rec-table td{padding:13px 6px;border-top:1px solid var(--hair);font-weight:600;color:var(--ink2)}
+.rec-table td.val{color:var(--ink);text-align:right;font-variant-numeric:tabular-nums}
+.rec-table .rid{color:var(--muted)}
+
+/* ===== Explore Tests screen ===== */
+.et-card{background:var(--card);border-radius:var(--r-sm);box-shadow:var(--sh);padding:14px;margin-bottom:10px;cursor:pointer;display:flex;gap:13px;align-items:center}
+.et-card:active{transform:scale(.994)}
+.et-ic{width:42px;height:42px;border-radius:12px;background:var(--accent-soft);color:var(--on-green);display:grid;place-items:center;flex:0 0 42px;font-size:12px;font-weight:700}
+.et-mid{flex:1;min-width:0}
+.et-n{font-size:15px;font-weight:600}
+.et-s{font-size:12px;color:var(--muted);font-weight:600;margin-top:3px;line-height:1.4}
+.et-r{text-align:right;flex:0 0 auto}
+.et-v{font-size:16px;font-weight:600;white-space:nowrap}
+.et-v small{font-size:11px;color:var(--muted);font-weight:600}
+.et-d{font-size:10.5px;color:var(--muted);font-weight:600;margin-top:2px;text-transform:uppercase;letter-spacing:.02em}
+
+/* ===== Investigation (request) detail ===== */
+.id-card{background:var(--card);border-radius:var(--r-sm);box-shadow:var(--sh);padding:16px}
+.id-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.id-title{font-size:19px;font-weight:600;letter-spacing:-.3px;line-height:1.2}
+.id-id{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:5px}
+.id-meta{font-size:12.5px;color:var(--ink2);font-weight:600;margin-top:11px;padding-top:11px;border-top:1px solid var(--hair)}
+.stepper{margin:14px 0 4px;background:var(--card);border-radius:var(--r-sm);box-shadow:var(--sh);padding:16px 16px 14px}
+.step{display:flex;gap:13px;align-items:flex-start;position:relative;padding-bottom:15px}
+.step:last-child{padding-bottom:0}
+.step .dot{width:22px;height:22px;border-radius:50%;flex:0 0 22px;display:grid;place-items:center;z-index:1;font-size:9px}
+.step .dot.done{background:var(--accent);color:#fff} .step .dot.now{background:#fff;box-shadow:inset 0 0 0 2px var(--accent);color:var(--accent)} .step .dot.todo{background:var(--hair)}
+.step .dot svg{width:13px;height:13px}
+.step:not(:last-child):before{content:"";position:absolute;left:10px;top:22px;bottom:1px;width:2px;background:var(--hair)}
+.step.done:not(:last-child):before{background:var(--accent)}
+.step .sl{font-size:14px;font-weight:600}
+.step .sd{font-size:12px;color:var(--muted);font-weight:600;margin-top:2px}
+.step.todo .sl{color:var(--muted)}
+.tst-card{background:var(--card);border-radius:var(--r-sm);box-shadow:var(--sh);padding:14px;margin-bottom:10px}
+.tst-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.tst-n{font-size:15px;font-weight:600}
+.tst-st{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.tst-st.done{color:var(--on-green)} .tst-st.pend{color:#8A6D00}
+.tst-val{font-size:22px;font-weight:600;letter-spacing:-.5px;margin-top:9px}
+.tst-val small{font-size:12px;color:var(--muted);font-weight:600}
+.tst-hist{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;padding-top:11px;border-top:1px solid var(--hair)}
+.tst-hist .ht{font-size:12px;color:var(--muted);font-weight:600}
+.tst-cmp{font-size:13px;font-weight:600;color:var(--accent);display:flex;align-items:center;gap:2px;white-space:nowrap}
+.tst-cmp svg{width:15px;height:15px}
+.ver-chips{display:flex;gap:8px;margin-bottom:12px}
+.ver-chip{padding:7px 13px;border-radius:20px;font-size:12.5px;font-weight:600;background:var(--card);border:1px solid var(--hair);color:var(--ink2);cursor:pointer}
+.ver-chip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
 </style>
 </head>
 <body>
@@ -1190,27 +1315,43 @@ svg.spark{display:block;width:100%;height:40px;margin-top:9px}
         <div class="pad" data-adsub="basic" style="display:none;padding-top:14px"><div class="ins-ok" style="background:var(--bg);color:var(--muted)">Vitals, weight &amp; clinical assessment live here.</div></div>
         <div class="pad" data-adsub="rx" style="display:none;padding-top:14px"><div class="ins-ok" style="background:var(--bg);color:var(--muted)">Prescriptions &amp; treatment plans live here.</div></div>
         <div data-adsub="lab">
-          <div class="ad-statrow" id="ad-statrow"></div>
-          <div class="pad" id="ad-insights"></div>
-          <div class="pad" id="ad-reqlist" style="padding-bottom:28px"></div>
+          <div id="lab-records" style="padding-top:8px"></div>
+          <div class="pad" id="lab-recent"></div>
+          <div class="pad" id="lab-insights" style="padding-bottom:28px"></div>
         </div>
       </div>
     </section>
 
-    <!-- ===================== REQUEST DETAIL (Tests / Samples / Lab Reports / Notes) ===================== -->
+    <!-- ===================== INVESTIGATION (REQUEST) DETAIL ===================== -->
     <section class="screen" data-s="request-detail" id="rqd-screen">
-      <div class="rqd-head" id="rqd-head"></div>
-      <div class="rqd-tabs">
-        <button data-rk="tests" class="on" onclick="rqTab(this,'tests')">Tests</button>
-        <button data-rk="samples" onclick="rqTab(this,'samples')">Samples</button>
-        <button data-rk="reports" onclick="rqTab(this,'reports')">Lab Reports</button>
-        <button data-rk="notes" onclick="rqTab(this,'notes')">Notes</button>
+      <div class="bhead"><button class="back" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Lab Records</button><div class="htitle">Investigation</div></div>
+      <div class="pad" style="padding-top:10px;padding-bottom:30px">
+        <div class="id-card">
+          <div class="id-top"><div class="id-title" id="rqd-title"></div><span class="st-chip" id="rqd-status"></span></div>
+          <div class="id-id" id="rqd-id"></div>
+          <div class="id-meta" id="rqd-meta"></div>
+        </div>
+        <div class="stepper" id="rqd-stepper"></div>
+        <div class="rqd-tabs" style="position:static;margin:14px 0 6px;background:none;box-shadow:none;padding:0;gap:7px">
+          <button data-rk="overview" class="on" onclick="rqTab(this,'overview')">Overview</button>
+          <button data-rk="tests" onclick="rqTab(this,'tests')">Tests</button>
+          <button data-rk="reports" onclick="rqTab(this,'reports')">Reports</button>
+          <button data-rk="history" onclick="rqTab(this,'history')">History</button>
+        </div>
+        <div data-rqtab="overview" id="rqd-overview"></div>
+        <div data-rqtab="tests" style="display:none" id="rqd-tests"></div>
+        <div data-rqtab="reports" style="display:none" id="rqd-reports"></div>
+        <div data-rqtab="history" style="display:none" id="rqd-history"></div>
       </div>
-      <div class="rqd-cnt" id="rqd-cnt"></div>
-      <div class="pad" data-rqtab="tests" style="padding-top:4px" id="rqd-tests"></div>
-      <div class="pad" data-rqtab="samples" style="display:none;padding-top:4px" id="rqd-samples"></div>
-      <div class="pad" data-rqtab="reports" style="display:none;padding-top:14px" id="rqd-reports"></div>
-      <div class="pad" data-rqtab="notes" style="display:none;padding-top:14px" id="rqd-notes"></div>
+    </section>
+
+    <!-- ===================== EXPLORE TESTS (every test ever performed) ===================== -->
+    <section class="screen" data-s="explore-tests" id="et-screen">
+      <div class="bhead"><button class="back" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Lab Records</button><div class="htitle">Tests Performed</div></div>
+      <div class="pad" style="padding-top:10px">
+        <div class="ins-h" style="margin-top:4px"><span id="et-sub"></span></div>
+        <div id="et-list" style="padding-bottom:28px"></div>
+      </div>
     </section>
 
     <!-- ===================== TEST → ANIMALS (who had this test) ===================== -->
@@ -1384,6 +1525,32 @@ svg.spark{display:block;width:100%;height:40px;margin-top:9px}
 
   <!-- scrim + sheets -->
   <div class="scrim" id="scrim" onclick="closeSheet()"></div>
+
+  <!-- Laboratory Journey -->
+  <div class="sheet sheet-full" id="sheet-journey">
+    <div class="sf-top"><div><div class="sf-t1">Laboratory Journey</div><div class="sf-t2" id="journey-sub"></div></div><button class="xbtn" onclick="closeSheet()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button></div>
+    <div class="sf-body" id="journey-body"></div>
+  </div>
+  <!-- Test Detail -->
+  <div class="sheet sheet-full" id="sheet-testdetail">
+    <div class="sf-top"><div><div class="sf-t1" id="td-tname"></div><div class="sf-t2" id="td-tmeta"></div></div><button class="xbtn" onclick="closeSheet()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button></div>
+    <div class="sf-body">
+      <div class="card2" id="td-chartcard"><div id="td-chart"></div>
+        <div class="td-stats"><div class="td-st"><div class="k">First performed</div><div class="v" id="td-first">—</div></div><div class="td-st"><div class="k">Latest performed</div><div class="v" id="td-latest">—</div></div></div>
+      </div>
+      <div class="td-acts" id="td-actions"></div>
+    </div>
+  </div>
+  <!-- View Records -->
+  <div class="sheet sheet-full" id="sheet-records">
+    <div class="sf-top"><div><div class="sf-t1" id="rec-title2"></div><div class="sf-t2" id="rec-sub2"></div></div><button class="xbtn" onclick="closeSheet()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button></div>
+    <div class="sf-body"><div class="card2" style="padding:2px 14px"><table class="rec-table"><thead><tr><th>Date</th><th>Request</th><th style="text-align:right">Result</th><th>Unit</th></tr></thead><tbody id="rec-tbody"></tbody></table></div></div>
+  </div>
+  <!-- Related Reports -->
+  <div class="sheet sheet-full" id="sheet-reports">
+    <div class="sf-top"><div><div class="sf-t1" id="rel-title"></div><div class="sf-t2">Tap a report to open the PDF</div></div><button class="xbtn" onclick="closeSheet()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button></div>
+    <div class="sf-body" id="rel-body"></div>
+  </div>
 
   <!-- lab-value graph bottom sheet (Figma 152:8872 / 157:10688) -->
   <!-- Select Request bottom sheet (Figma 178:6142) -->
@@ -2172,125 +2339,179 @@ renderMT();
 renderKO();
 renderSpecies();
 
-/* ===================== ANIMAL DETAIL · Lab Requests (insights + list) ===================== */
-const AD_NAMES=['Dr. Nihal Mehata','Dr. Swathi Rao','Deelipkumar','A. Sharma','R. Iyer'];
-const AD_LOC=['Central Lab - Sector 54','Field Lab - North','Gagwa On-site Lab'];
-const AD_PANELS=[['cbc','lft'],['cmp','tft'],['lft','serumbio'],['cbc','parasitology'],['serumbio','cbc'],['cmp','lft','cbc'],['tft','serumbio'],['allergy','cbc']];
+/* ===================== ANIMAL DETAIL · Laboratory Records ===================== */
+const TEST_SHORT={cbc:'CBC',cmp:'CMP',lft:'LFT',tft:'TFT',cbc2:'CBC',serumbio:'Serum Biochem',allergy:'Allergy Panel',parasitology:'Parasitology'};
+const LAB_TITLES=['Routine Health Screen','Annual Wellness Panel','Pre-transfer Screening','Quarantine Intake Panel','Follow-up Biochemistry','Post-treatment Review','Geriatric Monitoring','Nutritional Status Review','Pre-anaesthetic Workup','Seasonal Health Check'];
+const LAB_BY=['Dr. Nihal Mehata','Dr. Swathi Rao','Dr. Arjun Pillai','Dr. Meera Nair','Dr. R. Iyer'];
+const LAB_TIMES=['08:24 AM','11:10 AM','02:15 PM','04:45 PM','09:30 AM'];
+const AD_PANELS2=[['cbc','lft'],['cmp'],['lft','serumbio'],['cbc','parasitology'],['serumbio','cbc'],['cmp','lft'],['tft'],['allergy','cbc'],['cbc'],['lft','tft']];
+const MON3=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const MONF=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const ICON_JOURNAL='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M9 7h6M9 11h6"/></svg>';
+const ICON_FLASK2='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6L5.5 17A2.5 2.5 0 0 0 7.7 21h8.6a2.5 2.5 0 0 0 2.2-4L14 9V3"/></svg>';
+const ICON_CLIP2='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8a2 2 0 0 1 2 2v13H6V6a2 2 0 0 1 2-2"/><path d="M9 9h6M9 13h5"/></svg>';
+const ICON_PROG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v9l6 3"/><circle cx="12" cy="12" r="9"/></svg>';
+const ICON_TABLE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/></svg>';
 const ICON_DOC='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h7l5 5v13H7z" stroke-linejoin="round"/><path d="M14 3v5h5"/></svg>';
 const ICON_CHK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-const ICON_LOC='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>';
-const ICON_INFO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01" stroke-linecap="round"/></svg>';
 const CHEVR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-const SAMP_TUBES=['Lavender Top · EDTA','Red Top · Serum','Green Top · Heparin','Sterile container · Swab'];
-let adAni=0, AD_HIST=[], rqCur=null;
+/* timeline Jan 2022 -> Jun 2026 */
+const TL=(function(){const a=[];for(let y=2022;y<=2026;y++){for(let m=0;m<12;m++){if(y===2026&&m>5)break;a.push({y,m});}}return a;})();
+function tlDate(idx,ai){const t=TL[idx];const day=((idx*7+ai*3)%26)+1;return day+' '+MON3[t.m]+' '+t.y;}
+let adAni=0, AD_REC=null, rqIdx=0, tdKey='cbc';
 
-/* value of a numeric sub-test at a given history index (di: 0=newest .. 11=oldest) */
-function adValAt(s,di){const f=full12(s.vals);return f[f.length-1-di]!==undefined?f[f.length-1-di]:f[f.length-1];}
-/* flagged params for a panel at a point in time */
-function adFlags(panel,di){
-  let flagged=0,total=0;const det=[];
-  panel.forEach(k=>{const t=TEST_CATALOG[k];if(!t||t.kind!=='numeric')return;
-    t.list.forEach((s,si)=>{const rng=REF[s.n];if(!rng)return;total++;const v=adValAt(s,di);
-      if(v<rng[0]){flagged++;det.push({n:s.n,dir:'low',k,si});}
-      else if(v>rng[1]){flagged++;det.push({n:s.n,dir:'high',k,si});}});
-  });
-  return {flagged,total,det};
+function testValueAt(k,j,J,ai){
+  const s=TEST_CATALOG[k].list[0];
+  if(TEST_CATALOG[k].kind==='numeric'){
+    const v=s.vals,base=v[0],end=v[v.length-1];
+    const frac=J>1?j/(J-1):1;
+    const dec=v.some(x=>!Number.isInteger(x))?1:0;
+    const wob=(((j*7+ai*5)%5)-2)*((Math.abs(end-base)||1)*0.04);
+    return {num:true,unit:s.u,value:+(base+(end-base)*frac+wob).toFixed(dec),name:s.n};
+  }
+  const r=s.results;return {num:false,unit:'',value:r[(j+ai)%r.length],name:s.n};
 }
-/* deterministic per-animal lab history (newest → oldest) */
-function buildLabHistory(ai){
-  const n=5+(ai%4);const list=[];
-  for(let r=0;r<n;r++){
-    const di=Math.min(11,Math.round(r*11/(n-1)));
-    const panel=AD_PANELS[(ai+r)%AD_PANELS.length];
+function buildLabRecord(ai){
+  const R=8+(ai%9),start=(ai*5)%28,reqs=[];
+  for(let r=0;r<R;r++){
+    const tlIdx=Math.round(start+(53-start)*(R>1?r/(R-1):1));
+    const panel=AD_PANELS2[(ai+r)%AD_PANELS2.length];
     let status='Completed';
-    if(r===0) status=(ai%3===0)?'In Progress':((ai%3===1)?'Pending':'Completed');
-    const fl=(status==='Completed')?adFlags(panel,di):{flagged:0,total:0,det:[]};
-    const tests=panel.reduce((s,k)=>s+((TEST_CATALOG[k]&&TEST_CATALOG[k].list.length)||0),0);
-    const reject=(r===2 && ai%2===0)?1:0;
-    list.push({i:r,di,id:G_REQS[di],date:G_DATES[di],case:'MED-00'+(120+ai*3+Math.floor(r/2)),
-      panel,status,tests,samples:panel.length+reject,reject,
-      by:AD_NAMES[(ai+r)%AD_NAMES.length],loc:AD_LOC[(ai+r)%AD_LOC.length],
-      flagged:fl.flagged,paramTotal:fl.total,det:fl.det});
+    if(r===R-1) status=(ai%2===0)?'Pending':'Completed';
+    else if(r===R-2 && ai%2===1) status='Pending';
+    else if(r===2 && ai%4===0) status='Cancelled';
+    const retest=(status==='Completed' && r%5===2)?1:0;
+    reqs.push({order:r,tlIdx,panel,status,retest,
+      id:'LT'+String(TL[tlIdx].y).slice(2)+'-'+(1000+ai*13+r),
+      title:LAB_TITLES[(ai+r)%LAB_TITLES.length],by:LAB_BY[(ai+r)%LAB_BY.length],
+      time:LAB_TIMES[(ai+r)%LAB_TIMES.length],date:tlDate(tlIdx,ai),y:TL[tlIdx].y,m:TL[tlIdx].m});
   }
-  return list;
+  const occ={};
+  reqs.forEach(rq=>rq.panel.forEach(k=>{(occ[k]=occ[k]||[]).push(rq.order);}));
+  reqs.forEach(rq=>{
+    rq.tests=rq.panel.map(k=>{
+      const list=occ[k],j=list.indexOf(rq.order),J=list.length,vv=testValueAt(k,j,J,ai);
+      let tStatus='Completed',shown=true;
+      if(rq.status==='Cancelled'){tStatus='Cancelled';shown=false;}
+      else if(rq.status==='Pending'){tStatus=(rq.panel.indexOf(k)===0)?'Completed':'Pending';shown=(tStatus==='Completed');}
+      return {key:k,name:TEST_SHORT[k]||k,full:TEST_CATALOG[k].title,num:vv.num,unit:vv.unit,value:shown?vv.value:null,status:tStatus};
+    });
+    rq.testCount=rq.panel.length;
+    rq.reports=(rq.status==='Completed')?(1+rq.retest):0;
+  });
+  reqs.sort((a,b)=>b.tlIdx-a.tlIdx);
+  reqs.forEach((rq,i)=>rq.idx=i);
+  return {ai,reqs};
 }
-function sparkSVG(series,color){
-  if(series.length<2) return '';
-  const W=120,H=40,p=5,mn=Math.min(...series),mx=Math.max(...series),rg=(mx-mn)||1;
-  const pts=series.map((v,i)=>[p+(W-2*p)*i/(series.length-1),H-p-(H-2*p)*((v-mn)/rg)]);
-  const d=pts.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' ');
-  const lp=pts[pts.length-1];
-  return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><path d="${d}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><circle cx="${lp[0].toFixed(1)}" cy="${lp[1].toFixed(1)}" r="3.5" fill="#fff" stroke="${color}" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>`;
-}
-function adInsights(){
-  const hist=AD_HIST,completed=hist.filter(r=>r.status==='Completed');
-  const totalReq=hist.length,totalTests=hist.reduce((s,r)=>s+r.tests,0);
-  const recent=hist.filter(r=>r.di<6).length,older=hist.filter(r=>r.di>=6).length;
-  const buckets=Array(12).fill(0);hist.forEach(r=>buckets[11-r.di]++);
-  const maxB=Math.max(1,...buckets);
-  /* flagged trend, oldest → newest */
-  const byTime=[...completed].sort((a,b)=>b.di-a.di);
-  const flagSeries=byTime.map(r=>r.flagged);
-  const latest=byTime[byTime.length-1]||{flagged:0,paramTotal:0},prev=byTime[byTime.length-2];
-  let flagDir='flat',flagTxt='No prior report';
-  if(prev){const d=latest.flagged-prev.flagged;flagDir=d<0?'down':(d>0?'up':'flat');flagTxt=d<0?('▼ '+Math.abs(d)+' fewer'):(d>0?('▲ '+d+' more'):'No change');}
-  /* watchlist: recurring out-of-range params */
-  const tally={};
-  completed.forEach(r=>r.det.forEach(d=>{if(!tally[d.n])tally[d.n]={n:d.n,dir:d.dir,cnt:0,k:d.k,si:d.si};tally[d.n].cnt++;}));
-  let watch=Object.values(tally);
-  watch.forEach(w=>{w.appear=completed.filter(r=>r.panel.includes(w.k)).length||1;});
-  const recurring=watch.filter(w=>w.cnt>=2).sort((a,b)=>b.cnt-a.cnt);
-  watch=(recurring.length?recurring:watch.sort((a,b)=>b.cnt-a.cnt)).slice(0,4);
-  /* activity direction */
-  let dir='flat',dirIcon='→',dirText='steady';
-  if(recent>older){dir='up';dirIcon='▲';dirText='up vs prior 6 mo';}
-  else if(recent<older){dir='down';dirIcon='▼';dirText='down vs prior 6 mo';}
-  return {totalReq,totalTests,bars:buckets.map(b=>Math.round(b/maxB*100)),
-    dir,dirIcon,dirText,watch,
-    latestFlag:latest.flagged,latestTotal:latest.paramTotal||0,flagDir,flagTxt,
-    spark:sparkSVG(flagSeries,'#FA6140')};
-}
-function renderStatRow(){
-  const hist=AD_HIST;
-  const done=hist.filter(r=>r.status==='Completed').length;
-  const pend=hist.length-done;
-  const samples=hist.reduce((s,r)=>s+r.samples,0);
-  document.getElementById('ad-statrow').innerHTML=
-    `<div class="ad-stat done"><div class="v tnum">${done}</div><div class="k">Completed</div></div>
-     <div class="ad-stat pend"><div class="v tnum">${pend}</div><div class="k">Open</div></div>
-     <div class="ad-stat"><div class="v tnum">${samples}</div><div class="k">Samples</div></div>`;
-}
-function renderInsights(){
-  const ins=adInsights();let h='';
-  h+='<div class="ins-h">Watchlist · Out-of-range parameters</div>';
-  if(ins.watch.length){
-    h+='<div class="ins-watch"><div class="wsub">Lab values that came back outside their reference range — and how often across reports. Tap to view the trend.</div><div class="wchips">'+
-      ins.watch.map(w=>`<button class="wchip ${w.dir}" onclick="openParamTrend(${adAni},'${w.k}',${w.si})">${w.n} <span class="ar">${w.dir==='high'?'↑':'↓'}</span> <span class="cnt">${w.cnt}/${w.appear}</span></button>`).join('')+
-      '</div></div>';
-  }else{
-    h+='<div class="ins-ok">'+ICON_CHK+'All tracked values stayed within range across recent reports.</div>';
-  }
-  h+='<div class="ins-2">';
-  h+=`<div class="ins-card"><div class="ic-k">Lab activity · 12 mo</div><div class="ic-v tnum">${ins.totalReq} <small>req · ${ins.totalTests} tests</small></div><span class="ins-trend ${ins.dir}">${ins.dirIcon} ${ins.dirText}</span><div class="minibars">${ins.bars.map(b=>`<i class="${b>=66?'hot':''}" style="height:${Math.max(8,b)}%"></i>`).join('')}</div></div>`;
-  h+=`<div class="ins-card"><div class="ic-k">Flagged per report</div><div class="ic-v tnum">${ins.latestFlag}<small> of ${ins.latestTotal}</small></div><span class="ins-trend ${ins.flagDir}">${ins.flagTxt}</span>${ins.spark||'<div class="minibars"></div>'}</div>`;
-  h+='</div>';
-  document.getElementById('ad-insights').innerHTML=h;
-}
-function renderReqList(){
-  const groups=[],gmap={};
-  AD_HIST.forEach(r=>{if(!gmap[r.case]){gmap[r.case]={case:r.case,items:[]};groups.push(gmap[r.case]);}gmap[r.case].items.push(r);});
-  let h='<div class="ins-h">Requests</div>';
-  groups.forEach(g=>{
-    h+=`<div class="lr-case">Case ID · ${g.case}</div>`;
-    g.items.forEach(r=>{
-      const st=r.status==='Completed'?'done':(r.status==='In Progress'?'prog':'pend');
-      h+=`<div class="lr-card" onclick="openRequestDetail(${r.i})">
-        <div class="lr-top"><div><div class="lr-id">Lab Test · ${r.id}</div><div class="lr-when">Requested on ${r.date}</div></div><span class="lr-st ${st}">${r.status}</span></div>
-        <div class="lr-foot"><span class="fi">Tests <b>${r.tests}</b></span><span class="fi">Samples <b>${r.samples}</b></span>${(r.status==='Completed'&&r.flagged)?`<span class="fi lr-flag">${r.flagged} flagged</span>`:''}<span class="chev">${CHEVR}</span></div>
-      </div>`;
+function recTestAgg(){
+  const agg={},chrono=[...AD_REC.reqs].sort((a,b)=>a.tlIdx-b.tlIdx);
+  chrono.forEach(rq=>{
+    if(rq.status==='Cancelled')return;
+    rq.tests.forEach(t=>{
+      if(!agg[t.key])agg[t.key]={key:t.key,name:t.name,full:t.full,num:t.num,unit:t.unit,count:0,records:[],reports:[]};
+      const a=agg[t.key];a.count++;
+      a.records.push({date:rq.date,reqId:rq.id,value:t.value,unit:t.unit,num:t.num,tlIdx:rq.tlIdx});
+      if(rq.status==='Completed')a.reports.push({date:rq.date,reqId:rq.id,name:rq.title,rqIdx:rq.idx,rqTl:rq.tlIdx});
     });
   });
-  document.getElementById('ad-reqlist').innerHTML=h;
+  Object.values(agg).forEach(a=>{
+    a.records.sort((x,y)=>y.tlIdx-x.tlIdx);
+    a.latest=a.records[0];a.first=a.records[a.records.length-1];
+    a.reports.sort((x,y)=>y.rqTl-x.rqTl);
+  });
+  return agg;
+}
+function binSeries(values,bins){
+  if(!values.length)return Array(bins).fill(0);
+  const mn=Math.min(...values),mx=Math.max(...values),rg=(mx-mn)||1,b=Array(bins).fill(0);
+  values.forEach(v=>{let bi=Math.floor((v-mn)/rg*(bins-1e-9));if(bi>=bins)bi=bins-1;if(bi<0)bi=0;b[bi]++;});
+  return b;
+}
+function recInsights(){
+  const reqs=AD_REC.reqs,nonC=reqs.filter(r=>r.status!=='Cancelled'),completed=reqs.filter(r=>r.status==='Completed');
+  const totalRequests=reqs.length,totalTests=nonC.reduce((s,r)=>s+r.testCount,0),reports=reqs.reduce((s,r)=>s+r.reports,0);
+  const tally={};reqs.forEach(r=>r.panel.forEach(k=>{tally[k]=(tally[k]||0)+1;}));
+  const most=Object.keys(tally).map(k=>({k,name:TEST_SHORT[k]||k,c:tally[k]})).sort((a,b)=>b.c-a.c);
+  const totalRetests=reqs.reduce((s,r)=>s+r.retest,0),reqWithRetest=reqs.filter(r=>r.retest>0).length;
+  const newest=reqs[0],oldest=reqs[reqs.length-1],latestReportReq=completed[0];
+  return {totalRequests,totalTests,reports,most,totalRetests,reqWithRetest,
+    first:oldest.date,latest:newest.date,latestReport:latestReportReq?latestReportReq.date:'—',
+    sinceLabel:MON3[oldest.m]+' '+oldest.y};
+}
+function miniBars(bins){const mx=Math.max(1,...bins);return `<div class="hc-spark minibars" style="height:44px">${bins.map(b=>`<i class="${b/mx>=0.66?'hot':''}" style="height:${Math.max(8,Math.round(b/mx*100))}%"></i>`).join('')}</div>`;}
+function renderLabRecords(){
+  const ins=recInsights(),reqs=AD_REC.reqs;
+  const reqBins=binSeries(reqs.map(r=>r.tlIdx),12);
+  const tv=[];reqs.forEach(r=>{for(let i=0;i<r.testCount;i++)tv.push(r.tlIdx);});
+  const testBins=binSeries(tv,12),most=ins.most[0];
+  document.getElementById('lab-records').innerHTML=
+  `<div class="ins-h" style="padding-left:18px;padding-right:18px">Laboratory Records</div>
+  <div class="lab-hero">
+    <div class="hcard">
+      <div class="hc-k">Total Requests</div>
+      <div class="hc-v tnum">${ins.totalRequests} <small>investigations</small></div>
+      ${miniBars(reqBins)}
+      <div class="hc-rows"><div class="hc-row">First request <b>${ins.first}</b></div><div class="hc-row">Latest request <b>${ins.latest}</b></div></div>
+      <button class="hc-cta" onclick="openJourney()">${ICON_JOURNAL} View Journey</button>
+    </div>
+    <div class="hcard">
+      <div class="hc-k">Total Tests Performed</div>
+      <div class="hc-v tnum">${ins.totalTests} <small>tests</small></div>
+      ${miniBars(testBins)}
+      <div class="hc-rows"><div class="hc-row">First test <b>${ins.first}</b></div><div class="hc-row">Latest test <b>${ins.latest}</b></div><div class="hc-row">Most frequent <b>${most.name} · ${most.c}&times;</b></div></div>
+      <button class="hc-cta" onclick="openExploreTests()">${ICON_FLASK2} Explore Tests</button>
+    </div>
+  </div>`;
+}
+function fmtVal(t){if(!t||t.value===null||t.value===undefined)return '—';return t.num?(t.value+' '+t.unit):t.value;}
+function renderRecent(){
+  const reqs=AD_REC.reqs,newest=reqs[0];
+  const rtReq=reqs.find(r=>r.tests.some(t=>t.value!==null))||newest;
+  const rt=rtReq.tests.find(t=>t.value!==null)||rtReq.tests[0];
+  document.getElementById('lab-recent').innerHTML=
+  `<div class="ins-h">Recent Activity</div>
+  <div class="rec-card" onclick="openRequestDetail(${newest.idx})">
+    <div class="rec-ic req">${ICON_CLIP2}</div>
+    <div class="rec-mid"><div class="rec-t">${newest.title}</div><div class="rec-s">${newest.status} · ${newest.testCount} tests · ${newest.reports} report${newest.reports===1?'':'s'}<br>${newest.id} · ${newest.date}</div></div>
+    <span class="rec-chev">${CHEVR}</span>
+  </div>
+  <div class="rec-card" onclick="openTestSheet('${rt?rt.key:'cbc'}')">
+    <div class="rec-ic tst">${ICON_FLASK2}</div>
+    <div class="rec-mid"><div class="rec-t">${rt?rt.name:'Test'}</div><div class="rec-s">${rtReq.date} · ${rtReq.id}</div></div>
+    <div class="rec-val tnum">${rt&&rt.num&&rt.value!==null?rt.value:(rt&&rt.value!==null?rt.value:'—')}${rt&&rt.num&&rt.value!==null?`<small> ${rt.unit}</small>`:''}</div>
+  </div>`;
+}
+function renderLabInsights(){
+  const ins=recInsights(),reqs=AD_REC.reqs;
+  const years={};reqs.forEach(r=>{years[r.y]=(years[r.y]||0)+1;});
+  const yrs=Object.keys(years).sort(),ymax=Math.max(1,...yrs.map(y=>years[y]));
+  const most3=ins.most.slice(0,3),mmax=Math.max(1,...most3.map(m=>m.c));
+  document.getElementById('lab-insights').innerHTML=
+  `<div class="ins-h">Laboratory Insights</div>
+  <div class="card2"><div class="c2-h">Laboratory Journey</div><div class="lab-insrow">
+    <div class="li-line">First laboratory request <b>${ins.first}</b></div>
+    <div class="li-line">Latest laboratory activity <b>${ins.latest}</b></div>
+    <div class="li-line">Latest report generated <b>${ins.latestReport}</b></div>
+  </div></div>
+  <div class="ins-2">
+    <div class="ins-card"><div class="ic-k">Lifetime requests</div><div class="ic-v tnum">${ins.totalRequests}</div></div>
+    <div class="ins-card"><div class="ic-k">Lifetime tests</div><div class="ic-v tnum">${ins.totalTests}</div></div>
+    <div class="ins-card"><div class="ic-k">Reports</div><div class="ic-v tnum">${ins.reports}</div></div>
+  </div>
+  <div class="card2"><div class="c2-h">Most Performed Tests</div>
+    ${most3.map(m=>`<div class="mp-row"><span class="mp-n">${m.name}</span><span class="mp-bar"><i style="width:${Math.round(m.c/mmax*100)}%"></i></span><span class="mp-c">${m.c}&times;</span></div>`).join('')}
+  </div>
+  <div class="ins-2">
+    <div class="ins-card"><div class="ic-k">Total retests</div><div class="ic-v tnum">${ins.totalRetests}</div></div>
+    <div class="ins-card"><div class="ic-k">Requests w/ retest</div><div class="ic-v tnum">${ins.reqWithRetest}</div></div>
+  </div>
+  <div class="card2"><div class="c2-h">Testing Frequency</div>
+    <div class="freq-big tnum">${ins.totalTests} Tests</div>
+    <div class="freq-sub">Across ${ins.totalRequests} requests<br>Since ${ins.sinceLabel}</div>
+  </div>
+  <div class="card2"><div class="c2-h">Request Activity</div>
+    <div class="yearbars">${yrs.map(y=>`<div class="yb"><i style="height:${Math.max(8,Math.round(years[y]/ymax*44))}px"></i><span>${y}</span></div>`).join('')}</div>
+  </div>`;
 }
 function adAboutHTML(a){
   return `<div class="card" style="padding:16px"><div class="ah-meta" style="color:var(--ink2)">
@@ -2311,9 +2532,8 @@ function setADSub(which){
   document.querySelectorAll('#ad-screen [data-adsub]').forEach(d=>d.style.display=d.dataset.adsub===which?'':'none');
 }
 function adSub(btn,which){setADSub(which);}
-function openParamTrend(ai,k,si){gTest=(k in TEST_CATALOG)?k:'cbc';openGraph(ai);curSub=si||0;renderGraphCard();}
 function openAnimalDetail(ai){
-  adAni=ai;AD_HIST=buildLabHistory(ai);
+  adAni=ai;AD_REC=buildLabRecord(ai);
   const a=TD_ANIMALS[ai];
   document.getElementById('ad-photo').textContent=a.emoji;
   document.getElementById('ad-photo').style.background=a.bg;
@@ -2324,59 +2544,145 @@ function openAnimalDetail(ai){
     `<div class="r">ID: <b>${a.id}</b></div><div class="r">Sex: <b>${sex}</b> · Life Stage: <b>Adult</b></div><div class="r">Enclosure: <b>${a.enc}</b> · ${a.site}</div>`;
   document.getElementById('ad-about').innerHTML=adAboutHTML(a);
   setADTab('medical');setADSub('lab');
-  renderStatRow();renderInsights();renderReqList();
+  renderLabRecords();renderRecent();renderLabInsights();
   nav('animal-detail');
 }
 
-/* ===================== REQUEST DETAIL ===================== */
+/* ---------- drill-downs ---------- */
+function lineChart(series,color){
+  if(series.length<2){const v=series.length?series[0]:0;return `<div style="font-size:30px;font-weight:600;letter-spacing:-1px">${v}</div>`;}
+  const W=300,H=92,p=8,mn=Math.min(...series),mx=Math.max(...series),rg=(mx-mn)||1;
+  const pts=series.map((v,i)=>[p+(W-2*p)*i/(series.length-1),H-p-(H-2*p)*((v-mn)/rg)]);
+  const d=pts.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' ');
+  const area=d+` L${(W-p).toFixed(1)} ${H-p} L${p} ${H-p} Z`,lp=pts[pts.length-1];
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}" preserveAspectRatio="none"><defs><linearGradient id="tdg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${color}" stop-opacity=".2"/><stop offset="1" stop-color="${color}" stop-opacity="0"/></linearGradient></defs><path d="${area}" fill="url(#tdg)"/><path d="${d}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><circle cx="${lp[0].toFixed(1)}" cy="${lp[1].toFixed(1)}" r="4" fill="#fff" stroke="${color}" stroke-width="2.5" vector-effect="non-scaling-stroke"/></svg>`;
+}
+function openJourney(){
+  const reqs=AD_REC.reqs,groups=[],gmap={};
+  reqs.forEach(rq=>{const key=rq.y*12+rq.m;if(!gmap[key]){gmap[key]={key,label:MONF[rq.m]+' '+rq.y,items:[]};groups.push(gmap[key]);}gmap[key].items.push(rq);});
+  groups.sort((a,b)=>b.key-a.key);
+  let h='';
+  groups.forEach(g=>{
+    h+=`<div class="jr-month">${g.label}</div>`;
+    g.items.forEach(rq=>{
+      const act=rq.status==='Completed'
+        ?`<button class="jr-act report" onclick="event.stopPropagation();openReportFromReq(${rq.idx})">${ICON_DOC} View Report</button>`
+        :rq.status==='Pending'
+        ?`<button class="jr-act progress" onclick="event.stopPropagation();openRequestDetail(${rq.idx})">${ICON_PROG} View Progress</button>`:'';
+      h+=`<div class="jr-card" onclick="openRequestDetail(${rq.idx})">
+        <div class="jr-top"><div><div class="jr-title">${rq.title}</div><div class="jr-meta">${rq.id} · ${rq.date} · ${rq.time}</div><div class="jr-meta">By ${rq.by}</div></div><span class="st-chip ${rq.status}">${rq.status}</span></div>
+        <div class="jr-chips"><span>Tests <b>${rq.testCount}</b></span><span>Reports <b>${rq.reports}</b></span></div>${act}
+      </div>`;
+    });
+  });
+  document.getElementById('journey-body').innerHTML=h;
+  document.getElementById('journey-sub').textContent=reqs.length+' investigations · since '+reqs[reqs.length-1].date;
+  sheet('sheet-journey');
+}
+function openReportFromReq(i){const rq=AD_REC.reqs[i];closeSheet();openReportFor({panel:rq.panel,ani:adAni,id:rq.id,dt:rq.date,interim:false});}
+function openExploreTests(){
+  const agg=recTestAgg(),keys=Object.keys(agg).sort((a,b)=>agg[b].count-agg[a].count);
+  document.getElementById('et-list').innerHTML=keys.map(k=>{const a=agg[k];
+    const lv=a.latest&&a.latest.value!==null?(a.num?`${a.latest.value}<small> ${a.unit}</small>`:a.latest.value):'—';
+    return `<div class="et-card" onclick="openTestSheet('${k}')"><div class="et-ic">${(TEST_SHORT[k]||k).slice(0,3).toUpperCase()}</div><div class="et-mid"><div class="et-n">${a.full}</div><div class="et-s">Performed ${a.count}&times; · last ${a.latest?a.latest.date:'—'}<br>${a.latest?a.latest.reqId:''}</div></div><div class="et-r"><div class="et-v tnum">${lv}</div><div class="et-d">latest</div></div></div>`;
+  }).join('');
+  document.getElementById('et-sub').textContent=keys.length+' tests performed for '+TD_ANIMALS[adAni].name;
+  nav('explore-tests');
+}
+function openTestSheet(k){
+  const agg=recTestAgg(),a=agg[k]||agg[Object.keys(agg)[0]];if(!a)return;tdKey=a.key;
+  document.getElementById('td-tname').textContent=a.full;
+  document.getElementById('td-tmeta').textContent='Performed '+a.count+' time'+(a.count===1?'':'s');
+  const chart=document.getElementById('td-chart');
+  if(a.num){const series=[...a.records].sort((x,y)=>x.tlIdx-y.tlIdx).map(r=>r.value);chart.innerHTML=lineChart(series,'#37BD69');chart.style.display='';}
+  else{chart.innerHTML='<div class="rec-s" style="font-weight:600">Qualitative test — see records for individual findings.</div>';chart.style.display='';}
+  document.getElementById('td-first').textContent=a.first?a.first.date:'—';
+  document.getElementById('td-latest').textContent=a.latest?a.latest.date:'—';
+  document.getElementById('td-actions').innerHTML=
+    `<button class="td-act" onclick="openRecords('${a.key}')">${ICON_TABLE} View Records</button>
+     <button class="td-act ghost" onclick="openRelatedReports('${a.key}')">${ICON_DOC} View Related Reports</button>`;
+  sheet('sheet-testdetail');
+}
+function openRecords(k){
+  const agg=recTestAgg(),a=agg[k];if(!a)return;
+  document.getElementById('rec-title2').textContent=a.full;
+  document.getElementById('rec-sub2').textContent=a.count+' results · newest first';
+  document.getElementById('rec-tbody').innerHTML=a.records.map(r=>`<tr><td>${r.date}</td><td class="rid">${r.reqId}</td><td class="val">${r.value!==null?r.value:'—'}</td><td class="rid">${r.num?r.unit:''}</td></tr>`).join('');
+  closeSheet();sheet('sheet-records');
+}
+function openRelatedReports(k){
+  const agg=recTestAgg(),a=agg[k];if(!a)return;
+  document.getElementById('rel-title').textContent=a.full+' · Reports';
+  document.getElementById('rel-body').innerHTML=a.reports.length
+    ?a.reports.map(rp=>`<div class="rqd-report" style="margin-bottom:10px" onclick="openReportFromReq(${rp.rqIdx})"><div class="di">${ICON_DOC}</div><div style="flex:1"><div style="font-size:15px;font-weight:600">${rp.name}</div><div style="font-size:12px;color:var(--muted);font-weight:600;margin-top:3px">${rp.date} · ${rp.reqId}</div></div><span class="rec-chev">${CHEVR}</span></div>`).join('')
+    :'<div class="ins-ok" style="background:var(--card);color:var(--muted)">No completed reports yet for this test.</div>';
+  closeSheet();sheet('sheet-reports');
+}
+
+/* ---------- investigation (request) detail ---------- */
 function openRequestDetail(i){
-  const r=AD_HIST[i];if(!r)return;rqCur=r;const a=TD_ANIMALS[adAni];
-  document.getElementById('rqd-head').innerHTML=
-    `<button class="rqd-back" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-     <div class="rqd-id">${ICON_INFO} Lab Test · ${r.id} <span class="st">${r.status}</span></div>
-     <div class="rqd-sub">${a.name} · ID ${a.id} · Case ${r.case}</div>
-     <div class="rqd-line">${ICON_LOC}${r.loc}</div>
-     <div class="rqd-line">${ICON_INFO}Requested by ${r.by} · ${r.date}</div>`;
-  const compTests=r.status==='Completed'?r.tests:(r.status==='In Progress'?Math.round(r.tests/2):0);
-  const recvSamples=r.status==='Pending'?Math.max(0,r.samples-1):r.samples-r.reject;
-  document.getElementById('rqd-cnt').innerHTML=
-    `<div class="c"><div class="v tnum">${compTests}/${r.tests}</div><div class="l">Tests completed</div></div>
-     <div class="c"><div class="v tnum">${recvSamples}/${r.samples}</div><div class="l">Samples received</div></div>`;
-  renderRQTests(r,a);renderRQSamples(r,a);renderRQReports(r,a);renderRQNotes(r,a);
-  rqSwitch('tests');
+  const rq=AD_REC.reqs[i];if(!rq)return;rqIdx=i;const a=TD_ANIMALS[adAni];
+  closeSheet();
+  document.getElementById('rqd-title').textContent=rq.title;
+  document.getElementById('rqd-id').textContent=rq.id+' · '+a.name;
+  const sc=document.getElementById('rqd-status');sc.textContent=rq.status;sc.className='st-chip '+rq.status;
+  document.getElementById('rqd-meta').innerHTML=`Created ${rq.date} · ${rq.time}&nbsp;&nbsp;·&nbsp;&nbsp;${rq.testCount} tests · ${rq.reports} report${rq.reports===1?'':'s'}`;
+  renderStepper(rq);renderRQOverview(rq,a);renderRQTests2(rq,a);renderRQReports2(rq,a);renderRQHistory(rq,a);
+  rqSwitch('overview');
   nav('request-detail');
 }
-function renderRQTests(r,a){
-  const rows=r.panel.map((k,ki)=>{
-    const t=TEST_CATALOG[k],dept=deptTitle(DEPT[k]||'PATHOLOGY');
-    const stt=r.status==='Completed'?'done':(r.status==='In Progress'?(ki===0?'prog':'pend'):'pend');
-    const lbl=stt==='done'?'Completed':(stt==='prog'?'In Progress':'Pending');
-    const tap=r.status==='Completed'?` onclick="openParamTrend(${adAni},'${k}',0)"`:'';
-    return `<div class="trow"${tap}><div><div class="st ${stt}">${lbl}</div><div class="nm">${t.title}</div></div><div class="rt"><span>${dept} · ${t.list.length} sub</span>${CHEVR}</div></div>`;
+function renderStepper(rq){
+  const cancelled=rq.status==='Cancelled';
+  const steps=[['Created','Request logged'],['Testing','Samples under analysis'],['Completed','All tests finalised'],['Report Generated','Lab report issued']];
+  const reached=rq.status==='Completed'?4:(rq.status==='Pending'?1:1);
+  let h=steps.map((s,i)=>{
+    let cls=cancelled?(i===0?'done':'todo'):(i<reached?'done':(i===reached?'now':'todo'));
+    const dot=cls==='done'?`<span class="dot done">${ICON_CHK}</span>`:(cls==='now'?'<span class="dot now">●</span>':'<span class="dot todo"></span>');
+    return `<div class="step ${cls==='done'?'done':''} ${cls==='todo'?'todo':''}">${dot}<div><div class="sl">${s[0]}</div><div class="sd">${s[1]}</div></div></div>`;
   }).join('');
-  document.getElementById('rqd-tests').innerHTML=`<div class="rqd-grp"><span class="pic">${a.emoji}</span>${a.name}</div>`+rows;
+  if(cancelled)h+=`<div class="step todo"><span class="dot todo"></span><div><div class="sl" style="color:var(--error)">Cancelled</div><div class="sd">Investigation was cancelled</div></div></div>`;
+  document.getElementById('rqd-stepper').innerHTML=h;
 }
-function renderRQSamples(r,a){
-  const cards=r.panel.map((k,ki)=>{
-    const t=TEST_CATALOG[k];let stt,cls;
-    if(r.status==='Completed'){stt='Reported';cls='rep';}
-    else if(r.status==='In Progress'){stt=ki===0?'In Progress':'Received';cls=ki===0?'prog':'ok';}
-    else{stt='Received';cls='ok';}
-    return `<div class="scard2"><div class="sh"><div><div class="nm">${t.title}</div><div class="mt">${SAMP_TUBES[ki%4]} · ${deptTitle(DEPT[k]||'Lab')}</div></div><span class="schip ${cls}">${stt}</span></div></div>`;
-  });
-  if(r.reject) cards.push(`<div class="scard2"><div class="sh"><div><div class="nm">Repeat sample</div><div class="mt">Lavender Top · 10 ml</div></div><span class="schip rej">Rejected</span></div><div class="rqd-note"><b>Insufficient sample.</b> A fresh aliquot has been requested from the field team.</div></div>`);
-  document.getElementById('rqd-samples').innerHTML=`<div class="rqd-grp"><span class="pic">${a.emoji}</span>${a.name}</div>`+cards.join('')+`<div class="rqd-cta"><button onclick="toast('Sample management — coming next')">Manage Samples</button></div>`;
+function renderRQOverview(rq,a){
+  document.getElementById('rqd-overview').innerHTML=
+  `<div class="card2"><div class="c2-h">Investigation Summary</div><div class="li-line" style="color:var(--ink2);justify-content:flex-start">${rq.title}</div></div>
+   <div class="card2"><div class="lab-insrow">
+     <div class="li-line">Created by <b>${rq.by}</b></div>
+     <div class="li-line">Created on <b>${rq.date} · ${rq.time}</b></div>
+     <div class="li-line">Current status <b>${rq.status}</b></div>
+     <div class="li-line">Tests requested <b>${rq.testCount}</b></div>
+   </div></div>
+   <div class="card2"><div class="c2-h">Notes</div><div class="rqd-note" style="margin-top:0">${rqNote(rq,a)}</div></div>`;
 }
-function renderRQReports(r,a){
-  if(r.status==='Completed'){
-    const robj={panel:r.panel,ani:adAni,id:r.id,dt:r.date,interim:false};
-    document.getElementById('rqd-reports').innerHTML=`<div class="rqd-report" onclick='openReportFor(${JSON.stringify(robj)})'><div class="di">${ICON_DOC}</div><div style="flex:1"><div style="font-size:15px;font-weight:600">Final Report · ${a.name}</div><div style="font-size:12px;color:var(--muted);font-weight:600;margin-top:3px">Issued ${r.date} · ${r.tests} tests</div></div><span class="chev">${CHEVR}</span></div>`;
-  }else{
-    document.getElementById('rqd-reports').innerHTML=`<div class="ins-ok" style="background:var(--bg);color:var(--muted)">${ICON_DOC}Final lab report appears here once all tests are approved by the lab.</div>`;
-  }
+function rqNote(rq,a){
+  if(rq.status==='Cancelled')return 'Investigation cancelled — superseded by a later request. '+rq.by+' noted no further testing was required at the time.';
+  if(rq.status==='Pending')return 'Samples received and under analysis at the lab. Results will populate here as each test is finalised.';
+  return rq.retest?'One parameter was repeated to confirm the initial reading before the report was finalised.':'Routine investigation for '+a.name+'. All requested tests were completed and reported.';
 }
-function renderRQNotes(r,a){
-  document.getElementById('rqd-notes').innerHTML=`<div class="rqd-note-card"><div class="who">${r.by} <span>· requested ${r.date}</span></div><div style="margin-top:4px">Routine ${r.panel.length>1?'multi-panel':''} screen for ${a.name}. Samples dispatched to ${r.loc}.</div><div class="hr"></div><div class="who">Lab · Gagwa <span>· in review</span></div><div style="margin-top:4px">${r.reject?'One sample flagged insufficient — repeat requested.':'All samples logged and assigned to departments.'}</div></div>`;
+function renderRQTests2(rq,a){
+  const agg=recTestAgg();
+  document.getElementById('rqd-tests').innerHTML=rq.tests.map(t=>{
+    const ag=agg[t.key],hist=ag?ag.count:1;
+    const st=t.status==='Completed'?'done':(t.status==='Pending'?'pend':'');
+    const cmp=hist>1?`<div class="tst-hist"><span class="ht">Performed ${hist} times for ${a.name}</span><button class="tst-cmp" onclick="openRecords('${t.key}')">Compare History ${CHEVR}</button></div>`:'';
+    const valBlock=t.value!==null?`<div class="tst-val tnum">${t.num?`${t.value} <small>${t.unit}</small>`:t.value}</div>`:`<div class="tst-val" style="font-size:14px;color:var(--muted)">Result pending</div>`;
+    return `<div class="tst-card"><div class="tst-top"><div class="tst-n">${t.full}</div><span class="tst-st ${st}">${t.status}</span></div>${valBlock}${cmp}</div>`;
+  }).join('');
+}
+function renderRQReports2(rq,a){
+  if(rq.status==='Completed'){
+    const chips=rq.retest?`<div class="ver-chips"><span class="ver-chip on" onclick="this.parentElement.querySelectorAll('.ver-chip').forEach(c=>c.classList.remove('on'));this.classList.add('on')">Final (v2)</span><span class="ver-chip" onclick="this.parentElement.querySelectorAll('.ver-chip').forEach(c=>c.classList.remove('on'));this.classList.add('on')">Interim (v1)</span></div>`:'';
+    document.getElementById('rqd-reports').innerHTML=chips+`<div class="rqd-report" onclick="openReportFromReq(${rq.idx})"><div class="di">${ICON_DOC}</div><div style="flex:1"><div style="font-size:15px;font-weight:600">${rq.title} — Report</div><div style="font-size:12px;color:var(--muted);font-weight:600;margin-top:3px">${rq.date} · ${rq.id}</div></div><span class="rec-chev">${CHEVR}</span></div>`;
+  }else document.getElementById('rqd-reports').innerHTML=`<div class="ins-ok" style="background:var(--card);color:var(--muted)">${ICON_DOC} Report will be available once all tests are finalised.</div>`;
+}
+function renderRQHistory(rq,a){
+  const ev=[['Request created',rq.date+' · '+rq.time,true]];
+  if(rq.status!=='Cancelled')ev.push(['Testing started',rq.date,true]);
+  if(rq.retest)ev.push(['Retest requested','Confirmation of one parameter',true]);
+  if(rq.status==='Completed'){ev.push(['Testing completed',rq.date,true]);ev.push(['Report generated',rq.date,true]);}
+  else if(rq.status==='Pending')ev.push(['Testing in progress','Awaiting results',false]);
+  else if(rq.status==='Cancelled')ev.push(['Investigation cancelled','No further testing',false]);
+  document.getElementById('rqd-history').innerHTML=`<div class="tl">${ev.map(e=>`<div class="tli"><span class="nub ${e[2]?'':'pend'}"><i></i></span><div class="tlcard"><div class="mid"><div class="nm">${e[0]}</div><div class="dt">${e[1]}</div></div></div></div>`).join('')}</div>`;
 }
 function rqSwitch(which){
   document.querySelectorAll('#rqd-screen .rqd-tabs button').forEach(b=>b.classList.toggle('on',b.dataset.rk===which));
