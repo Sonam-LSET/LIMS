@@ -1980,10 +1980,12 @@ function gEntityHTML(a){
     <div class="gs-ent-row"><span>Site</span><b>${a.site}</b></div>
   </div>`;
 }
-let gAni=0;
-function openGraph(i){
-  gAni=i;
-  const a=TD_ANIMALS[i],t=TEST_CATALOG[gTest];
+let gAni=0,gEntity=null;
+function openGraph(i){gAni=i;openGraphFor(TD_ANIMALS[i],gTest);}
+/* a = animal object (any dataset), testKey = TEST_CATALOG key */
+function openGraphFor(a,testKey){
+  gEntity=a; if(testKey && testKey in TEST_CATALOG) gTest=testKey;
+  const t=TEST_CATALOG[gTest];
   document.getElementById('gs-name').textContent=t.title;
   document.getElementById('gs-subs').textContent=t.subs+' Subtests';
   const ent=document.getElementById('gs-entity'); ent.classList.remove('open'); ent.innerHTML=gEntityHTML(a);
@@ -1999,7 +2001,7 @@ function openGraph(i){
 /* ===== lab report viewer (opens from a record) ===== */
 const REF={Hemoglobin:[12,18],WBC:[4,11],RBC:[4.5,6.5],Platelets:[150,400],Glucose:[70,110],Urea:[15,40],Creatinine:[0.6,1.4],Sodium:[135,145],Potassium:[3.5,5],Calcium:[8.5,10.5],ALT:[10,50],AST:[10,55],ALP:[40,130],Bilirubin:[0.1,1.2],Albumin:[3.2,5],GGT:[8,40],T3:[80,200],T4:[5,12],TSH:[0.4,4],'Total Protein':[6,8],Globulin:[2,3.5],Cholesterol:[120,200],Amylase:[300,1100],Lipase:[100,300],Phosphorus:[2.5,5]};
 const DEPT={cbc:'HAEMATOLOGY',cbc2:'HAEMATOLOGY',cmp:'BIOCHEMISTRY',lft:'BIOCHEMISTRY',tft:'ENDOCRINOLOGY',serumbio:'BIOCHEMISTRY',allergy:'IMMUNOLOGY',parasitology:'MICROBIOLOGY'};
-function openReport(di){ renderReport([gTest],TD_ANIMALS[gAni],(G_REQS[di]||G_REQS[0]),(G_DATES[di]||G_DATES[0]),di===0,di); }
+function openReport(di){ renderReport([gTest],gEntity||TD_ANIMALS[gAni],(G_REQS[di]||G_REQS[0]),(G_DATES[di]||G_DATES[0]),di===0,di); }
 function openReportFor(r){ closeSheet(); renderReport(r.panel,TD_ANIMALS[r.ani],r.id,(r.dt||'').split(' • ')[0],!!r.interim,0); }
 function deptTitle(d){return d.charAt(0)+d.slice(1).toLowerCase();}
 function repParam(s,di,a,date){
@@ -2602,20 +2604,9 @@ function openExploreTests(){
   document.getElementById('et-sub').textContent=keys.length+' tests performed for '+ADA.name;
   nav('explore-tests');
 }
-function openTestSheet(k){
-  const agg=recTestAgg(),a=agg[k]||agg[Object.keys(agg)[0]];if(!a)return;tdKey=a.key;
-  document.getElementById('td-tname').textContent=a.full;
-  document.getElementById('td-tmeta').textContent='Performed '+a.count+' time'+(a.count===1?'':'s');
-  const chart=document.getElementById('td-chart');
-  if(a.num){const series=[...a.records].sort((x,y)=>x.tlIdx-y.tlIdx).map(r=>r.value);chart.innerHTML=lineChart(series,'#37BD69');chart.style.display='';}
-  else{chart.innerHTML='<div class="rec-s" style="font-weight:600">Qualitative test — see records for individual findings.</div>';chart.style.display='';}
-  document.getElementById('td-first').textContent=a.first?a.first.date:'—';
-  document.getElementById('td-latest').textContent=a.latest?a.latest.date:'—';
-  document.getElementById('td-actions').innerHTML=
-    `<button class="td-act" onclick="openRecords('${a.key}')">${ICON_TABLE} View Records</button>
-     <button class="td-act ghost" onclick="openRelatedReports('${a.key}')">${ICON_DOC} View Related Reports</button>`;
-  sheet('sheet-testdetail');
-}
+/* tap a test card → reuse the earlier lab-value graph bottom sheet (trend + period tabs
+   1M/3M/6M/12M/All + sub-test dropdown + Latest/Highest/Lowest + View All Records) */
+function openTestSheet(k){ tdKey=(k in TEST_CATALOG)?k:'cbc'; openGraphFor(ADA,tdKey); }
 function openRecords(k){
   const agg=recTestAgg(),a=agg[k];if(!a)return;
   document.getElementById('rec-title2').textContent=a.full;
